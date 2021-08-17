@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class CategoryController extends Controller
@@ -32,27 +33,6 @@ class CategoryController extends Controller
                 'breadcrumbs' => $breadcrumbs,
             ]);
         }
-    }
-
-    public function favorite()
-    {
-        foreach (json_decode($_COOKIE['market_favorites']) as $favorite)
-        {
-            $slug_product = $favorite;
-            foreach ($slug_product as $slug) {
-                $q_favorites[] = Http::get('http://80.78.246.225:3000/api/v1/site/product/'.$slug)
-                    ->collect()['data'];
-            }
-        }
-        try {
-            $product = $q_favorites;
-        } catch (Exception $exception) {
-            $product = [];
-        }
-
-        return view('catalog.favorite', array(
-            'products' => $product,
-        ));
     }
 
     public function scores()

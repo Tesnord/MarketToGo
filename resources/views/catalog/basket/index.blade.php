@@ -67,7 +67,13 @@
                         </div>
                         <div class="cart__list-amount">
                             <div class="catalog__item-amount">
-                                <input type="text" value="1"><span class="up"><img src="{{ asset('assets/images/svg/plus.svg') }}" alt=""></span><span class="down"><img src="{{ asset('assets/images/svg/minus.svg') }}" alt=""></span>
+                                <input type="text" min="1" max="20" value="{{ count($basket['quantity']) }}">
+                                <span class="up">
+                                    <img src="{{ asset('assets/images/svg/plus.svg') }}" alt="">
+                                </span>
+                                <span class="down">
+                                    <img src="{{ asset('assets/images/svg/minus.svg') }}" alt="">
+                                </span>
                             </div>
                         </div>
                         <div class="cart__list-numb">

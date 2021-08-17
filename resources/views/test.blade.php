@@ -12,20 +12,20 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($basket as $item)
-                <tr>
-                    <td>Basket</td>
-                    <td>{{ $item['slug'] }}</td>
-                    <td>{{ $item['quantity'] }}</td>
-                </tr>
-            @endforeach
-            @foreach($favorites as $item)
-                <tr>
-                    <td>Favorite</td>
-                    <td>{{ $item }}</td>
-                    <td></td>
-                </tr>
-            @endforeach
+{{--            @foreach($basket as $item)--}}
+{{--                <tr>--}}
+{{--                    <td>Basket</td>--}}
+{{--                    <td>{{ $item['slug'] }}</td>--}}
+{{--                    <td>{{ $item['quantity'] }}</td>--}}
+{{--                </tr>--}}
+{{--            @endforeach--}}
+{{--            @foreach($favorites as $item)--}}
+{{--                <tr>--}}
+{{--                    <td>Favorite</td>--}}
+{{--                    <td>{{ $item }}</td>--}}
+{{--                    <td></td>--}}
+{{--                </tr>--}}
+{{--            @endforeach--}}
             </tbody>
         </table>
     </div>

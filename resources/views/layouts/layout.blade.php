@@ -73,9 +73,9 @@
                         <span class="header__menu-icon-tit">баллы</span>
                     </a>
 {{--                @endauth--}}
-                <a class="header__menu-icon-item" href="{{ route('favorite') }}">
+                <a class="header__menu-icon-item" href="{{ route('favorite.show') }}">
                     <img src="{{asset('assets/images/svg/icon-menu4.svg')}}" alt="">
-                    <span class="header__menu-icon-notif">4</span>
+                    <span class="header__menu-icon-notif favoriteCount">{{ count($favorites) }}</span>
                     <span class="header__menu-icon-tit">избранное</span>
                 </a>
             </div>
@@ -144,9 +144,9 @@
     {{--                            <span class="header__bottom-info-notif">4</span>--}}
                             </a>
 {{--                        @endauth--}}
-                        <a class="header__bottom-info-item" href="{{ route('favorite') }}">
+                        <a class="header__bottom-info-item" href="{{ route('favorite.show') }}">
                             <img src="{{asset('assets/images/svg/icon-header2.svg')}}" alt=""> избранное
-                            <span class="header__bottom-info-notif">4</span>
+                            <span class="header__bottom-info-notif favoriteCount">{{ count($favorites) }}</span>
                         </a>
                         <a class="header__bottom-info-item header__bottom-info-item-cart" href="{{ route('basket.index') }}">
                             <img src="{{asset('assets/images/svg/icon-header3.svg')}}" alt=""> корзина
@@ -358,7 +358,7 @@
     </div>
 </div>
 
-
+<script type="application/javascript">const log = (...args) => {{ config('app.debug') ? 1 : 0}} && console.log(...args)</script>
 <script type="text/javascript" src="{{asset('vendors/jquery/dist/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/jquery-ui/jquery-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/jquery-ui/jquery.ui.touch-punch.min.js')}}"></script>

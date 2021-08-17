@@ -9,18 +9,6 @@
                 <div class="check-in__tx">
                     <h1>Войти или зарегистрироваться</h1>
                     <div class="check-in__input" id="phoneForm">
-
-                        <div class="mt-2">
-                            @if($errors->any())
-                                <div class="alert-danger">
-                                    <ul>
-                                        @foreach($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </div>
                         <div class="registration">
                             <div class="check-in__tx phone">
                                 <p>Чтобы сохранять корзину, получать промокоды и следить за своей историей покупок</p>

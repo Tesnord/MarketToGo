@@ -3,6 +3,7 @@
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ShopController;
@@ -46,7 +47,9 @@ Route::prefix('catalog')->group(function () {
 // Поиск
 Route::get('/search', [CategoryController::class, 'search'])->name('search');
 // Избранное
-Route::post('/favorite', [CategoryController::class, 'favorite'])->name('favorite');
+Route::get('/favorite', [FavoriteController::class, 'show'])->name('favorite.show');
+Route::put('/favorite', [FavoriteController::class, 'put'])->name('favorite.put');
+Route::delete('/favorite', [FavoriteController::class, 'delete'])->name('favorite.delete');
 // Подписка на товары
 Route::prefix('subscribe')->group(function () {
     Route::get('/', [SubscribeController::class, 'index'])->name('subscribe.index');

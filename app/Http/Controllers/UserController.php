@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        dd($request->session()->all());
         return view('login.user.index');
     }
 

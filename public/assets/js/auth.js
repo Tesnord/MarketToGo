@@ -28,33 +28,29 @@ if (document.querySelector("div.registration")) {
             }).then(response => {
                 if (response.ok) {
                     $('span.phone').text(phone);
-                    // console.log(response.json())
-                    return response.json()
-                } else {
-                    return response.json().then(error => {
-                        const e = new Error('Что-то пошло не так')
-                        e.data = error
-                        throw e
+                    document.querySelector('div.phone').style.display = 'none';
+                    document.querySelector('div.code').style.display = '';
+                    let timer;
+                    let x = 60;
+                    countdown();
 
+                    function countdown() {
+                        document.querySelector('span.time').innerHTML = x;
+                        x--;
+                        if (x < 0) {
+                            clearTimeout(timer);
+                            document.querySelector('p.codetime').style.display = 'none';
+                            document.querySelector('p.codelink').style.display = '';
+                        } else {
+                            timer = setTimeout(countdown, 1000);
+                        }
+                    }
+                } else {
+                    response.json().then(error => {
+                        console.log(error.meta.message)
                     })
                 }
-            }).then((json) => console.log(json));
-            document.querySelector('div.phone').style.display = 'none';
-            document.querySelector('div.code').style.display = '';
-            let timer;
-            let x = 60;
-            countdown();
-            function countdown() {
-                document.querySelector('span.time').innerHTML = x;
-                x--;
-                if (x < 0) {
-                    clearTimeout(timer);
-                    document.querySelector('p.codetime').style.display = 'none';
-                    document.querySelector('p.codelink').style.display = '';
-                } else {
-                    timer = setTimeout(countdown, 1000);
-                }
-            }
+            });
         }
     })
     document.querySelector('button.code').addEventListener('click', e => {
@@ -63,20 +59,26 @@ if (document.querySelector("div.registration")) {
         fetch("/login", {
             method: 'POST',
             body: JSON.stringify({phone: phone, code: code}),
-            headers: {'Content-type': 'application/json'}
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-type': 'application/json'
+            }
         }).then(response => {
             if (response.ok) {
-                // window.location.href = '/personal';
-                return response.json();
+                window.location.href = '/personal';
             } else {
-                return response.json().then(error => {
+                response.text().then(error => {
+                    const codeInput = document.querySelector('input.code');
                     codeInput.style.border = '2px solid red';
-                    const e = new Error('Что-то пошло не так')
-                    e.data = error
-                    throw e
+                    codeInput.addEventListener('click', () => {
+                        codeInput.style.border = '';
+                        codeInput.value = '';
+                    })
+                    console.log(error)
                 })
             }
-        }).then((json) => console.log(json));
+        });
     })
 }
 

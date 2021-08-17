@@ -9,10 +9,9 @@ use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
         $categories = $this->requestHelper->getCategoriesMain();
-        // dd($categories);
         return view('home', [
             'categories' => $categories,
         ]);
@@ -20,6 +19,7 @@ class HomeController extends Controller
 
     public function getTest()
     {
+
         return view('test');
     }
 

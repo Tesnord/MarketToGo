@@ -8,28 +8,42 @@ if (document.querySelectorAll('.catalog__item .catalog__item-fav')) {
             if (Cookies.get('market_favorites')) {
                 favArr = JSON.parse(Cookies.get('market_favorites')).favorites
             }
-
             const item_index = favArr.indexOf(product_id)
             if (item_index === -1) {
                 favArr.unshift(product_id)
+                fetch('/favorite', {
+                    method: 'PUT',
+                    body: JSON.stringify({product_id}),
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-type': 'application/json'
+                    }
+                })
                 e.target.closest('[data-product-id]').classList.toggle('catalog__item-favorites')
             } else {
                 favArr.splice(item_index, 1)
+                fetch('/favorite', {
+                    method: 'DELETE',
+                    body: JSON.stringify({product_id}),
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-type': 'application/json'
+                    }
+                })
                 e.target.closest('[data-product-id]').classList.toggle('catalog__item-favorites')
             }
-
             document.querySelectorAll('[data-role="favorite_counter"]').forEach(el => {
                 el.innerText = favArr.length.toString()
             })
-
             if (favArr.length === 0) {
                 Cookies.remove('market_favorites')
             } else {
                 Cookies.set('market_favorites', {"favorites": favArr}, {expires: 7})
             }
-
-            console.log(favArr.length)
-            console.log(favArr)
+            document.querySelectorAll('span.favoriteCount').forEach(el => el.innerHTML = favArr.length);
+            log(favArr)
         })
     })
 }
@@ -41,121 +55,59 @@ if (document.querySelector(".button.button-all[data-product-id]")) {
         if (Cookies.get('market_favorites')) {
             favArr = JSON.parse(Cookies.get('market_favorites')).favorites
         }
-
         const item_index = favArr.indexOf(product_id)
         if (item_index === -1) {
             favArr.unshift(product_id)
+            fetch('/favorite', {
+                method: 'PUT',
+                body: JSON.stringify({product_id}),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-type': 'application/json'
+                }
+            })
             e.target.querySelector('img').src = "/assets/images/svg/like2.svg"
         } else {
             favArr.splice(item_index, 1)
+            fetch('/favorite', {
+                method: 'DELETE',
+                body: JSON.stringify({product_id}),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-type': 'application/json'
+                }
+            })
             e.target.querySelector('img').src = "/assets/images/svg/like.svg"
         }
-
         if (favArr.length === 0) {
             Cookies.remove('market_favorites')
         } else {
             Cookies.set('market_favorites', {"favorites": favArr}, {expires: 7})
         }
-
-        console.log(favArr)
+        document.querySelectorAll('span.favoriteCount').forEach(el => el.innerHTML = favArr.length);
+        log(favArr)
     })
 }
-
 // Добавление в корзину из каталога
-if (document.querySelectorAll('.catalog__item .catalog__item-buy')) {
-    document.querySelectorAll('.catalog__item .catalog__item-buy').forEach(t => {
+if (document.querySelectorAll('div.catalog__item-info')) {
+    document.querySelectorAll('div.catalog__item-info a.catalog__item-buy').forEach(t => {
         t.addEventListener('click', e => {
-
             const product_id = e.target.closest('[data-product-id]').dataset.productId
             let basketArr = []
             if (Cookies.get('market_basket')) {
                 basketArr = JSON.parse(Cookies.get('market_basket')).basket
             }
-
-            const found = basketArr.find((el) => {
-                if (el.slug === product_id) {
-                    el.quantity++
-                    return true
-                }
-                return false
-            })
-            if (typeof found === 'undefined') {
-                basketArr.push({'slug': product_id, 'quantity': 1})
-            }
-
-            if (basketArr.length === 0) {
-                Cookies.remove('market_basket')
-            } else {
-                Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-            }
-            console.log(basketArr)
+            basketArr.push({'id': product_id, 'quantity': 1})
+            Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
+            e.target.style.display = 'none'
+            e.target.parentElement.querySelector('div.catalog__item-amount').style.display = ''
+            e.target.parentElement.querySelector('input').value = '1';
+            log(basketArr)
         })
     })
 }
-
-// // Замена кнопки "купить" на блок количества товара
-// if (document.querySelectorAll('.catalog__item .catalog__item-info')) {
-//     // Увеличение количества товара в каталоге
-//     document.querySelectorAll('.catalog__item .catalog__item-info .catalog__item-amount .up').forEach(t => {
-//         t.addEventListener('click', e => {
-//             e.preventDefault()
-//             const product_id = e.target.closest('[data-product-id]').dataset.productId
-//             let basketArr = []
-//             if (Cookies.get('market_basket')) {
-//                 basketArr = JSON.parse(Cookies.get('market_basket')).basket
-//             }
-//             basketArr.map(el => {
-//                 if (el.id === product_id) {
-//                     const input = e.target.parentElement.querySelector('input')
-//                     if (input) {
-//                         const max = input.max
-//                         let value = input.value
-//                         value = value++ < max ? value++ : max
-//                         input.value = value
-//                         el.quantity = value
-//                     }
-//                 }
-//             })
-//
-//             if (basketArr.length === 0) {
-//                 Cookies.remove('market_basket')
-//             } else {
-//                 Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-//             }
-//             console.log(basketArr)
-//
-//         })
-//     })
-//     // Уменьшение количества товара в каталоге
-//     document.querySelectorAll('.catalog__item .catalog__item-info .catalog__item-amount .down').forEach(t => {
-//         t.addEventListener('click', e => {
-//             const product_id = e.target.closest('[data-product-id]').dataset.productId
-//             let basketArr = []
-//             if (Cookies.get('market_basket')) {
-//                 basketArr = JSON.parse(Cookies.get('market_basket')).basket
-//             }
-//             basketArr.map(el => {
-//                 if (el.id === product_id) {
-//                     const input = e.target.parentElement.querySelector('input')
-//                     if (input) {
-//                         let value = input.value
-//                         value = value-- <= 1 ? 1 : value
-//                         input.value = value
-//                         el.quantity = value
-//                     }
-//                 }
-//             })
-//
-//             if (basketArr.length === 0) {
-//                 Cookies.remove('market_basket')
-//             } else {
-//                 Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-//             }
-//             console.log(basketArr)
-//
-//         })
-//     })
-// }
 
 // Добавление в корзину из карточки товара
 if (document.querySelector(".button.button-primary[data-product-id]")) {
@@ -182,12 +134,11 @@ if (document.querySelector(".button.button-primary[data-product-id]")) {
             Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
         }
 
-        console.log(basketArr)
+        log(basketArr)
     })
 }
 
-// Изменение товара в корзине
-if (document.querySelectorAll('.cart__list-item')) {
+/*if (document.querySelectorAll('.cart__list-item')) {
     // Удаление товара из корзины
     document.querySelectorAll('.cart__list-item .cart__list-delete').forEach(t => {
         t.addEventListener('click', e => {
@@ -198,95 +149,61 @@ if (document.querySelectorAll('.cart__list-item')) {
             }
             basketArr.map(el => {
                 if (el.id === product_id) {
-                    basketArr.splice(basketArr.indexOf(el), 1)
+                    basketArr = basketArr.splice(basketArr.indexOf(el), 1)
                 }
             })
 
-            if (basketArr.length === 0) {
+            if (basketArr.length === 0) {product_id = e.target.closest('[data-product-id]').dataset.productId
                 Cookies.remove('market_basket')
             } else {
                 Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
             }
 
-            console.log(basketArr)
+            log(basketArr)
 
         })
     })
-    // Увеличение количества товара в корзине
-    document.querySelectorAll('.cart__list-item .catalog__item-amount .up').forEach(t => {
-        t.addEventListener('click', e => {
-            e.preventDefault()
-            const product_id = e.target.closest('[data-product-id]').dataset.productId
-            let basketArr = []
-            if (Cookies.get('market_basket')) {
-                basketArr = JSON.parse(Cookies.get('market_basket')).basket
-            }
-            basketArr.map(el => {
-                if (el.id === product_id) {
-                    const input = e.target.parentElement.querySelector('input')
-                    if (input) {
-                        const max = input.max
-                        let value = input.value
-                        value = value++ < max ? value++ : max
-                        input.value = value
-                        el.quantity = value
-                    }
-                }
-            })
+}*/
 
-            if (basketArr.length === 0) {
-                Cookies.remove('market_basket')
-            } else {
-                Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-            }
-            console.log(basketArr)
-
-        })
-    })
-    // Уменьшение количества товара в корзине
-    document.querySelectorAll('.cart__list-item .catalog__item-amount .down').forEach(t => {
-        t.addEventListener('click', e => {
-            const product_id = e.target.closest('[data-product-id]').dataset.productId
-            let basketArr = []
-            if (Cookies.get('market_basket')) {
-                basketArr = JSON.parse(Cookies.get('market_basket')).basket
-            }
-            basketArr.map(el => {
-                if (el.id === product_id) {
-                    const input = e.target.parentElement.querySelector('input')
-                    if (input) {
-                        let value = input.value
-                        value = value-- <= 1 ? 1 : value
-                        input.value = value
-                        el.quantity = value
-                    }
-                }
-            })
-
-            if (basketArr.length === 0) {
-                Cookies.remove('market_basket')
-            } else {
-                Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-            }
-            console.log(basketArr)
-
-        })
+// Изменение товара
+// Увеличение количества товара в каталоге
+const up = (e) => {
+    const id = e.currentTarget.closest('[data-product-id]').dataset.productId
+    let basketArr = []
+    if (Cookies.get('market_basket')) {
+        basketArr = JSON.parse(Cookies.get('market_basket')).basket
+    }
+    basketArr.forEach(el => {
+        if (el.id === id) {
+            const input = document.querySelector(`[data-product-id="${id}"] input.count`)
+            input.value = input.value++ < input.max ? input.value++ : input.max
+            el.quantity = input.value
+            Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
+        }
     })
 }
+const down = (e) => {
+    const id = e.currentTarget.closest('[data-product-id]').dataset.productId
+    let basketArr = []
+    if (Cookies.get('market_basket')) {
+        basketArr = JSON.parse(Cookies.get('market_basket')).basket
+    }
+    basketArr.forEach((el, key) => {
+        if (el.id === id) {
+            const input = document.querySelector(`[data-product-id="${id}"] input.count`)
+            if (--input.value === 0) {
+                basketArr.splice(key, 1)
+                input.closest('div.catalog__item-amount').style.display = 'none'
+                input.closest('div.catalog__item-amount').nextElementSibling.style.display = ''
+            } else {
+                el.quantity = input.value
+            }
 
-
-/*
-<div className="catalog__item-amount">
-    <span className="catalog__item-buy" data-product-id="{{ $product->id }}">купить
-        <img src="{{asset('/assets/images/svg/cart.svg')}}" alt="">
-    </span>
-</div>
-<div className="catalog__item-amount">
-    <input type="text" min="1" max="20" value="{{$product->quantityInBasket}}">
-    <span className="up">
-        <img src="{{asset('/assets/images/svg/plus.svg')}}" alt="">
-    </span>
-    <span className="down">
-        <img src="{{asset('/assets/images/svg/minus.svg')}}" alt="">
-    </span>
-</div>*/
+            if (basketArr.length === 0) {
+                Cookies.remove('market_basket')
+            } else {
+                Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
+            }
+        }
+    })
+}

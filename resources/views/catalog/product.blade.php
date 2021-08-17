@@ -62,16 +62,16 @@
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
                     <div class="card-product__description-btns">
-                        <a class="button button-primary" data-product-id="{{ $product['slug']  }}">купить
+                        <a class="button button-primary" data-product-id="{{ $product['_id']  }}">купить
                             <img src="{{ asset('assets/images/svg/cart.svg') }}" alt="">
                         </a>
-                        @if(empty(in_array($product['slug'], $favorites)))
+                        @if(empty(in_array($product['_id'], $favorites)))
                             <a class="button button-all"
-                               data-product-id="{{ $product['slug']  }}">в избранное<img
+                               data-product-id="{{ $product['_id']  }}">в избранное<img
                                     src="{{ asset('assets/images/svg/like.svg') }}" alt=""></a>
                         @else
                             <a class="button button-all"
-                               data-product-id="{{ $product['slug']  }}">в избранное<img
+                               data-product-id="{{ $product['_id']  }}">в избранное<img
                                     src="{{ asset('assets/images/svg/like2.svg') }}" alt=""></a>
                         @endif
                     </div>

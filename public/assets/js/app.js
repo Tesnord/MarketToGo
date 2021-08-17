@@ -1,7 +1,7 @@
 'use strict';
 
 $(function () {
-    $('.down').click(function () {
+/*    $('.down').click(function () {
         var $input = $(this).parent().find('input');
         var count = parseInt($input.val()) - 1;
         count = count < 1 ? 1 : count;
@@ -14,7 +14,7 @@ $(function () {
         $input.val(parseInt($input.val()) + 1);
         $input.change();
         return false;
-    });
+    });*/
 
     $(".js-card-product").click(function (e) {
         $(this).parent().addClass('open').children('.card-product__product-row').removeClass('d-none');

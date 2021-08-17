@@ -107,7 +107,7 @@ Breadcrumbs::for('home', function ($trail) {
     // Home > Favorite
     Breadcrumbs::for('favorite', function ($trail) {
         $trail->parent('home');
-        $trail->push('Избранное', route('favorite'));
+        $trail->push('Избранное', route('favorite.show'));
     });
 
     // Баллы
