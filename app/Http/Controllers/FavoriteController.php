@@ -25,21 +25,13 @@ class FavoriteController extends Controller
     {
         if (!$request->session()->has('token')) return;
         $product_id = $request->post('product_id');
-        $favorites = $this->requestHelper->getUserRequest($request, 'favorites', [$product_id], 'put');
-        // Сохранение в файл...УДАЛИТЬ!!!
-        $file = fopen('f_put.json', 'w+');
-        fwrite($file, $favorites);
-        fclose($file);
+        $this->requestHelper->getUserRequest($request, 'favorites', [$product_id], 'put');
     }
 
     public function delete(Request $request)
     {
         if (!$request->session()->has('token')) return;
         $product_id = $request->post('product_id');
-        $favorites = $this->requestHelper->getUserRequest($request, 'favorites/'.$product_id, [], 'delete');
-        // Сохранение в файл...УДАЛИТЬ!!!
-        $file = fopen('f_put.json', 'w+');
-        fwrite($file, $favorites);
-        fclose($file);
+        $this->requestHelper->getUserRequest($request, 'favorites/'.$product_id, [], 'delete');
     }
 }

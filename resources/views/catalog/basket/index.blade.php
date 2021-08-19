@@ -55,7 +55,8 @@
                     </div>
                     <div class="cart__list-item">
                         <div class="cart__list-descr">
-                            <div class="cart__list-img" style="background-image: url('{{ asset('assets/images/card-img2.jpg') }}')"></div><a class="cart__list-title" href="#">Манго Тайское Премиум (1 шт 300 гр)</a>
+                            <div class="cart__list-img" style="background-image: url('{{ asset('assets/images/card-img2.jpg') }}')"></div>
+                            <a class="cart__list-title" href="#">Манго Тайское Премиум (1 шт 300 гр)</a>
                             <div class="cart__list-article">Артикул: 87346773</div>
                         </div>
                         <div class="cart__list-numb cart__list-numb-tw">

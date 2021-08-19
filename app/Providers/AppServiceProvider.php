@@ -51,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
         }
         $favorite = $GLOBALS["favorites"];
         $basket = $GLOBALS["basket"];
+
         $productId = array_column($basket, 'id');
         $productBasket = function ($id) {
             foreach ($GLOBALS['basket'] as $item) {

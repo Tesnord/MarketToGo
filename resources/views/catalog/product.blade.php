@@ -7,7 +7,7 @@
             {{ Diglactic\Breadcrumbs\Breadcrumbs::render('product', $slug) }}
         </div>
     </div>
-    <div class="card-product">
+    <div class="card-product" data-product-id="{{$product['_id']}}">
         <div class="container">
             <div class="card-product__inner">
                 <div class="card-product__top-mob">
@@ -62,8 +62,17 @@
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
                     <div class="card-product__description-btns">
-                        <a class="button button-primary" data-product-id="{{ $product['_id']  }}">купить
-                            <img src="{{ asset('assets/images/svg/cart.svg') }}" alt="">
+                        <div class="catalog__item-amount" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
+                            <input class="count" type="text" min="1" max="{{$product['count']}}" value="{{$productBasket($product['_id'])}}">
+                            <span class="up" onclick="up(event)">
+                                <img src="{{ asset('assets/images/svg/plus.svg')}}" alt="">
+                            </span>
+                            <span class="down" onclick="down(event)">
+                                <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
+                            </span>
+                        </div>
+                        <a class="button button-primary" data-product-id="{{ $product['_id']  }}" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
+                            <img src="{{ asset('assets/images/svg/cart.svg')}}" alt="">
                         </a>
                         @if(empty(in_array($product['_id'], $favorites)))
                             <a class="button button-all"

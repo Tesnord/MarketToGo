@@ -127,6 +127,7 @@ class RequestHelper {
             case 401:
                 // refresh
                 $response = Http::post($this->auth.'refresh', ['refreshToken' => $tokens['refreshToken']]);
+
                 if ($response->status() === 400) abort(400);
                 $request->session()->put('token', $response->json()['data']);
                 return $this->getUserRequest($request, $handler, $data, $method);
