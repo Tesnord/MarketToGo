@@ -11,6 +11,7 @@ class FavoriteController extends Controller
     {
         if ($request->session()->has('token')) {
             $products = $this->requestHelper->getUserRequest($request, 'favorites');
+            // dd($products);
             return view('catalog.favorite', [
                 'products' => $products['data']
             ]);

@@ -8,7 +8,9 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        dd($request->session()->all());
+        // $tokens = $request->session()->get('token');
+        // dd($tokens['refreshToken']);
+        // dd($request->session()->all());
         return view('login.user.index');
     }
 

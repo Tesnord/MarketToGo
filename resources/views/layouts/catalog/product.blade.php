@@ -51,7 +51,7 @@
                             <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
                         </span>
                     </div>
-                    <a class="catalog__item-buy" data-product-id="{{ $product['_id']  }}" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
+                    <a class="catalog__item-buy" data-product-id="{{$product['_id']}}" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
                         <img src="{{ asset('assets/images/svg/cart.svg')}}" alt="">
                     </a>
                 </div>

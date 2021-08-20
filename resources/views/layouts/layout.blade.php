@@ -75,7 +75,7 @@
 {{--                @endauth--}}
                 <a class="header__menu-icon-item" href="{{ route('favorite.show') }}">
                     <img src="{{asset('assets/images/svg/icon-menu4.svg')}}" alt="">
-                    <span class="header__menu-icon-notif favoriteCount">{{ count($favorites) }}</span>
+                    <span class="header__menu-icon-notif favoriteCount {{ empty($favorites) ? 'd-none' : '' }}">{{ count($favorites) }}</span>
                     <span class="header__menu-icon-tit">избранное</span>
                 </a>
             </div>
@@ -138,30 +138,30 @@
                         </form>
                     </div>
                     <div class="header__bottom-info">
-{{--                        @auth()--}}
+                        @if(session()->has('token'))
                             <a class="header__bottom-info-item" href="{{ route('scores') }}">
                                 <img src="{{asset('assets/images/svg/icon-header1.svg')}}" alt=""> баллы
     {{--                            <span class="header__bottom-info-notif">4</span>--}}
                             </a>
-{{--                        @endauth--}}
+                        @endif
                         <a class="header__bottom-info-item" href="{{ route('favorite.show') }}">
                             <img src="{{asset('assets/images/svg/icon-header2.svg')}}" alt=""> избранное
-                            <span class="header__bottom-info-notif favoriteCount">{{ count($favorites) }}</span>
+                            <span class="header__bottom-info-notif favoriteCount {{ empty($favorites) ? 'd-none' : '' }}">{{ count($favorites) }}</span>
                         </a>
                         <a class="header__bottom-info-item header__bottom-info-item-cart" href="{{ route('basket.index') }}">
                             <img src="{{asset('assets/images/svg/icon-header3.svg')}}" alt=""> корзина
                             <span class="header__bottom-info-notif">14</span>
                         </a>
-{{--                        @guest()--}}
-                            <a class="header__bottom-info-item header__bottom-info-item-enter" href="{{ route('login.create') }}">
-                                <img src="{{asset('assets/images/svg/icon-header4.svg')}}" alt=""> Войти
-                            </a>
-{{--                        @endguest--}}
-{{--                        @auth()--}}
+
+                        @if(session()->has('token'))
                             <a class="header__bottom-info-item header__bottom-info-item-enter" href="{{ route('personal.index') }}">
                                 <img src="{{asset('assets/images/svg/icon-header4.svg')}}" alt=""> Профиль
                             </a>
-{{--                        @endauth--}}
+                        @else
+                            <a class="header__bottom-info-item header__bottom-info-item-enter" href="{{ route('login.create') }}">
+                                <img src="{{asset('assets/images/svg/icon-header4.svg')}}" alt=""> Войти
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

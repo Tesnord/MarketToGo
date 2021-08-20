@@ -39,8 +39,10 @@ if (document.querySelectorAll('.catalog__item .catalog__item-fav')) {
             })
             if (favArr.length === 0) {
                 Cookies.remove('market_favorites')
+                document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.add('d-none'));
             } else {
                 Cookies.set('market_favorites', {"favorites": favArr}, {expires: 7})
+                document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.remove('d-none'));
             }
             document.querySelectorAll('span.favoriteCount').forEach(el => el.innerHTML = favArr.length);
             log(favArr)
@@ -83,8 +85,10 @@ if (document.querySelector(".button.button-all[data-product-id]")) {
         }
         if (favArr.length === 0) {
             Cookies.remove('market_favorites')
+            document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.add('d-none'));
         } else {
             Cookies.set('market_favorites', {"favorites": favArr}, {expires: 7})
+            document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.remove('d-none'));
         }
         document.querySelectorAll('span.favoriteCount').forEach(el => el.innerHTML = favArr.length);
         log(favArr)

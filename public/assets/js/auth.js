@@ -1,3 +1,4 @@
+// Авторизация
 if (document.querySelector("div.registration")) {
     document.querySelector("p.codelink").addEventListener('click', e => {
         document.querySelector('div.phone').style.display = '';
@@ -6,6 +7,7 @@ if (document.querySelector("div.registration")) {
         document.querySelector('p.codetime').style.display = '';
         document.querySelector('input.code').value = '';
     })
+    // Отправка номера (валидация номера)
     document.querySelector("button.phone").addEventListener('click', e => {
         let phone = $('#tel').val();
         let regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
@@ -47,12 +49,13 @@ if (document.querySelector("div.registration")) {
                     }
                 } else {
                     response.json().then(error => {
-                        console.log(error.meta.message)
+                        log(error.meta.message)
                     })
                 }
             });
         }
     })
+    // Отправка кода
     document.querySelector('button.code').addEventListener('click', e => {
         let phone = $('span.phone').html();
         let code = $('#code').val();
@@ -75,11 +78,46 @@ if (document.querySelector("div.registration")) {
                         codeInput.style.border = '';
                         codeInput.value = '';
                     })
-                    console.log(error)
+                    log(error)
                 })
             }
         });
     })
 }
+// logout
+if (document.querySelector('div.lk__menu')) {
+    (document.querySelector('a.logout')).addEventListener('click', e => {
+        fetch("/logout", {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                if (json.status === 'ok') {
+                    location.href = json.uri;
+                    log('ok')
+                } else {
+                    log('error')
+                }
+            })
+    })
+}
 
 
+/*
+{
+    if (response.ok) {
+        // window.location.href = '/login';
+        log('ok')
+    } else {
+        response.text().then(error => {
+            // window.location.href = '/personal';
+            log(error.meta.message)
+        })
+    }
+
+}*/

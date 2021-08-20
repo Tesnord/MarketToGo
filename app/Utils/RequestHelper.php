@@ -22,15 +22,6 @@ class RequestHelper {
     {
 
     }
-    public function inBasket($id)
-    {
-        foreach ($GLOBALS['basket'] as $item) {
-            if ($item['id'] === $id) {
-                return $item['quantity'];
-            }
-        }
-        return false;
-    }
     // Brands
     public function getBrandsIndex(): Collection
     {
@@ -63,6 +54,12 @@ class RequestHelper {
     public function getLogin($data): Response
     {
         return Http::post($this->auth . 'login', $data);
+    }
+
+    // Login
+    public function logout($data): Response
+    {
+        return Http::post($this->auth . 'logout', $data);
     }
 
     // Product

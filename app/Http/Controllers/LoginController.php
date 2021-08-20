@@ -27,10 +27,6 @@ class LoginController extends Controller
                 fclose($file);
         } else {
             $login = $this->requestHelper->getLogin(['phone' => $phone, 'code' => $code]);
-                // Сохранение в файл...УДАЛИТЬ!!!
-                $file = fopen('token_data.json','w+');
-                fwrite($file, $login);
-                fclose($file);
             $result = $login->json();
             if ($result['meta']['code'] === 400) {
                 return response($result['meta']['message'], 400);
@@ -38,11 +34,21 @@ class LoginController extends Controller
             $request->session()->put('token', $result['data']);
             $favorites = $this->requestHelper->getUserRequest($request, 'favorites', $GLOBALS["favorites"], 'put');
             setcookie('market_favorites', json_encode(['favorites' => $favorites['data']]));
-                // Сохранение в файл...УДАЛИТЬ!!!
-                $file = fopen('f_data.json','w+');
-                fwrite($file, $favorites);
-                fclose($file);
         }
 
+    }
+
+    public function logout()
+    {
+        $tokens = session()->get('token');
+        $result = $this->requestHelper->logout(['refreshToken' => $tokens['refreshToken']]);
+        session()->remove('token');
+        // TODO запись в файл УДАЛИТЬ!!!
+        if ($result['meta']['code'] !== 200) {
+            $file = fopen('logs_logout_errors.json','w+');
+            fwrite($file, $result);
+            fclose($file);
+        }
+        return ['status' => 'ok', 'uri' => '/'];
     }
 }
