@@ -38,7 +38,7 @@ Breadcrumbs::for('home', function ($trail) {
     // Home > Basket
     Breadcrumbs::for('basket', function ($trail) {
         $trail->parent('home');
-        $trail->push('Корзина', route('basket.index'));
+        $trail->push('Корзина', route('basket.show'));
     });
     // Home > Checkout
     Breadcrumbs::for('checkout', function ($trail) {

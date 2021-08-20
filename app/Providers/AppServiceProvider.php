@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
                 $GLOBALS["favorites"] = $market_favorites["favorites"];
             }
         } catch (\Exception $e) {
-            $GLOBALS["favorites"] = array();
+            $GLOBALS["favorites"] = [];
         }
         try {
             // Basket
@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
                 $GLOBALS["basket"] = $market_basket["basket"];
             }
         } catch (\Exception $e) {
-            $GLOBALS["basket"] = array();
+            $GLOBALS["basket"] = [];
         }
         $favorite = $GLOBALS["favorites"];
         $basket = $GLOBALS["basket"];
@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
         $productBasket = function ($id) {
             foreach ($GLOBALS['basket'] as $item) {
                 if ($item['id'] === $id) {
-                    return $item['quantity'];
+                    return $item['count'];
                 }
             }
             return false;

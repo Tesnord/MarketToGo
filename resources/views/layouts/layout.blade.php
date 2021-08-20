@@ -148,7 +148,7 @@
                             <img src="{{asset('assets/images/svg/icon-header2.svg')}}" alt=""> избранное
                             <span class="header__bottom-info-notif favoriteCount {{ empty($favorites) ? 'd-none' : '' }}">{{ count($favorites) }}</span>
                         </a>
-                        <a class="header__bottom-info-item header__bottom-info-item-cart" href="{{ route('basket.index') }}">
+                        <a class="header__bottom-info-item header__bottom-info-item-cart" href="{{ route('basket.show') }}">
                             <img src="{{asset('assets/images/svg/icon-header3.svg')}}" alt=""> корзина
                             <span class="header__bottom-info-notif">14</span>
                         </a>

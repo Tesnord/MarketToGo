@@ -86,7 +86,7 @@ Route::prefix('personal')->group(function () {
 });
 // Корзина
 Route::prefix('basket')->group(function () {
-    Route::get('/', [BasketController::class, 'index'])->name('basket.index');
+    Route::get('/', [BasketController::class, 'show'])->name('basket.show');
     // Оформление заказа
     Route::get('/checkout', [BasketController::class, 'checkout'])->name('basket.checkout');
 });

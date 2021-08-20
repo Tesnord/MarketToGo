@@ -27,9 +27,13 @@ if (document.querySelector("div.registration")) {
                     'X-Requested-With': 'XMLHttpRequest',
                     'Content-type': 'application/json'
                 }
-            }).then(response => {
-                if (response.ok) {
+            })
+                .then(response =>  response.json())
+                .then(json => {
+                    if (json.status === 'ok') {
                     $('span.phone').text(phone);
+                    $('span.newCode').text(json.code.debug);
+
                     document.querySelector('div.phone').style.display = 'none';
                     document.querySelector('div.code').style.display = '';
                     let timer;
@@ -48,11 +52,9 @@ if (document.querySelector("div.registration")) {
                         }
                     }
                 } else {
-                    response.json().then(error => {
-                        log(error.meta.message)
-                    })
-                }
-            });
+
+                    }
+                })
         }
     })
     // Отправка кода

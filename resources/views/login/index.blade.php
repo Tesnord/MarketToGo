@@ -21,7 +21,7 @@
                                 </button>
                             </div>
                             <div class="check-in__tx code" style="display: none">
-                                <p>Мы отправили код подтверждения на номер <span class="phone"></span></p>
+                                <p>Мы отправили код <span class="newCode"></span> подтверждения на номер <span class="phone"></span></p>
                                 <div class="order__input-cell">
                                     <input class="form__input-effect code" type="text" id="code">
                                     <label for="tl">Код из SMS</label>
