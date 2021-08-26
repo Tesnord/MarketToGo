@@ -26,19 +26,16 @@ class BasketController extends Controller
     public function put(Request $request)
     {
         if (!$request->session()->has('token')) return ['status' => 'ok'];
-        $product_id = $request->post('product_id');
-        $this->requestHelper->getUserRequest($request, 'favorites', [$product_id], 'put');
+        $product_id = $request->post('id');
+        $this->requestHelper->getUserRequest($request, 'basket', [$product_id], 'put');
         return ['status' => 'ok'];
     }
 
     public function delete(Request $request)
     {
         if (!$request->session()->has('token')) return ['status' => 'ok'];
-        $product_id = $request->post('product_id');
-        $result = $this->requestHelper->getUserRequest($request, 'favorites/'.$product_id, [], 'delete');
-        $file = fopen('product_data.json','w+');
-        fwrite($file, $result);
-        fclose($file);
+        $product_id = $request->post('id');
+        $this->requestHelper->getUserRequest($request, 'basket/'.$product_id, [], 'delete');
         return ['status' => 'ok'];
     }
 
