@@ -1,273 +1,326 @@
 'use strict'
-// Добавление в избранное из каталога
+/**
+ * Шаблон fetch запроса
+ */
+const myFetch = (url, method, data) => fetch(url, {
+    method,
+    body: JSON.stringify(data),
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-type': 'application/json'
+    }
+})
+/**
+ * Шаблоны для Favorite
+ */
+const getFavorites = () => {
+    if (Cookies.get('market_favorites')) {
+        return JSON.parse(Cookies.get('market_favorites')).favorites
+    }
+    return []
+}
+const setFavorites = favArray => {
+    if (favArray.length === 0) {
+        Cookies.remove('market_favorites')
+        document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.add('d-none'));
+    } else {
+        Cookies.set('market_favorites', {"favorites": favArray}, {expires: 7})
+        document.querySelectorAll('span.favoriteCount').forEach(el => el.innerHTML = favArray.length.toString());
+        document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.remove('d-none'));
+    }
+}
+/**
+ * Добавление в избранное из каталога
+ */
 if (document.querySelectorAll('.catalog__item .catalog__item-fav')) {
     document.querySelectorAll('.catalog__item .catalog__item-fav').forEach(t => {
         t.addEventListener('click', e => {
-            const product_id = e.currentTarget.closest('[data-product-id]').dataset.productId
-            let favArr = []
-            if (Cookies.get('market_favorites')) {
-                favArr = JSON.parse(Cookies.get('market_favorites')).favorites
-            }
-            const item_index = favArr.indexOf(product_id)
+            const productSelect = e.currentTarget.closest('[data-product-id]')
+            const product_id = productSelect.dataset.productId
+            const favoriteArr = getFavorites()
+            const item_index = favoriteArr.indexOf(product_id)
             if (item_index === -1) {
-                favArr.unshift(product_id)
-                fetch('/favorite', {
-                    method: 'PUT',
-                    body: JSON.stringify({product_id}),
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-type': 'application/json'
-                    }
-                })
-                e.currentTarget.closest('[data-product-id]').classList.toggle('catalog__item-favorites')
+                myFetch('/favorite', 'PUT', {product_id})
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json.status === 'ok') {
+                            favoriteArr.push(product_id)
+                            productSelect.classList.toggle('catalog__item-favorites')
+                            setFavorites(favoriteArr)
+                        } else {
+                            log('errors')
+                        }
+                    })
+
             } else {
-                favArr.splice(item_index, 1)
-                fetch('/favorite', {
-                    method: 'DELETE',
-                    body: JSON.stringify({product_id}),
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-type': 'application/json'
-                    }
-                })
-                e.currentTarget.closest('[data-product-id]').classList.toggle('catalog__item-favorites')
+                myFetch('/favorite', 'DELETE', {product_id})
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json.status === 'ok') {
+                            favoriteArr.splice(item_index, 1)
+                            productSelect.classList.toggle('catalog__item-favorites')
+                            setFavorites(favoriteArr)
+                        } else {
+                            log('errors')
+                        }
+                    })
             }
-            document.querySelectorAll('[data-role="favorite_counter"]').forEach(el => {
-                el.innerText = favArr.length.toString()
-            })
-            if (favArr.length === 0) {
-                Cookies.remove('market_favorites')
-                document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.add('d-none'));
-            } else {
-                Cookies.set('market_favorites', {"favorites": favArr}, {expires: 7})
-                document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.remove('d-none'));
-            }
-            document.querySelectorAll('span.favoriteCount').forEach(el => el.innerHTML = favArr.length);
-            log(favArr)
         })
     })
 }
-// Добавление в избранное из карточки товара
-if (document.querySelector(".button.button-all[data-product-id]")) {
-    document.querySelector(".button.button-all[data-product-id]").addEventListener('click', e => {
-        const product_id = e.currentTarget.dataset.productId
-        let favArr = []
-        if (Cookies.get('market_favorites')) {
-            favArr = JSON.parse(Cookies.get('market_favorites')).favorites
-        }
-        const item_index = favArr.indexOf(product_id)
+/**
+ * Добавление в избранное из карточки товара
+ */
+if (document.querySelector(".card-product__inner")) {
+    document.querySelector(".button.button-all").addEventListener('click', e => {
+        const productSelect = e.currentTarget.closest('[data-product-id]')
+        const product_id = productSelect.dataset.productId
+        const favoriteArr = getFavorites()
+        let item_index = favoriteArr.indexOf(product_id)
         if (item_index === -1) {
-            favArr.unshift(product_id)
-            fetch('/favorite', {
-                method: 'PUT',
-                body: JSON.stringify({product_id}),
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-type': 'application/json'
-                }
-            })
-            e.currentTarget.querySelector('img').src = "/assets/images/svg/like2.svg"
+            myFetch('/favorite', 'PUT', {product_id})
+                .then(response => response.json())
+                .then(json => {
+                    if (json.status === 'ok') {
+                        favoriteArr.unshift(product_id)
+                        productSelect.querySelector('img.like').src = "/assets/images/svg/like2.svg"
+                        setFavorites(favoriteArr)
+                    } else {
+                        log('errors')
+                    }
+                })
+
         } else {
-            favArr.splice(item_index, 1)
-            fetch('/favorite', {
-                method: 'DELETE',
-                body: JSON.stringify({product_id}),
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-type': 'application/json'
-                }
-            })
-            e.currentTarget.querySelector('img').src = "/assets/images/svg/like.svg"
+            myFetch('/favorite', 'DELETE', {product_id})
+                .then(response => response.json())
+                .then(json => {
+                    if (json.status === 'ok') {
+                        favoriteArr.splice(item_index, 1)
+                        productSelect.querySelector('img.like').src = "/assets/images/svg/like.svg"
+                        setFavorites(favoriteArr)
+                    } else {
+                        log('errors')
+                    }
+                })
         }
-        if (favArr.length === 0) {
-            Cookies.remove('market_favorites')
-            document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.add('d-none'));
-        } else {
-            Cookies.set('market_favorites', {"favorites": favArr}, {expires: 7})
-            document.querySelectorAll('span.favoriteCount').forEach(el => el.classList.remove('d-none'));
-        }
-        document.querySelectorAll('span.favoriteCount').forEach(el => el.innerHTML = favArr.length);
-        log(favArr)
     })
 }
-// Добавление в корзину из каталога
+
+
+/**
+ * Шаблоны для Basket
+ */
+const getBasket = () => {
+    if (Cookies.get('market_basket')) {
+        return JSON.parse(Cookies.get('market_basket')).basket
+    }
+    return []
+}
+
+const setBasket = basketArray => {
+    if (basketArray.length === 0) {
+        Cookies.remove('market_basket')
+        document.querySelector('span.basketCount').classList.add('d-none');
+    } else {
+        Cookies.set('market_basket', {"basket": basketArray}, {expires: 7})
+        document.querySelector('span.basketCount').innerHTML = basketArray.length.toString();
+        document.querySelector('span.basketCount').classList.remove('d-none');
+    }
+}
+const putEvent = el => {
+    el.addEventListener('click', e => {
+        const basketArr = getBasket()
+        const product = e.target.closest('[data-product-id]')
+        const input = product.querySelector('input.count')
+        const product_id = product.dataset.productId
+        myFetch('/basket', 'PUT', {id: product_id, count: 1})
+            .then(response => response.json())
+            .then(json => {
+                if (json.status === 'ok') {
+                    const found = basketArr.find((el) => {
+                        if (el.id === product_id) {
+                            el.count++
+                            input.value = el.count;
+                            return true
+                        }
+                        return false
+                    })
+                    if (typeof found === 'undefined') {
+                        basketArr.push({'id': product_id, 'count': 1})
+                        input.value = '1';
+
+                    }
+                    product.querySelector('#buy').style.display = 'none'
+                    product.querySelector('#count').style.display = ''
+                    setBasket(basketArr)
+                } else {
+                    log('errors')
+                }
+            })
+    })
+}
+/**
+ * Изменение товара
+ * Увеличение количества товара
+ */
+const up = e => {
+    const basketArr = getBasket()
+    const product = e.currentTarget.closest('[data-product-id]')
+    const product_id = product.dataset.productId
+    const input = product.querySelector('input.count')
+    basketArr.forEach(el => {
+        if (el.id === product_id) {
+            myFetch('/basket', 'PUT', {id: product_id})
+                .then(response => response.json())
+                .then(json => {
+                    if (json.status === 'ok') {
+                        input.value = input.value++ < input.max ? input.value++ : input.max
+                        el.count = input.value
+                        log(basketArr)
+                        setBasket(basketArr)
+                    } else {
+                        log('errors')
+                    }
+                })
+        }
+    })
+}
+/**
+ * Уменьшение количества товара
+ * удаление товара если 0
+ */
+const down = e => {
+    const basketArr = getBasket()
+    const product = e.currentTarget.closest('[data-product-id]')
+    const product_id = product.dataset.productId
+    const input = product.querySelector('input.count')
+    basketArr.forEach((el, key) => {
+        if (el.id === product_id) {
+            myFetch('/basket', 'DELETE', {id: product_id})
+                .then(response => response.json())
+                .then(json => {
+                    if (json.status === 'ok') {
+                        if (--input.value === 0) {
+                            basketArr.splice(key, 1)
+                            product.querySelector('#buy').style.display = ''
+                            product.querySelector('#count').style.display = 'none'
+                        } else {
+                            el.count = input.value
+                        }
+                        log(basketArr)
+                        setBasket(basketArr)
+                    } else {
+                        log('errors')
+                    }
+                })
+        }
+    })
+}
+
+/**
+ * Добавление в корзину из каталога
+ */
 if (document.querySelectorAll('div.catalog__item-info')) {
     document.querySelectorAll('div.catalog__item-info a.catalog__item-buy').forEach(t => {
-        t.addEventListener('click', e => {
-            const product_id = e.currentTarget.closest('[data-product-id]').dataset.productId
-            let basketArr = []
-            if (Cookies.get('market_basket')) {
-                basketArr = JSON.parse(Cookies.get('market_basket')).basket
-            }
-            const found = basketArr.find((el) => {
-                if (el.id === product_id) {
-                    el.count++
-                    e.currentTarget.parentElement.querySelector('input').value = el.count;
-                    return true
-                }
-                return false
-            })
-            if (typeof found === 'undefined') {
-                basketArr.push({'id': product_id, 'count': 1})
-                e.currentTarget.parentElement.querySelector('input').value = '1';
-                fetch('/basket', {
-                    method: 'PUT',
-                    body: JSON.stringify({id: product_id, count: 1}),
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-type': 'application/json'
-                    }
-                })
-            }
-            Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-            e.currentTarget.style.display = 'none'
-            e.currentTarget.parentElement.querySelector('div.catalog__item-amount').style.display = ''
-
-            log(basketArr)
-        })
-    })
-}
-// Добавление в корзину из карточки товара
-if (document.querySelector(".button.button-primary[data-product-id]")) {
-    document.querySelector(".button.button-primary[data-product-id]").addEventListener('click', e => {
-        const product_id = e.currentTarget.closest('[data-product-id]').dataset.productId
-        let basketArr = []
-        if (Cookies.get('market_basket')) {
-            basketArr = JSON.parse(Cookies.get('market_basket')).basket
-        }
-        const found = basketArr.find((el) => {
-            if (el.id === product_id) {
-                el.count++
-                e.currentTarget.parentElement.querySelector('input').value = el.count;
-                return true
-            }
-            return false
-        })
-        if (typeof found === 'undefined') {
-            basketArr.push({'id': product_id, 'count': 1})
-            e.currentTarget.parentElement.querySelector('input').value = '1';
-        }
-        Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-        e.currentTarget.style.display = 'none'
-        e.currentTarget.parentElement.querySelector('div.catalog__item-amount').style.display = ''
-
-        log(basketArr)
+        putEvent(t)
     })
 }
 
-// Изменение товара
-// Увеличение количества товара
-const up = (e) => {
-    const id = e.currentTarget.closest('[data-product-id]').dataset.productId
-    let basketArr = []
-    if (Cookies.get('market_basket')) {
-        basketArr = JSON.parse(Cookies.get('market_basket')).basket
-    }
-    basketArr.forEach(el => {
-        if (el.id === id) {
-            const input = document.querySelector(`[data-product-id="${id}"] input.count`)
-            input.value = input.value++ < input.max ? input.value++ : input.max
-            el.count = input.value
-            Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-        }
-    })
+/**
+ * Добавление в корзину из карточки товара
+ */
+if (document.querySelector("div.card-product__inner")) {
+    putEvent(document.querySelector("a.button-primary"))
 }
-// Уменьшение количества товара (+ удаление товара если 0)
-const down = (e) => {
-    const id = e.currentTarget.closest('[data-product-id]').dataset.productId
-    let basketArr = []
-    if (Cookies.get('market_basket')) {
-        basketArr = JSON.parse(Cookies.get('market_basket')).basket
-    }
-    basketArr.forEach((el, key) => {
-        if (el.id === id) {
-            const input = document.querySelector(`[data-product-id="${id}"] input.count`)
-            if (--input.value === 0) {
-                basketArr.splice(key, 1)
-                input.closest('div.catalog__item-amount').style.display = 'none'
-                input.closest('div.catalog__item-amount').nextElementSibling.style.display = ''
-            } else {
-                el.count = input.value
-            }
 
-            if (basketArr.length === 0) {
-                Cookies.remove('market_basket')
-            } else {
-                Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-            }
-        }
-    })
-}
-// Изменение товара в корзине
+/**
+ * Изменение товара в корзине
+ */
 if (document.querySelectorAll('.cart__list-item')) {
-    // Увеличение товара в корзине
+    /**
+     * Увеличение количества товара
+     */
     document.querySelectorAll('.cart__list-item span.up').forEach(t => {
         t.addEventListener('click', e => {
-            let id = e.currentTarget.closest('[data-product-id]').dataset.productId
-            let basketArr = []
-            if (Cookies.get('market_basket')) {
-                basketArr = JSON.parse(Cookies.get('market_basket')).basket
-            }
+            const basketArr = getBasket()
+            const product = e.currentTarget.closest('[data-product-id]')
+            const product_id = product.dataset.productId
+            const input = product.querySelector('input.count')
             basketArr.forEach(el => {
-                if (el.id === id) {
-                    const input = document.querySelector(`[data-product-id="${id}"] input.count`)
-                    input.value = input.value++ < input.max ? input.value++ : input.max
-                    el.count = input.value
-                    Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
+                if (el.id === product_id) {
+                    myFetch('/basket', 'PUT', {id: product_id})
+                        .then(response => response.json())
+                        .then(json => {
+                            if (json.status === 'ok') {
+                                input.value = input.value++ < input.max ? input.value++ : input.max
+                                el.count = input.value
+                                log(basketArr)
+                                setBasket(basketArr)
+                            } else {
+                                log('errors')
+                            }
+                        })
                 }
             })
         })
     })
-    // Уменьшение количества товара в корзине (+ удаление товара если 0)
+    /**
+     * Уменьшение количества товара
+     * удаление товара если 0
+     */
     document.querySelectorAll('.cart__list-item span.down').forEach(t => {
         t.addEventListener('click', e => {
-            let id = e.currentTarget.closest('[data-product-id]').dataset.productId
-            let basketArr = []
-            if (Cookies.get('market_basket')) {
-                basketArr = JSON.parse(Cookies.get('market_basket')).basket
-            }
+            const basketArr = getBasket()
+            const product = e.currentTarget.closest('[data-product-id]')
+            const product_id = product.dataset.productId
+            const input = product.querySelector('input.count')
             basketArr.forEach((el, key) => {
-                if (el.id === id) {
-                    const input = document.querySelector(`[data-product-id="${id}"] input.count`)
-                    if (--input.value === 0) {
-                        basketArr.splice(key, 1)
-                        e.currentTarget.closest('[data-product-id]').remove()
-                    } else {
-                        el.count = input.value
-                    }
-                    if (basketArr.length === 0) {
-                        Cookies.remove('market_basket')
-                        setTimeout(() => location.reload(), 0)
-                    } else {
-                        Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-                    }
+                if (el.id === product_id) {
+                    myFetch('/basket', 'DELETE', {id: product_id})
+                        .then(response => response.json())
+                        .then(json => {
+                            if (json.status === 'ok') {
+                                if (--input.value === 0) {
+                                    basketArr.splice(key, 1)
+                                    product.remove()
+                                } else {
+                                    el.count = input.value
+                                }
+                                log(basketArr)
+                                setBasket(basketArr)
+                            } else {
+                                log('errors')
+                            }
+                        })
                 }
             })
         })
     })
-    // Удаление товара из корзины
+    /**
+     * Удаление товара из корзины
+     */
     document.querySelectorAll('.cart__list-item .cart__list-delete').forEach(t => {
         t.addEventListener('click', e => {
-            let id = e.currentTarget.closest('[data-product-id]').dataset.productId
-            let basketArr = JSON.parse(Cookies.get('market_basket')).basket
-            basketArr.forEach((el, key) => {
-                if (el.id === id) {
-                    basketArr.splice(key, 1)
-                    e.currentTarget.closest('[data-product-id]').remove()
+            const basketArr = getBasket()
+            const product = e.currentTarget.closest('[data-product-id]')
+            const product_id = product.dataset.productId
+            getBasket().forEach((el, key) => {
+                if (el.id === product_id) {
+                    myFetch('/basket', 'DELETE', {id: product_id})
+                        .then(response => response.json())
+                        .then(json => {
+                            if (json.status === 'ok') {
+                                basketArr.splice(key, 1)
+                                setBasket(basketArr)
+                                product.remove()
+                                log(basketArr)
+                            } else {
+                                log('errors')
+                            }
+                        })
                 }
             })
-            if (basketArr.length === 0) {
-                Cookies.remove('market_basket')
-                setTimeout(() => location.reload(), 0)
-            } else {
-                Cookies.set('market_basket', {"basket": basketArr}, {expires: 7})
-            }
-
         })
     })
 }

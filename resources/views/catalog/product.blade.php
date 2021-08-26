@@ -7,9 +7,9 @@
             {{ Diglactic\Breadcrumbs\Breadcrumbs::render('product', $slug) }}
         </div>
     </div>
-    <div class="card-product" data-product-id="{{$product['_id']}}">
+    <div class="card-product">
         <div class="container">
-            <div class="card-product__inner">
+            <div class="card-product__inner" data-product-id="{{$product['_id']}}">
                 <div class="card-product__top-mob">
                     <div class="card-product__description-top">
                         <div class="card-product__description-top-item">Артикул: {{$product['vendorCode']}}</div>
@@ -62,7 +62,7 @@
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
                     <div class="card-product__description-btns">
-                        <div class="catalog__item-amount" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
+                        <div class="catalog__item-amount" id="count" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
                             <input class="count" type="text" min="1" max="{{$product['count']}}" value="{{$productBasket($product['_id'])}}">
                             <span class="up" onclick="up(event)">
                                 <img src="{{ asset('assets/images/svg/plus.svg')}}" alt="">
@@ -71,16 +71,14 @@
                                 <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
                             </span>
                         </div>
-                        <a class="button button-primary" data-product-id="{{ $product['_id']  }}" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
+                        <a class="button button-primary" id="buy" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
                             <img src="{{ asset('assets/images/svg/cart.svg')}}" alt="">
                         </a>
                         @if(empty(in_array($product['_id'], $favorites)))
-                            <a class="button button-all"
-                               data-product-id="{{ $product['_id']  }}">в избранное<img
+                            <a class="button button-all">в избранное<img class="like"
                                     src="{{ asset('assets/images/svg/like.svg') }}" alt=""></a>
                         @else
-                            <a class="button button-all"
-                               data-product-id="{{ $product['_id']  }}">в избранное<img
+                            <a class="button button-all">в избранное<img class="like"
                                     src="{{ asset('assets/images/svg/like2.svg') }}" alt=""></a>
                         @endif
                     </div>

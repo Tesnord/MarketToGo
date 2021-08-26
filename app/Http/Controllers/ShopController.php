@@ -9,7 +9,7 @@ class ShopController extends Controller
 {
     public function show($slug_shop)
     {
-        $shops = $this->requestHelper->getShop($slug_shop);
+        $shops = $this->requestHelper->getRequest('shop/'.$slug_shop);
         $shop = $shops['data'];
         $products = $shop['products'];
         $slug = [

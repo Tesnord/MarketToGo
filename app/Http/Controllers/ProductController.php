@@ -8,7 +8,7 @@ class ProductController extends Controller
 {
     public function show($slug_product)
     {
-        $products = $this->requestHelper->getProduct($slug_product);
+        $products = $this->requestHelper->getRequest('product/'.$slug_product);
         $product = $products['data'];
         $breadcrumbs = $product['breadcrumbs'];
         $slug = [

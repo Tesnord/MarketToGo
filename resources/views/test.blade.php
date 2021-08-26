@@ -3,31 +3,29 @@
 @section('content')
 
     <div class="container">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Cookie</th>
-                <th scope="col">Slug Product</th>
-                <th scope="col">Quantity</th>
-            </tr>
-            </thead>
-            <tbody>
-{{--            @foreach($basket as $item)--}}
-{{--                <tr>--}}
-{{--                    <td>Basket</td>--}}
-{{--                    <td>{{ $item['slug'] }}</td>--}}
-{{--                    <td>{{ $item['quantity'] }}</td>--}}
-{{--                </tr>--}}
-{{--            @endforeach--}}
-{{--            @foreach($favorites as $item)--}}
-{{--                <tr>--}}
-{{--                    <td>Favorite</td>--}}
-{{--                    <td>{{ $item }}</td>--}}
-{{--                    <td></td>--}}
-{{--                </tr>--}}
-{{--            @endforeach--}}
-            </tbody>
-        </table>
+        <div class="row border m-2">
+            @if(!empty(session()->get('token')))
+                @foreach(session()->get('token') as $token)
+                    <pre>
+                        {{ $token }}
+                    </pre>
+                @endforeach
+            </div>
+            <div class="row border m-2">
+                <pre>
+                    {{ $_COOKIE['market_favorites'] }}
+                </pre>
+            </div>
+            <div class="row border m-2">
+                <pre>
+                    {{ $_COOKIE['market_basket'] }}
+                </pre>
+            </div>
+        @else
+            <pre>
+                Not Authorization
+            </pre>
+        @endif
     </div>
 
 {{-- Lesson 1 --}}

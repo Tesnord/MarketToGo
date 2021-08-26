@@ -1,12 +1,7 @@
 // Авторизация
 if (document.querySelector("div.registration")) {
-    document.querySelector("p.codelink").addEventListener('click', e => {
-        document.querySelector('div.phone').style.display = '';
-        document.querySelector('div.code').style.display = 'none';
-        document.querySelector('p.codelink').style.display = 'none';
-        document.querySelector('p.codetime').style.display = '';
-        document.querySelector('input.code').value = '';
-    })
+    $("#tel").mask("8(999) 999-9999");
+    // $("#code").mask("9999");
     // Отправка номера (валидация номера)
     document.querySelector("button.phone").addEventListener('click', e => {
         let phone = $('#tel').val();
@@ -28,31 +23,30 @@ if (document.querySelector("div.registration")) {
                     'Content-type': 'application/json'
                 }
             })
-                .then(response =>  response.json())
+                .then(response => response.json())
                 .then(json => {
                     if (json.status === 'ok') {
-                    $('span.phone').text(phone);
-                    $('span.newCode').text(json.code.debug);
+                        $('span.phone').text(phone);
+                        $('span.newCode').text(json.code.debug);
 
-                    document.querySelector('div.phone').style.display = 'none';
-                    document.querySelector('div.code').style.display = '';
-                    let timer;
-                    let x = 60;
-                    countdown();
-
-                    function countdown() {
-                        document.querySelector('span.time').innerHTML = x;
-                        x--;
-                        if (x < 0) {
-                            clearTimeout(timer);
-                            document.querySelector('p.codetime').style.display = 'none';
-                            document.querySelector('p.codelink').style.display = '';
-                        } else {
-                            timer = setTimeout(countdown, 1000);
+                        document.querySelector('div.phone').style.display = 'none';
+                        document.querySelector('div.code').style.display = '';
+                        let timer;
+                        let x = 60;
+                        countdown();
+                        function countdown() {
+                            document.querySelector('span.time').innerHTML = x;
+                            x--;
+                            if (x < 0) {
+                                clearTimeout(timer);
+                                document.querySelector('p.codetime').style.display = 'none';
+                                document.querySelector('p.codelink').style.display = '';
+                            } else {
+                                timer = setTimeout(countdown, 1000);
+                            }
                         }
-                    }
-                } else {
-
+                    } else {
+                        log('errors')
                     }
                 })
         }
@@ -108,18 +102,3 @@ if (document.querySelector('div.lk__menu')) {
             })
     })
 }
-
-
-/*
-{
-    if (response.ok) {
-        // window.location.href = '/login';
-        log('ok')
-    } else {
-        response.text().then(error => {
-            // window.location.href = '/personal';
-            log(error.meta.message)
-        })
-    }
-
-}*/

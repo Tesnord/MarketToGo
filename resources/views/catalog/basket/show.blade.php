@@ -144,6 +144,19 @@
                 </div>
             </div>
         </div>
+    @else
+        <div class="tx">
+            <div class="container">
+                <div class="tx__inner">
+                    <div class="tx__img"><img src="{{ asset('assets/images/svg/img1.svg') }}" alt=""></div>
+                    <div class="tx__text">
+                        <div class="tx__title">В корзине пока нет товаров</div>
+                        <p>Перейдите в каталог, посмотрите скидки или <br>воспользуйтесь поиском, чтобы найти нужный товар.</p>
+                        <a class="button button-secondary" href="{{ route('home') }}">начать покупки</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="catalog-min catalog-min-tw">
             <div class="container">
                 <h3>Возможно вас заинтересует</h3>
@@ -240,19 +253,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @else
-        <div class="tx">
-            <div class="container">
-                <div class="tx__inner">
-                    <div class="tx__img"><img src="{{ asset('assets/images/svg/img1.svg') }}" alt=""></div>
-                    <div class="tx__text">
-                        <div class="tx__title">В корзине пока нет товаров</div>
-                        <p>Перейдите в каталог, посмотрите скидки или <br>воспользуйтесь поиском, чтобы найти нужный товар.</p>
-                        <a class="button button-secondary" href="{{ route('home') }}">начать покупки</a>
                     </div>
                 </div>
             </div>

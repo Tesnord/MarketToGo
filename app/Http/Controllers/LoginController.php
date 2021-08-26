@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
+use function Symfony\Component\String\s;
+
 class LoginController extends Controller
 {
     public function create()
@@ -20,34 +22,28 @@ class LoginController extends Controller
         $phone = $request->post('phone');
         $code = $request->post('code');
         if (empty($code)) {
-            $login = $this->requestHelper->getLogin(['phone' => $phone]);
+            $login = $this->requestHelper
+                ->getRequest('login', 'post', 'auth', ['phone' => $phone]);
             $login = $login['data'];
             return ['status' => 'ok', 'code' => $login];
-                // // Сохранение в файл...УДАЛИТЬ!!!
-                // $file = fopen('token_data.json','w+');
-                // fwrite($file, $login);
-                // fclose($file);
         } else {
-            $login = $this->requestHelper->getLogin(['phone' => $phone, 'code' => $code]);
-            $result = $login->json();
-            if ($result['meta']['code'] === 400) {
-                return response($result['meta']['message'], 400);
+            $login = $this->requestHelper
+                ->getRequest('login', 'post', 'auth', ['phone' => $phone, 'code' => $code]);
+            if ($login['meta']['code'] === 400) {
+                return response($login['meta']['message'], 400);
             }
-            $request->session()->put('token', $result['data']);
-            $favorites = $this->requestHelper->getUserRequest($request, 'favorites', $GLOBALS["favorites"], 'put');
-            if ($favorites['data'] === false) {
-                cookie('market_favorites', json_encode(['favorites' => []]), 60*24*7);
-            } else {
-                cookie('market_favorites', json_encode(['favorites' => $favorites['data']]), 60*24*7);
-            }
+            $request->session()->put('token', $login['data']);
 
+            $this->requestHelper->getCookie($request, 'favorites');
+            $this->requestHelper->getCookie($request, 'basket');
         }
     }
 
     public function logout()
     {
         $tokens = session()->get('token');
-        $result = $this->requestHelper->logout(['refreshToken' => $tokens['refreshToken']]);
+        $result = $this->requestHelper
+            ->getRequest('logout', 'post', 'auth', ['refreshToken' => $tokens['refreshToken']]);
         session()->remove('token');
         // TODO запись в файл УДАЛИТЬ!!!
         if ($result['meta']['code'] !== 200) {

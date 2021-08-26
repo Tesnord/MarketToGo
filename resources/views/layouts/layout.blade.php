@@ -81,7 +81,7 @@
             </div>
             <div class="header__menu-btn-catalog js-menu-btn-catalog">каталог товаров</div>
             <ul class="header__menu-main">
-                <li><a href="{{ route('provider') }}">Поставщикам</a></li>
+{{--                <li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
                 <li><a href="{{ route('about') }}">О нас</a></li>
                 <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                 <li><a href="{{ route('brand.index') }}">Бренды</a></li>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="header__top-menu">
                         <ul>
-                            <li><a href="{{ route('provider') }}">Поставщикам</a></li>
+{{--                            <li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
                             <li><a href="{{ route('about') }}">О нас</a></li>
                             <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                             <li><a href="{{ route('brand.index') }}">Бренды</a></li>
@@ -150,7 +150,7 @@
                         </a>
                         <a class="header__bottom-info-item header__bottom-info-item-cart" href="{{ route('basket.show') }}">
                             <img src="{{asset('assets/images/svg/icon-header3.svg')}}" alt=""> корзина
-                            <span class="header__bottom-info-notif">14</span>
+                            <span class="header__bottom-info-notif basketCount {{ empty($basket) ? 'd-none' : '' }}">{{ count($basket) }}</span>
                         </a>
 
                         @if(session()->has('token'))
@@ -197,7 +197,7 @@
                 <div class="footer__top-inner">
                     <ul class="footer__menu">
                         <li><a href="{{ route('about') }}">О нас</a></li>
-                        <li><a href="{{ route('provider') }}">Поставщикам</a></li>
+{{--                        <li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
                         <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                         <li><a href="{{ route('brand.index') }}">Бренды</a></li>
                     </ul>
@@ -362,6 +362,7 @@
 <script type="text/javascript" src="{{asset('vendors/jquery/dist/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/jquery-ui/jquery-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/jquery-ui/jquery.ui.touch-punch.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/jquery.maskedinput/dist/jquery.maskedinput.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/select/select2.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/jquery.nicescroll.min.js')}}"></script>

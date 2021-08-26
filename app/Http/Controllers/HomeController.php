@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function home(Request $request)
     {
-        $categories = $this->requestHelper->getCategoriesMain();
+        $categories = $this->requestHelper->getRequest('categories/main');
         return view('home', [
             'categories' => $categories,
         ]);

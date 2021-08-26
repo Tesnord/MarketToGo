@@ -63,7 +63,6 @@ class AppServiceProvider extends ServiceProvider
         };
         // Menu
         $menu_categories = Http::get('http://80.78.246.225:3000/api/v1/site/categories')->json();
-
         View::share(
             [
                 'menu_categories' => $menu_categories,

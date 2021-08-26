@@ -17,89 +17,6 @@ class RequestHelper {
         $this->auth = config('app.api_entry_auth');
     }
 
-    // Basket
-    public function getBasket()
-    {
-
-    }
-    // Brands
-    public function getBrandsIndex(): Collection
-    {
-        return $this->getRequest('brands');
-    }
-
-    public function getBrandsShow($slug): Collection
-    {
-        return $this->getRequest('brands/'.$slug);
-    }
-
-    public function getBrandsCatalog($slug): Collection
-    {
-        return $this->getRequest('brand/'.$slug);
-    }
-
-    // Category
-    public function getCategories($slug): Collection
-    {
-        return $this->getRequest('categories/'.$slug);
-    }
-
-    // Home
-    public function getCategoriesMain(): Collection
-    {
-        return $this->getRequest('categories/main');
-    }
-
-    // Login
-    public function getLogin($data): Response
-    {
-        return Http::post($this->auth . 'login', $data);
-    }
-
-    // Login
-    public function logout($data): Response
-    {
-        return Http::post($this->auth . 'logout', $data);
-    }
-
-    // Product
-    public function getProduct($slug): Collection
-    {
-        $result = Http::get($this->domain.'product/'.$slug)->collect();
-        if ($result['meta']['status'] === false) {
-            abort(404);
-        }
-        return $result;
-    }
-
-    // Promotion
-    public function getPromotion()
-    {
-
-    }
-
-    // Shop
-    public function getShop($slug): Collection
-    {
-        $result = Http::get($this->domain.'shop/'.$slug)->collect();
-        if ($result['meta']['status'] === false) {
-            abort(404);
-        }
-        return $result;
-    }
-
-    // Subscribe
-    public function getSubscribe()
-    {
-
-    }
-
-    // User
-    public function getUser()
-    {
-
-    }
-
     public function getRequest(string $handler, string $method = 'get', string $entry_point = 'domain', array $data = []): Collection
     {
         $result = Http::$method($this->$entry_point.$handler, $data)->collect();
@@ -111,10 +28,6 @@ class RequestHelper {
 
     public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get'): Collection
     {
-        // if (!$request->session()->has('token')) {
-        //     // redirect('', '');
-        //     abort(401);
-        // }
         $tokens = $request->session()->get('token');
 
         $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
@@ -133,5 +46,15 @@ class RequestHelper {
                 break;
         }
         return $result;
+    }
+
+    public function getCookie(Request $request, $cookieName)
+    {
+        $result = $this->getUserRequest($request, $cookieName, $GLOBALS[$cookieName], 'put');
+        if ($result['data'] === false) {
+            setcookie('market_'.$cookieName, json_encode([$cookieName => []]), time()+60*60*24*30);
+        } else {
+            setcookie('market_'.$cookieName, json_encode([$cookieName => $result['data']]), time()+60*60*24*30);
+        }
     }
 }

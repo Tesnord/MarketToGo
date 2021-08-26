@@ -10,12 +10,11 @@ class CategoryController extends Controller
 {
     public function index($slug_category)
     {
-        $categories = $this->requestHelper->getCategories($slug_category);
+        $categories = $this->requestHelper->getRequest('categories/'.$slug_category);
         $category = $categories['data'];
         $breadcrumbs = $category['breadcrumbs'];
         $children = $category['categories'];
         $products = $category['products'];
-        // dd($breadcrumbs);
 
         if ($category["root"]) {
             return view('catalog.category.index', [
@@ -25,7 +24,6 @@ class CategoryController extends Controller
                 'breadcrumbs' => $breadcrumbs,
             ]);
         } else {
-            // dd($children);
             return view('catalog.category.show', [
                 'category' => $category,
                 'children' => $children,

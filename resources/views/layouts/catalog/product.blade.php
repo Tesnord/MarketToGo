@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <div class="catalog__item-amount" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
+                    <div class="catalog__item-amount" id="count" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
                         <input class="count" type="text" min="1" max="{{$product['count']}}" value="{{$productBasket($product['_id'])}}">
                         <span class="up" onclick="up(event)">
                             <img src="{{ asset('assets/images/svg/plus.svg')}}" alt="">
@@ -51,7 +51,7 @@
                             <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
                         </span>
                     </div>
-                    <a class="catalog__item-buy" data-product-id="{{$product['_id']}}" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
+                    <a class="catalog__item-buy" id="buy" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
                         <img src="{{ asset('assets/images/svg/cart.svg')}}" alt="">
                     </a>
                 </div>

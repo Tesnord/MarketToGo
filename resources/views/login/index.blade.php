@@ -13,7 +13,7 @@
                             <div class="check-in__tx phone">
                                 <p>Чтобы сохранять корзину, получать промокоды и следить за своей историей покупок</p>
                                 <div class="order__input-cell">
-                                    <input class="form__input-effect phone" name="tel" type="tel" id="tel">
+                                    <input class="form__input-effect phone" name="tel" type="text" id="tel">
                                     <label for="tel">Телефон *</label>
                                 </div>
                                 <button type="submit" data-login="true" class="button button-secondary w-100 phone">
