@@ -27,7 +27,8 @@ class BasketController extends Controller
     {
         if (!$request->session()->has('token')) return ['status' => 'ok'];
         $product_id = $request->post('id');
-        $this->requestHelper->getUserRequest($request, 'basket', [$product_id], 'put');
+        $product_count = $request->post('count');
+        $this->requestHelper->getUserRequest($request, 'basket', [['id' => $product_id, 'count' => $product_count]], 'put');
         return ['status' => 'ok'];
     }
 

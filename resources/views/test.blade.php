@@ -10,17 +10,21 @@
                         {{ $token }}
                     </pre>
                 @endforeach
-            </div>
-            <div class="row border m-2">
+        </div>
+        <div class="row border m-2">
+            @if(!empty($_COOKIE['market_favorites']))
                 <pre>
                     {{ $_COOKIE['market_favorites'] }}
                 </pre>
-            </div>
-            <div class="row border m-2">
+            @endif
+        </div>
+        <div class="row border m-2">
+            @if(!empty($_COOKIE['market_favorites']))
                 <pre>
                     {{ $_COOKIE['market_basket'] }}
                 </pre>
-            </div>
+            @endif
+        </div>
         @else
             <pre>
                 Not Authorization
@@ -28,13 +32,13 @@
         @endif
     </div>
 
-{{-- Lesson 1 --}}
-{{--    <div class="container lesson-1"></div>--}}
-{{-- Lesson 2 --}}
-{{--    <div class="container lesson-2"></div>--}}
-{{-- Lesson 3 --}}
-{{--    <div class="container lesson-3"></div>--}}
-{{-- Lesson 4 --}}
+    {{-- Lesson 1 --}}
+    {{--    <div class="container lesson-1"></div>--}}
+    {{-- Lesson 2 --}}
+    {{--    <div class="container lesson-2"></div>--}}
+    {{-- Lesson 3 --}}
+    {{--    <div class="container lesson-3"></div>--}}
+    {{-- Lesson 4 --}}
     {{--<div class="container lesson-4">
         <div class="row mb-5 border">
             <div class="col-2 m-2 p-2 border">
@@ -161,7 +165,7 @@
             </div>
         </div>
     </div>--}}
-{{-- Lesson 5 --}}
+    {{-- Lesson 5 --}}
     {{--<div class="container lesson-5">
         <div class="row m-2 border">
             <div class="m-2 p-2 border">
@@ -262,7 +266,7 @@
             </div>
         </div>
     </div>--}}
-{{-- Lesson 6 --}}
+    {{-- Lesson 6 --}}
     {{--<div class="container lesson-6">
         <div class="row m-2 border">
             <div class="m-2 p-2 border">
@@ -309,7 +313,7 @@
             </div>
         </div>
     </div>--}}
-{{-- Lesson 7 --}}
+    {{-- Lesson 7 --}}
     {{--<div class="container lesson-7">
         <div class="row mb-2 border">
             <div class="col-1 m-2 p-2 border">
@@ -362,7 +366,7 @@
             </div>
         </div>
     </div>--}}
-{{-- Lesson 8 --}}
+    {{-- Lesson 8 --}}
     {{--    <div class="container lesson-8">
         <section class="mb-5">
             <button class="button-primary b-1">Task-1</button>
@@ -462,7 +466,7 @@
             <div class="out-15"></div>
         </section>
     </div>--}}
-{{-- Lesson 9 --}}
+    {{-- Lesson 9 --}}
 
 
 @endsection

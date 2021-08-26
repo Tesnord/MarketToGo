@@ -62,7 +62,7 @@
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
                     <div class="card-product__description-btns">
-                        <div class="catalog__item-amount" id="count" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
+                        <div class="catalog__item-amount mb-10" id="count" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
                             <input class="count" type="text" min="1" max="{{$product['count']}}" value="{{$productBasket($product['_id'])}}">
                             <span class="up" onclick="up(event)">
                                 <img src="{{ asset('assets/images/svg/plus.svg')}}" alt="">
@@ -324,6 +324,7 @@
                     </div>
                     <div class="card-product__other">
                         <h3>Другие предложения продавцов на сайте</h3>
+{{--                        {{ dd($product['offers']) }}--}}
                         <div class="card-product__product">
                             @foreach($product['offers'] as $offer)
                                 <div class="card-product__product-row">
@@ -331,7 +332,7 @@
                                         <div class="card-product__product-img">
                                             <img src="{{ asset($offer['image']) }}" alt="">
                                         </div>
-                                        <div class="card-product__product-title">{{ $offer['title'] }}</div>
+                                        <a class="card-product__product-title" href="{{ $offer['slug'] }}">{{ $offer['title'] }}</a>
                                         <div class="card-product__product-firm">{{ $offer['subTitle'] }}</div>
                                     </div>
                                     <div class="card-product__product-price">
@@ -345,8 +346,7 @@
                                         @endif
                                     </div>
                                     <div class="card-product__product-btn">
-                                        <a class="button button-primary" href="#">купить
-                                            <img src="{{ asset('assets/images/svg/cart.svg') }}" alt="">
+                                        <a class="button button-primary" href="{{ $offer['slug'] }}">подробнее
                                         </a>
                                     </div>
                                 </div>

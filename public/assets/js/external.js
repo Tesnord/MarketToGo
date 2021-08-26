@@ -312,8 +312,11 @@ if (document.querySelectorAll('.cart__list-item')) {
                         .then(json => {
                             if (json.status === 'ok') {
                                 basketArr.splice(key, 1)
-                                setBasket(basketArr)
                                 product.remove()
+                                setBasket(basketArr)
+                                if (basketArr.length === 0) {
+                                    location.reload()
+                                }
                                 log(basketArr)
                             } else {
                                 log('errors')
