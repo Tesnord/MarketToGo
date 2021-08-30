@@ -66,12 +66,12 @@
                                 <div class="cart__list-numb">
                                     <div class="cart__list-price">
                                         <div class="cart__list-price-now">
-                                            {{--{{ $product['price']['value'] * $productBasket($product['_id']) }}--}}
+                                            {{ $productPrice($product) }}
                                             {{ $product['price']['currency'] }}
                                         </div>
                                     </div>
                                     <div class="cart__list-numb-tx">Экономия
-                                        {{--{{ ($product['oldPrice']['value'] * $productBasket($product['_id']))-($product['price']['value'] * $productBasket($product['_id'])) }}--}}
+                                        {{ $productPrice($product, $productBasket($product['_id'])) }}
                                         {{ $product['price']['currency'] }}
                                     </div>
                                 </div>
@@ -79,35 +79,35 @@
                             </div>
                         @endforeach
                     </div>
-    {{--                if товары по подписке--}}
-    {{--                <div class="cart__list">--}}
-    {{--                    <h3>Товары по подписке</h3>--}}
-    {{--                    <div class="cart__list-item">--}}
-    {{--                        <div class="cart__list-descr">--}}
-    {{--                            <div class="cart__list-img" style="background-image: url('{{ asset('assets/images/card-img2.jpg') }}')"></div><a class="cart__list-title" href="#">Манго Тайское Премиум (1 шт 300 гр)</a>--}}
-    {{--                            <div class="cart__list-article">Артикул: 87346773</div>--}}
-    {{--                        </div>--}}
-    {{--                        <div class="cart__list-numb">--}}
-    {{--                            <div class="cart__list-price">--}}
-    {{--                                <div class="cart__list-price-now">121 {{ $product['price']['currency'] }}</div>--}}
-    {{--                                <div class="cart__list-price-old">145 {{ $product['price']['currency'] }}</div>--}}
-    {{--                            </div>--}}
-    {{--                            <div class="cart__list-numb-tx">Цена за 1 шт</div>--}}
-    {{--                        </div>--}}
-    {{--                        <div class="cart__list-amount">--}}
-    {{--                            <div class="catalog__item-amount">--}}
-    {{--                                <input type="text" value="1"><span class="up"><img src="{{ asset('assets/images/svg/plus.svg') }}" alt=""></span><span class="down"><img src="{{ asset('assets/images/svg/minus.svg') }}" alt=""></span>--}}
-    {{--                            </div>--}}
-    {{--                        </div>--}}
-    {{--                        <div class="cart__list-numb">--}}
-    {{--                            <div class="cart__list-price">--}}
-    {{--                                <div class="cart__list-price-now">242 {{ $product['price']['currency'] }}</div>--}}
-    {{--                            </div>--}}
-    {{--                            <div class="cart__list-numb-tx">Экономия 300 {{ $product['price']['currency'] }}</div>--}}
-    {{--                        </div>--}}
-    {{--                        <div class="cart__list-delete"><svg><use xlink:href="#delete"></use></svg></div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
+{{--                    if товары по подписке--}}
+                    {{--<div class="cart__list">
+                        <h3>Товары по подписке</h3>
+                        <div class="cart__list-item">
+                            <div class="cart__list-descr">
+                                <div class="cart__list-img" style="background-image: url('{{ asset('assets/images/card-img2.jpg') }}')"></div><a class="cart__list-title" href="#">Манго Тайское Премиум (1 шт 300 гр)</a>
+                                <div class="cart__list-article">Артикул: 87346773</div>
+                            </div>
+                            <div class="cart__list-numb">
+                                <div class="cart__list-price">
+                                    <div class="cart__list-price-now">121 {{ $product['price']['currency'] }}</div>
+                                    <div class="cart__list-price-old">145 {{ $product['price']['currency'] }}</div>
+                                </div>
+                                <div class="cart__list-numb-tx">Цена за 1 шт</div>
+                            </div>
+                            <div class="cart__list-amount">
+                                <div class="catalog__item-amount">
+                                    <input type="text" value="1"><span class="up"><img src="{{ asset('assets/images/svg/plus.svg') }}" alt=""></span><span class="down"><img src="{{ asset('assets/images/svg/minus.svg') }}" alt=""></span>
+                                </div>
+                            </div>
+                            <div class="cart__list-numb">
+                                <div class="cart__list-price">
+                                    <div class="cart__list-price-now">242 {{ $product['price']['currency'] }}</div>
+                                </div>
+                                <div class="cart__list-numb-tx">Экономия 300 {{ $product['price']['currency'] }}</div>
+                            </div>
+                            <div class="cart__list-delete"><svg><use xlink:href="#delete"></use></svg></div>
+                        </div>
+                    </div>--}}
                     <div class="cart__list-all">
                         <div class="cart__list-descr">
                             <div class="cart__list-all-title">Промокод применен</div>
@@ -123,8 +123,14 @@
                         </div>
                         <div class="cart__list-all-price">
                             <div class="cart__list-price">
-                                <div class="cart__list-price-now">121 {{ $product['price']['currency'] }}</div>
-                                <div class="cart__list-price-old">145 {{ $product['price']['currency'] }}</div>
+                                <div class="cart__list-price-now">
+
+                                    {{ $product['price']['currency'] }}
+                                </div>
+                                <div class="cart__list-price-old">
+                                    145
+                                    {{ $product['price']['currency'] }}
+                                </div>
                             </div>
                         </div>
                         <div class="cart__list-all-btn"><a class="button button-secondary" href="{{ route('basket.checkout') }}">оформить заказ</a></div>

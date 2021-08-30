@@ -33,7 +33,7 @@ if (document.querySelector("div.registration")) {
                         document.querySelector('div.code').style.display = '';
                         let timer;
                         let x = 60;
-                        countdown();
+                        countdown();div.header__search
                         function countdown() {
                             document.querySelector('span.time').innerHTML = x;
                             x--;

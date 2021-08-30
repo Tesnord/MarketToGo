@@ -29,7 +29,9 @@ class RequestHelper {
     public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get'): Collection
     {
         $tokens = $request->session()->get('token');
-
+        if ($tokens === false) {
+            $request->session()->remove('token');
+        }
         $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
             ->$method($this->domain.$handler, $data)->collect();
 
@@ -38,7 +40,7 @@ class RequestHelper {
                 // refresh
                 $response = Http::post($this->auth.'refresh', ['refreshToken' => $tokens['refreshToken']]);
 
-                if ($response->status() === 400) abort(400);
+                // if ($response->status() === 400) abort(400);
                 $request->session()->put('token', $response->json()['data']);
                 return $this->getUserRequest($request, $handler, $data, $method);
             case 400:

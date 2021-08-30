@@ -128,9 +128,9 @@
                         <img src="{{asset('assets/images/svg/logo-mob.svg')}}" alt="">
                     </a>
                     <div class="header__search">
-                        <form>
-                            <input type="text" placeholder="Что вы ищете?">
-                            <button class="header__search-btn" type="button">
+                        <form action="{{ route('search') }}" method="GET">
+                            <input class="search" name="search" type="text" placeholder="Что вы ищете?">
+                            <button class="header__search-btn">
                                 <img src="{{asset('assets/images/svg/search.svg')}}" alt="">
                             </button>
                             <div class="header__search-clean">
@@ -373,6 +373,7 @@
 <script type="text/javascript" src="{{asset('assets/js/app.js')}}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/external.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/auth.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/search.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/test.js') }}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/hasget/dist/hasget.min.js"></script>

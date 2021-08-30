@@ -38,8 +38,5 @@ class CategoryController extends Controller
         return view('catalog.scores');
     }
 
-    public function search()
-    {
-        return view('catalog.search');
-    }
+
 }

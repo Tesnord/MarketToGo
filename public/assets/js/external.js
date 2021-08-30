@@ -171,7 +171,7 @@ const up = e => {
     const input = product.querySelector('input.count')
     basketArr.forEach(el => {
         if (el.id === product_id) {
-            myFetch('/basket', 'PUT', {id: product_id})
+            myFetch('/basket', 'PUT', {id: product_id, count: input.value})
                 .then(response => response.json())
                 .then(json => {
                     if (json.status === 'ok') {
@@ -197,7 +197,7 @@ const down = e => {
     const input = product.querySelector('input.count')
     basketArr.forEach((el, key) => {
         if (el.id === product_id) {
-            myFetch('/basket', 'DELETE', {id: product_id})
+            myFetch('/basket', 'DELETE', {id: product_id, count: input.value})
                 .then(response => response.json())
                 .then(json => {
                     if (json.status === 'ok') {
@@ -249,12 +249,13 @@ if (document.querySelectorAll('.cart__list-item')) {
             const input = product.querySelector('input.count')
             basketArr.forEach(el => {
                 if (el.id === product_id) {
-                    myFetch('/basket', 'PUT', {id: product_id})
+                    myFetch('/basket', 'PUT', {id: product_id, count: input.value})
                         .then(response => response.json())
                         .then(json => {
                             if (json.status === 'ok') {
                                 input.value = input.value++ < input.max ? input.value++ : input.max
                                 el.count = input.value
+                                document.querySelector('.cart__list-price-now')
                                 log(basketArr)
                                 setBasket(basketArr)
                             } else {
@@ -277,7 +278,7 @@ if (document.querySelectorAll('.cart__list-item')) {
             const input = product.querySelector('input.count')
             basketArr.forEach((el, key) => {
                 if (el.id === product_id) {
-                    myFetch('/basket', 'DELETE', {id: product_id})
+                    myFetch('/basket', 'DELETE', {id: product_id, count: input.value})
                         .then(response => response.json())
                         .then(json => {
                             if (json.status === 'ok') {

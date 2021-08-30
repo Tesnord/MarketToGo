@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromotionController;
@@ -45,7 +46,7 @@ Route::prefix('catalog')->group(function () {
     Route::get('/{slug_category}', [CategoryController::class, 'index'])->name('category.index');
 });
 // Поиск
-Route::get('/search', [CategoryController::class, 'search'])->name('search');
+Route::get('/search', [SearchController::class, 'show'])->name('search');
 // Избранное
 Route::get('/favorite', [FavoriteController::class, 'show'])->name('favorite.show');
 Route::put('/favorite', [FavoriteController::class, 'put'])->name('favorite.put');
