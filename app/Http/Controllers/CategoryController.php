@@ -33,9 +33,17 @@ class CategoryController extends Controller
         }
     }
 
-    public function scores()
+    public function scores(Request $request)
     {
-        return view('catalog.scores');
+        // if ($request->session()->has('token')) {
+            $scores = $this->requestHelper->getUserRequest($request,'score');
+            // dd($scores);
+            return view('catalog.scores', [
+                'scores' => $scores['data'],
+            ]);
+        // }
+        // $scores = $this->requestHelper->getRequest('score');
+        // return view('catalog.scores');
     }
 
 

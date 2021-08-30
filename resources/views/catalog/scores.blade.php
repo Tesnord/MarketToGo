@@ -23,19 +23,19 @@
                     <div class="point__table-cell point__table-cell-title">Операция</div>
                     <div class="point__table-cell point__table-cell-title">Начислено баллов</div>
                 </div>
-{{--                @foreach($scores as $score)--}}
-{{--                    <div class="point__table-row">--}}
-{{--                        <div class="point__table-cell">--}}
-{{--                            <div class="point__data">{{ $score->created_at->format('d.m.Y') }}</div>--}}
-{{--                        </div>--}}
-{{--                        <div class="point__table-cell">--}}
-{{--                            <div class="point__title">{{ $score->operation }}</div>--}}
-{{--                        </div>--}}
-{{--                        <div class="point__table-cell">--}}
-{{--                            <div class="point__price">{{ $score->points }}@foreach($currency as $rub) {{ $rub->value }} @endforeach</div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                @endforeach--}}
+                @foreach($scores as $score)
+                    <div class="point__table-row">
+                        <div class="point__table-cell">
+                            <div class="point__data">{{ $score['date'] }}</div>
+                        </div>
+                        <div class="point__table-cell">
+                            <div class="point__title">{{ $score['type'] }}</div>
+                        </div>
+                        <div class="point__table-cell">
+                            <div class="point__price">{{ $score['count'] }}</div>
+                        </div>
+                    </div>
+                @endforeach
             </div><a class="button button-all" href="#">загрузить еще</a>
         </div>
     </div>
