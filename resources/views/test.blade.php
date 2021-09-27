@@ -32,24 +32,6 @@
         @endif
     </div>
 
-    <div class="container">
-        <div class="row nonCol">
-            <div class="hCol border border-primary">#</div>
-            <div class="hCol border border-primary">1</div>
-            <div class="hCol border border-primary">2</div>
-        </div>
-        <div class="row nonCol">
-            <div class="hCol border border-primary">2</div>
-            <div class="hCol border black"></div>
-            <div class="hCol border black"></div>
-        </div>
-        <div class="row nonCol">
-            <div class="hCol border border-primary">1</div>
-            <div class="hCol border"></div>
-            <div class="hCol border black"></div>
-        </div>
-    </div>
-
     {{-- Lesson 1 --}}
     {{--    <div class="container lesson-1"></div>--}}
     {{-- Lesson 2 --}}

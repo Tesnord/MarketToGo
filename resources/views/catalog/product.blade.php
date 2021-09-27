@@ -24,10 +24,10 @@
                 <div class="card-product__slider js-card-product-slider">
                     <div class="card-product__slider-nav">
                         @foreach($product['images'] as $image)
-                        <div class="card-product__slider-nav-item">
-                            <div class="card-product__slider-nav-item-img"
-                                 style="background-image: url({{ $image }})"></div>
-                        </div>
+                            <div class="card-product__slider-nav-item">
+                                <div class="card-product__slider-nav-item-img"
+                                     style="background-image: url({{ $image }})"></div>
+                            </div>
                         @endforeach
                     </div>
                     <div class="card-product__slider-for">
@@ -49,21 +49,23 @@
                     </div>
                     <h1>{{ $product['title'] }}</h1>
                     <p>Цена за фасованный товар указана с учетом оптимально возможного веса фасовки.</p>
-                    <div class="card-product__description-points">+{{ $product['score'] }} балла</div>
+                    {{--                    <div class="card-product__description-points">+{{ $product['score'] }} балла</div>--}}
                     <div class="card-product__description-info">
                         <div class="card-product__description-price">
                             <div class="card-product__description-price-now">
                                 {{$product['price']['value']}}{{ $product['price']['currency'] }}
                             </div>
-                                <div class="card-product__description-price-old">
-                                    {{$product['oldPrice']['value']}}{{ $product['oldPrice']['currency'] }}
-                                </div>
+                            <div class="card-product__description-price-old">
+                                {{$product['oldPrice']['value']}}{{ $product['oldPrice']['currency'] }}
+                            </div>
                         </div>
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
                     <div class="card-product__description-btns">
-                        <div class="catalog__item-amount mb-10" id="count" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
-                            <input class="count" type="text" min="1" max="{{$product['count']}}" value="{{$productBasket($product['_id'])}}">
+                        <div class="catalog__item-amount" id="count"
+                             style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
+                            <input class="count" type="text" min="1" max="{{$product['count']}}"
+                                   value="{{$productBasket($product['_id'])}}">
                             <span class="up" onclick="up(event)">
                                 <img src="{{ asset('assets/images/svg/plus.svg')}}" alt="">
                             </span>
@@ -71,28 +73,32 @@
                                 <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
                             </span>
                         </div>
-                        <a class="button button-primary" id="buy" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
+                        <a class="button button-primary js-cart" href="javascript:void(0)" id="buy"
+                           style="{{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">
+                            купить
                             <img src="{{ asset('assets/images/svg/cart.svg')}}" alt="">
                         </a>
                         @if(empty(in_array($product['_id'], $favorites)))
-                            <a class="button button-all">в избранное<img class="like"
-                                    src="{{ asset('assets/images/svg/like.svg') }}" alt=""></a>
+                            <a class="button button-all" href="javascript:void(0)">в избранное
+                                <img class="like" src="{{ asset('assets/images/svg/like.svg') }}" alt=""></a>
                         @else
-                            <a class="button button-all">в избранное<img class="like"
-                                    src="{{ asset('assets/images/svg/like2.svg') }}" alt=""></a>
+                            <a class="button button-all" href="javascript:void(0)">в избранное
+                                <img class="like" src="{{ asset('assets/images/svg/like2.svg') }}" alt=""></a>
                         @endif
                     </div>
-                    <a class="card-product__description-link" href="#">
-                        <img src="{{ asset('assets/images/svg/icon1.svg') }}" alt="">
-                        <span>Получайте товары по более привлекательной цене</span>
-                    </a>
+                    {{-- <a class="card-product__description-link" href="#">
+                         <img src="{{ asset('assets/images/svg/icon1.svg') }}" alt="">
+                         <span>Получайте товары по более привлекательной цене</span>
+                     </a>--}}
                 </div>
                 <div class="card-product__all lnk">
                     <div class="card-product__all-reviews">
                         <a class="card-product__all-lnk" href="#card-item3"></a>
                         <div class="card-product__all-reviews-rating">
                             <div class="card-product__all-reviews-rating-now">{{ $product['rating']['score'] }}</div>
-                            <div class="card-product__all-reviews-rating-all">({{ $product['rating']['reviews'] }} отзыва)</div>
+                            <div class="card-product__all-reviews-rating-all">({{ $product['rating']['reviews'] }}
+                                отзыва)
+                            </div>
                         </div>
                         <div class="card-product__all-reviews-list">
                             @for($i = 0; $i < 5; $i++)
@@ -115,6 +121,17 @@
                     </div>--}}
                     <div class="card-product__all-logo">
                         <img src="{{ asset('assets/images/logo-card.png') }}" alt="">
+                    </div>
+                    <div class="card-product__slider-label">
+                        @foreach($product['label'] as $label)
+                            <div class="catalog__item-label catalog__item-label-{{ $label['type'] }}">
+                                @if(!empty($label['data']))
+                                    <span>{{ $label['data'] }} %</span>
+                                @else
+                                    <span>{{ $label['type'] }}</span>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -143,8 +160,11 @@
                                         <div class="card-product__tabs-table">
                                             @foreach($product['characteristics'] as $characteristics)
                                                 <div class="card-product__tabs-table-row">
-                                                    <div class="card-product__tabs-table-cell">{{$characteristics[0]}}:</div>
-                                                    <div class="card-product__tabs-table-cell card-product__tabs-table-cell-city">
+                                                    <div class="card-product__tabs-table-cell">{{$characteristics[0]}}
+                                                        :
+                                                    </div>
+                                                    <div
+                                                        class="card-product__tabs-table-cell card-product__tabs-table-cell-city">
                                                         {{$characteristics[1]}}</div>
                                                 </div>
                                             @endforeach
@@ -158,9 +178,9 @@
                                             @foreach($product['tags'] as $tag)
                                                 @switch($tag)
                                                     @case('halal')
-                                                        <div class="card-product__tabs-label-item"> Халяль
-                                                            <img src="{{ asset('assets/images/svg/tb-icon1.svg') }}" alt="">
-                                                        </div>
+                                                    <div class="card-product__tabs-label-item"> Халяль
+                                                        <img src="{{ asset('assets/images/svg/tb-icon1.svg') }}" alt="">
+                                                    </div>
                                                     @break
                                                     @case('vegan')
                                                     <div class="card-product__tabs-label-item"> Веган
@@ -215,7 +235,8 @@
                                                     <li>Новогодний декор</li>
                                                 </ol>
                                             </div>
-                                            <div class="card-product__tabs-text-mob-btn js-text-mob-btn">читать еще</div>
+                                            <div class="card-product__tabs-text-mob-btn js-text-mob-btn">читать еще
+                                            </div>
                                         </div>
                                         <div class="card-product__tabs-label">
                                             @foreach($product['tags'] as $tag)
@@ -249,68 +270,77 @@
                             <div class="tab-pane fade" id="card-item3" role="tabpanel" aria-labelledby="card-item3-tab">
                                 <div class="card-product__tabs-holder">
                                     <div class="card-product__tabs-inner">
-                                        <div class="card-product__reviews">
-                                            @foreach($product['reviews']['list'] as $review)
-                                                <div class="card-product__reviews-item">
-                                                    <div class="card-product__reviews-info">
-                                                        <div class="card-product__reviews-title">{{ $review['name'] }}</div>
-                                                        <div class="card-product__reviews-rating">
-                                                            @for($i = 0; $i < 5; $i++)
-                                                                @if(floor($review['rating']) - $i >= 1)
-                                                                    <div class="card-product__reviews-rating-item">
-                                                                        <img
-                                                                            src="{{asset('assets/images/svg/rating-active.svg')}}"
-                                                                            alt="">
-                                                                    </div>
-                                                                @else
-                                                                    <div class="card-product__reviews-rating-item">
-                                                                        <img
-                                                                            src="{{asset('assets/images/svg/rating.svg')}}"
-                                                                            alt="">
-                                                                    </div>
-                                                                @endif
-                                                            @endfor
+                                        @if(empty($product['reviews']))
+                                            <div class="card-product__reviews-none">
+                                                <div class="card-product__reviews-none-title">У этого товара пока нет отзывов.</div>
+                                                <p>Если вы заказывали этот товар, поделитесь своим впечатлением о нём, и<br> другие покупатели будут вам благодарны.</p>
+                                            </div>
+                                        @else
+                                            <div class="card-product__reviews">
+                                                @foreach($product['reviews']['list'] as $review)
+                                                    <div class="card-product__reviews-item">
+                                                        <div class="card-product__reviews-info">
+                                                            <div
+                                                                class="card-product__reviews-title">{{ $review['name'] }}</div>
+                                                            <div class="card-product__reviews-rating">
+                                                                @for($i = 0; $i < 5; $i++)
+                                                                    @if(floor($review['rating']) - $i >= 1)
+                                                                        <div class="card-product__reviews-rating-item">
+                                                                            <img
+                                                                                src="{{asset('assets/images/svg/rating-active.svg')}}"
+                                                                                alt="">
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="card-product__reviews-rating-item">
+                                                                            <img
+                                                                                src="{{asset('assets/images/svg/rating.svg')}}"
+                                                                                alt="">
+                                                                        </div>
+                                                                    @endif
+                                                                @endfor
+                                                            </div>
+                                                            <div
+                                                                class="card-product__reviews-data">{{ $review['date'] }}</div>
                                                         </div>
-                                                        <div class="card-product__reviews-data">{{ $review['date'] }}</div>
+                                                        <div class="card-product__reviews-description">
+                                                            <p>{{ $review['text'] }}</p>
+                                                            @if(!empty($review['images']))
+                                                                <div class="card-product__reviews-list">
+                                                                    @foreach($review['images'] as $image)
+                                                                        <a class="card-product__reviews-list-img"
+                                                                           href="{{ asset($image) }}"
+                                                                           data-fancybox="rev1" style="background-image:
+                                                                            url('{{ asset($image) }}')"></a>
+                                                                    @endforeach
+                                                                    {{--<div class="card-product__reviews-list-img card-product__reviews-list-img-all"
+                                                                         style="background-image: url('{{ asset('assets/images/card-img4.jpg') }}')">
+                                                                        <span>еще 3</span>
+                                                                    </div>--}}
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                                {{--<div class="card-product__reviews-item d-none">
+                                                    <div class="card-product__reviews-info">
+                                                        <div class="card-product__reviews-title">Лариса Шинкаренко</div>
+                                                        <div class="card-product__reviews-rating">
+                                                            <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
+                                                            <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
+                                                            <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
+                                                            <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
+                                                            <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating.svg') }}" alt=""></div>
+                                                        </div>
+                                                        <div class="card-product__reviews-data">14.01.2021</div>
                                                     </div>
                                                     <div class="card-product__reviews-description">
-                                                        <p>{{ $review['text'] }}</p>
-                                                        @if(!empty($review['images']))
-                                                            <div class="card-product__reviews-list">
-                                                                @foreach($review['images'] as $image)
-                                                                    <a class="card-product__reviews-list-img"
-                                                                       href="{{ asset($image) }}"
-                                                                       data-fancybox="rev1" style="background-image:
-                                                                        url('{{ asset($image) }}')"></a>
-                                                                @endforeach
-                                                                {{--<div class="card-product__reviews-list-img card-product__reviews-list-img-all"
-                                                                     style="background-image: url('{{ asset('assets/images/card-img4.jpg') }}')">
-                                                                    <span>еще 3</span>
-                                                                </div>--}}
-                                                            </div>
-                                                        @endif
+                                                        <p>Хорошее и натуральное спелое манго, которое будет сочиться и будет обладать неповторимымвкусом и ароматом, найти достаточно сложно! Если приобрести манго в любом сетевом магазине,то Вы сами в этом убедитесь. Их манго жесткие, незрелые, блестят</p>
+                                                        <div class="card-product__reviews-list"><a class="card-product__reviews-list-img" href="{{ asset('assets/images/card-img3.jpg') }}" data-fancybox="rev3" style="background-image: url('{{ asset('assets/images/card-img3.jpg') }}')"></a><a class="card-product__reviews-list-img" href="{{ asset('assets/images/card-img4.jpg') }}" data-fancybox="rev3" style="background-image: url('{{ asset('assets/images/card-img4.jpg') }}')"></a><a class="card-product__reviews-list-img" href="{{ asset('assets/images/card-img4.jpg') }}" data-fancybox="rev3" style="background-image: url('{{ asset('assets/images/card-img4.jpg') }}')"></a></div>
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                            {{--<div class="card-product__reviews-item d-none">
-                                                <div class="card-product__reviews-info">
-                                                    <div class="card-product__reviews-title">Лариса Шинкаренко</div>
-                                                    <div class="card-product__reviews-rating">
-                                                        <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
-                                                        <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
-                                                        <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
-                                                        <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt=""></div>
-                                                        <div class="card-product__reviews-rating-item"><img src="{{ asset('assets/images/svg/rating.svg') }}" alt=""></div>
-                                                    </div>
-                                                    <div class="card-product__reviews-data">14.01.2021</div>
-                                                </div>
-                                                <div class="card-product__reviews-description">
-                                                    <p>Хорошее и натуральное спелое манго, которое будет сочиться и будет обладать неповторимымвкусом и ароматом, найти достаточно сложно! Если приобрести манго в любом сетевом магазине,то Вы сами в этом убедитесь. Их манго жесткие, незрелые, блестят</p>
-                                                    <div class="card-product__reviews-list"><a class="card-product__reviews-list-img" href="{{ asset('assets/images/card-img3.jpg') }}" data-fancybox="rev3" style="background-image: url('{{ asset('assets/images/card-img3.jpg') }}')"></a><a class="card-product__reviews-list-img" href="{{ asset('assets/images/card-img4.jpg') }}" data-fancybox="rev3" style="background-image: url('{{ asset('assets/images/card-img4.jpg') }}')"></a><a class="card-product__reviews-list-img" href="{{ asset('assets/images/card-img4.jpg') }}" data-fancybox="rev3" style="background-image: url('{{ asset('assets/images/card-img4.jpg') }}')"></a></div>
-                                                </div>
+                                                <div class="card-product__reviews-btn js-card-product-reviews">смотреть +75 еще</div>--}}
                                             </div>
-                                            <div class="card-product__reviews-btn js-card-product-reviews">смотреть +75 еще</div>--}}
-                                        </div>
+                                        @endif
                                     </div>
                                     <div class="card-product__right">
                                         @include('layouts.catalog.product.shop')
@@ -324,7 +354,7 @@
                     </div>
                     <div class="card-product__other">
                         <h3>Другие предложения продавцов на сайте</h3>
-{{--                        {{ dd($product['offers']) }}--}}
+                        {{--                        {{ dd($product['offers']) }}--}}
                         <div class="card-product__product">
                             @foreach($product['offers'] as $offer)
                                 <div class="card-product__product-row">
@@ -332,7 +362,8 @@
                                         <div class="card-product__product-img">
                                             <img src="{{ asset($offer['image']) }}" alt="">
                                         </div>
-                                        <a class="card-product__product-title" href="{{ $offer['slug'] }}">{{ $offer['title'] }}</a>
+                                        <a class="card-product__product-title"
+                                           href="{{ $offer['slug'] }}">{{ $offer['title'] }}</a>
                                         <div class="card-product__product-firm">{{ $offer['subTitle'] }}</div>
                                     </div>
                                     <div class="card-product__product-price">

@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function home(Request $request)
     {
-        $categories = $this->requestHelper->getRequest('categories/main');
+        $categories = $this->requestHelper->getRequest('catalog/main');
         return view('home', [
             'categories' => $categories,
         ]);
@@ -19,7 +19,7 @@ class HomeController extends Controller
 
     public function getTest()
     {
-
+        dd(session()->all());
         return view('test');
     }
 

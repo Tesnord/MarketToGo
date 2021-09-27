@@ -1,7 +1,21 @@
 'use strict';
 
 $(function () {
-/*    $('.down').click(function () {
+    $('.lk__menu, .order__right').theiaStickySidebar({
+        additionalMarginTop: 10
+    });
+    $(".catalog__item .catalog__item-fav").click(function (e) {
+        $(this).parent().parent().toggleClass('catalog__item-favorites');
+    });
+
+    $(".js-cart").click(function (e) {
+        $(this).parent().addClass('am');
+    });
+    $(".js-buy-cart").click(function (e) {
+        $(this).parent().addClass('ct');
+    });
+
+    /*$('.down').click(function () {
         var $input = $(this).parent().find('input');
         var count = parseInt($input.val()) - 1;
         count = count < 1 ? 1 : count;

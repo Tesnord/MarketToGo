@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-4">
+                           {{-- <div class="col-xl-4">
                                 <div class="lk__group-item">
                                     <a href="{{ route('personal.subscribe') }}"></a>
                                     <div class="lk__group-item-label">2 подписки</div>
@@ -57,10 +57,10 @@
                                         Редактируйте личные данные, управляйте уведомлениями
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
-                    <div class="cart-banner cart-banner-tw">
+                    {{--<div class="cart-banner cart-banner-tw">
                         <div class="cart-banner__inner">
                             <div class="cart-banner__img">
                                 <img src="{{ asset('assets/images/cart-banner2.png') }}" alt="">
@@ -70,7 +70,7 @@
                                 <a class="cart-banner__btn-tw" href="#">Добавить товары</a>
                             </div>
                         </div>
-                    </div>
+                    </div>--}}
                 </div>
                 @include('layouts.user.nav')
             </div>

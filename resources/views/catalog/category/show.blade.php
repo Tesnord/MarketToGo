@@ -19,8 +19,9 @@
         <div class="container">
             <div class="catalog-min__labels">
                 @foreach($children as $category)
-                    <a class="catalog-min__labels-item" href="{{ route('category.index', ['slug_category' => $category['slug']]) }}">
-                        <img src="{{asset('assets/images/svg/labels-icon.svg')}}" alt="">
+                    <a class="catalog-min__labels-item"
+                       href="{{ route('category.index', ['slug_category' => $category['slug']]) }}">
+                        <img style="height: 35px" src="{{asset($category['image'])}}" alt="">
                         <span>{{ $category['title'] }}</span>
                     </a>
                 @endforeach

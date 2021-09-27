@@ -46,7 +46,6 @@ if (document.querySelectorAll('.catalog__item .catalog__item-fav')) {
                     .then(json => {
                         if (json.status === 'ok') {
                             favoriteArr.push(product_id)
-                            productSelect.classList.toggle('catalog__item-favorites')
                             setFavorites(favoriteArr)
                         } else {
                             log('errors')
@@ -59,7 +58,6 @@ if (document.querySelectorAll('.catalog__item .catalog__item-fav')) {
                     .then(json => {
                         if (json.status === 'ok') {
                             favoriteArr.splice(item_index, 1)
-                            productSelect.classList.toggle('catalog__item-favorites')
                             setFavorites(favoriteArr)
                         } else {
                             log('errors')
@@ -222,7 +220,7 @@ const down = e => {
  * Добавление в корзину из каталога
  */
 if (document.querySelectorAll('div.catalog__item-info')) {
-    document.querySelectorAll('div.catalog__item-info a.catalog__item-buy').forEach(t => {
+    document.querySelectorAll('div.catalog__item-info span.catalog__item-buy').forEach(t => {
         putEvent(t)
     })
 }

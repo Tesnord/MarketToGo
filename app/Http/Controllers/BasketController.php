@@ -19,11 +19,8 @@ class BasketController extends Controller
                 }
             }
         };
-
         if ($request->session()->has('token')) {
             $products = $this->requestHelper->getUserRequest($request, 'basket');
-            // dd($products);
-
             return view('catalog.basket.show', [
                 'products' => $products['data'],
                 'count' => count($products['data']),
@@ -61,8 +58,14 @@ class BasketController extends Controller
         return ['status' => 'ok'];
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
-        return view('catalog.basket.checkout');
+        $order = $this->requestHelper->getUserRequest($request, 'order');
+//        dd($order);
+        return view('catalog.basket.checkout', [
+            'order' => $order['data'],
+            'address' => $order['data']['address'],
+            'profile' => $order['data']['profile'],
+        ]);
     }
 }

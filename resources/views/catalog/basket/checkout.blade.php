@@ -21,42 +21,84 @@
                     <div class="order__wrap">
                         <div class="cart__inner">
                             <div class="cart__list">
-                                <div class="cart__list-item">
-                                    <div class="cart__list-descr">
-                                        <div class="cart__list-img" style="background-image: url('{{ asset('assets/images/card-img3.jpg') }}')"></div><a class="cart__list-title" href="#">Манго Тайское Премиум (1 шт 300 гр)</a>
-                                        <div class="cart__list-article">Артикул: 87346773</div>
-                                    </div>
-                                    <div class="cart__list-numb">
-                                        <div class="cart__list-price"></div>
-                                        <div class="cart__list-numb-tx">Цена за 1 шт</div>
-                                    </div>
-                                    <div class="cart__list-numb last">
-                                        <div class="cart__list-price">
-                                            <div class="cart__list-price-now">242 ₽</div>
+                                @foreach($order['products'] as $product)
+                                    <div class="cart__list-item">
+                                        <div class="cart__list-descr">
+                                            <div class="cart__list-img"
+                                                 style="background-image: url('{{ asset($product['image']) }}')"></div>
+                                            <a class="cart__list-title" href="#">{{$product['title']}}</a>
+                                            <div class="cart__list-article">Артикул: {{$product['vendorCode']}}</div>
                                         </div>
-                                        <div class="cart__list-numb-tx">Экономия 300 ₽</div>
-                                    </div>
-                                </div>
-                                <div class="cart__list-item">
-                                    <div class="cart__list-descr">
-                                        <div class="cart__list-img" style="background-image: url('{{ asset('assets/images/card-img2.jpg') }}')"></div><a class="cart__list-title" href="#">Манго Тайское Премиум (1 шт 300 гр)</a>
-                                        <div class="cart__list-article">Артикул: 87346773</div>
-                                    </div>
-                                    <div class="cart__list-numb">
-                                        <div class="cart__list-price"></div>
-                                        <div class="cart__list-numb-tx">Цена за 1 шт</div>
-                                    </div>
-                                    <div class="cart__list-numb last">
-                                        <div class="cart__list-price">
-                                            <div class="cart__list-price-now">242 ₽</div>
+                                        <div class="cart__list-numb">
+                                            <div class="cart__list-price"></div>
+                                            <div class="cart__list-numb-tx">Цена за {{$product['count']}} шт</div>
                                         </div>
-                                        <div class="cart__list-numb-tx">Экономия 300 ₽</div>
+                                        <div class="cart__list-numb last">
+                                            <div class="cart__list-price">
+                                                <div class="cart__list-price-now">{{$product['price']}} ₽</div>
+                                            </div>
+                                            <div class="cart__list-numb-tx">Экономия {{$product['economy']}} ₽</div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                    <div class="order__wrap">
+                    <div class="order__wrap order__create" @if(!empty($address)) style="display: none" @endif>
+                        <div class="order__delivery">
+                            <div class="order__wrap-top">
+                                <div class="order__wrap-title">Доставка</div>
+                            </div>
+                            <div class="order__input">
+                                <a class="button button-gr button__create" href="javascript:void(0)">добавить адрес</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order__wrap order__store" style="display: none">
+                        <div class="order__delivery">
+                            <div class="order__wrap-top">
+                                <div class="order__wrap-title">Доставка</div>
+                            </div>
+                            <div class="order__input">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="order__input-cell order__input-cell-error">
+                                            <input class="form__input-effect has-content" type="text" id="address1">
+                                            <label for="address1">Адрес *</label>
+                                            {{--<span class="form__input-error">К сожалению, мы еще не осуществляем доставку в данном месте.</span>--}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="order__input-cell">
+                                            <input class="form__input-effect has-content" type="text" id="address2">
+                                            <label for="address2">Квартира *</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="order__input-cell">
+                                            <input class="form__input-effect has-content" type="text" id="address3">
+                                            <label for="address3">Этаж</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="order__input-cell">
+                                            <input class="form__input-effect has-content" type="text" id="address4">
+                                            <label for="address4">Подъезд</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="order__input-cell">
+                                            <input class="form__input-effect has-content" type="text" id="address5">
+                                            <label for="address5">Домофон</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="button button-gr button__store" href="javascript:void(0)">добавить адрес</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order__wrap order__show" @if(empty($address)) style="display: none" @endif>
                         <div class="order__delivery">
                             <div class="order__wrap-top">
                                 <div class="order__wrap-title">Доставка</div>
@@ -66,58 +108,68 @@
                                     <div class="order__wrap-list-item">200 ₽</div>
                                 </div>
                             </div>
-{{--                            Адрес предзаполнен--}}
-                            {{--<div class="order__payment-list">
-                                <div class="order__payment-list-tx">Ранее вы заказывали на данные адреса</div>
-                                <div class="order__payment-list-item-in">
-                                    <div class="order__payment-list-item">
-                                        <input type="radio" id="delivery1" name="delivery" checked>
-                                        <label for="delivery1"><span class="tit">Краснодар, улица им. Котлярова Н.С., д.24</span></label>
-                                    </div>
-                                    <div class="order__payment-list-item">
-                                        <input type="radio" id="delivery2" name="delivery">
-                                        <label for="delivery2"><span class="tit">г. Краснодар (Краснодарский край), улица имени Сергея Есенина, д. 113</span></label>
-                                    </div>
-                                </div><a class="button button-gr" href="#">добавить адрес</a>
-                            </div>--}}
+                            <div class="order__payment-list fl">
+                                <div class="order__payment-list-change-tx">
+                                    {{ $address['street'] }}
+                                </div>
+                                <a class="order__payment-list-change button__show" href="javascript:void(0)">
+                                    <svg>
+                                        <use xlink:href="#pen"></use>
+                                    </svg>
+                                    Изменить
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order__wrap order__update" style="display: none">
+                        <div class="order__delivery">
+                            <div class="order__wrap-top">
+                                <div class="order__wrap-title">Доставка</div>
+                            </div>
                             <div class="order__input">
-{{--                                <div class="order__payment-list-tx">Добавить новый адрес</div>
-                                    <a class="button button-gr" href="#">добавить адрес</a>--}}
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="order__input-cell order__input-cell-error">
-                                            <input class="form__input-effect has-content" type="text" id="address1" value="Краснодар, ул.Пушкина, 12">
-                                            <label for="address1">Адрес *</label><span class="form__input-error">К сожалению, мы еще не осуществляем доставку в данном месте.</span>
+                                        <div class="order__input-cell">
+                                            <input class="form__input-effect has-content" type="text" id="updateAddress1"
+                                                   value="{{ $address['street'] }}">
+                                            <label for="address1">Адрес *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address2" value="12">
+                                            <input class="form__input-effect has-content" type="text" id="updateAddress2"
+                                                   value="{{ $address['apartment'] }}">
                                             <label for="address2">Квартира *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address3" value="2">
+                                            <input class="form__input-effect has-content" type="text" id="updateAddress3"
+                                                   value="{{ $address['floor'] }}">
                                             <label for="address3">Этаж</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address4" value="12">
+                                            <input class="form__input-effect has-content" type="text" id="updateAddress4"
+                                                   value="{{ $address['entrance'] }}">
                                             <label for="address4">Подъезд</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address5" value="12">
+                                            <input class="form__input-effect has-content" type="text" id="updateAddress5"
+                                                   value="{{ $address['intercom'] }}">
                                             <label for="address5">Домофон</label>
                                         </div>
                                     </div>
                                 </div>
+                                <a class="button button-gr button__update" href="javascript:void(0)">Сохранить изменения</a>
                             </div>
                         </div>
                     </div>
+
                     <div class="order__wrap">
                         <div class="order__payment">
                             <div class="order__wrap-top">
@@ -146,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="order__point">
+                            {{--<div class="order__point">
                                 <div class="order__point-check">
                                     <input type="checkbox" id="check" name="check">
                                     <label for="check">Списать баллы</label>
@@ -158,7 +210,7 @@
                                     </div>
                                     <div class="polzunok-5"></div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                     <div class="order__wrap">
@@ -173,25 +225,29 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="name">
+                                            <input class="form__input-effect" type="text" id="name"
+                                                   value="{{$profile['name']}}">
                                             <label for="name">Имя *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="name-f">
+                                            <input class="form__input-effect" type="text" id="name-f"
+                                                   value="{{$profile['surname']}}">
                                             <label for="name-f">Фамилия *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="tel">
+                                            <input class="form__input-effect" type="text" id="tel"
+                                                   value="{{$profile['phone']}}">
                                             <label for="tel">Телефон *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="mail">
+                                            <input class="form__input-effect" type="text" id="mail"
+                                                   value="{{$profile['email']}}">
                                             <label for="mail">Электронная почта</label>
                                         </div>
                                     </div>
@@ -206,60 +262,64 @@
                         <div class="order__list-table">
                             <div class="order__list-table-row">
                                 <div class="order__list-table-item">Товары:</div>
-                                <div class="order__list-table-item">2 шт</div>
+                                <div class="order__list-table-item">{{ $order['totalCount'] }} шт</div>
                             </div>
                         </div>
                         <div class="order__list-promo">
                             <div class="cart__list-promo">
                                 <input type="text">
-                                <button class="cart__list-promo-btn"><img src="{{ asset('assets/images/svg/arrow3.svg') }}" alt=""></button>
+                                <button class="cart__list-promo-btn"><img
+                                        src="{{ asset('assets/images/svg/arrow3.svg')}}" alt=""></button>
                             </div>
                             <div class="cart__list-promo-done">Промокод применен</div>
                         </div>
                         <div class="order__list-table order__list-table-tw">
                             <div class="order__list-table-row">
                                 <div class="order__list-table-item">Доставка:</div>
-                                <div class="order__list-table-item"><a href="#">Выбрать</a></div>
-                            </div>
-                            <div class="order__list-table-row">
-                                <div class="order__list-table-item">Дата доставки:</div>
-                                <div class="order__list-table-item">Сегодня, 12 января</div>
+                                <div class="order__list-table-item">Курьером</div>
                             </div>
                             <div class="order__list-table-row">
                                 <div class="order__list-table-item">Способ оплаты:</div>
-                                <div class="order__list-table-item"><a href="#">Выбрать</a></div>
+                                <div class="order__list-table-item"><a href="#">Онлайн-оплата</a></div>
                             </div>
                         </div>
                         <div class="order__list-table">
                             <div class="order__list-table-row">
                                 <div class="order__list-table-item">Товаров на:</div>
-                                <div class="order__list-table-item">238 ₽</div>
+                                <div class="order__list-table-item">{{ $order['totalPrice'] }} ₽</div>
                             </div>
                             <div class="order__list-table-row">
                                 <div class="order__list-table-item">Доставка:</div>
                                 <div class="order__list-table-item">150 ₽</div>
                             </div>
-                            <div class="order__list-table-row">
+                            {{--<div class="order__list-table-row">
                                 <div class="order__list-table-item">Начислено баллов:</div>
                                 <div class="order__list-table-item">15</div>
-                            </div>
+                            </div>--}}
                             <div class="order__list-table-row">
                                 <div class="order__list-table-item">Экономия:</div>
-                                <div class="order__list-table-item">22 ₽</div>
+                                <div class="order__list-table-item">{{ $order['totalEconomy'] }} ₽</div>
                             </div>
+                        </div>
+                        <div class="order__list-all prom">
+                            <div class="order__list-all-item">Промокод:</div>
+                            <div class="order__list-all-item">-120 ₽</div>
                         </div>
                         <div class="order__list-all">
                             <div class="order__list-all-item">Итого:</div>
                             <div class="order__list-all-item">238 ₽</div>
-                        </div><a class="button button-secondary w-100" href="#">оформить заказ</a>
-                        <div class="order__list-descr">Нажимая кнопку «Оплатить заказ», я даю согласие на обработку своих персональных данных и принимаю условия Пользовательского соглашения</div>
+                        </div>
+                        <a class="button button-secondary w-100" href="javascript:void(0)">оформить заказ</a>
+                        <div class="order__list-descr">Нажимая кнопку «Оплатить заказ», я даю согласие на обработку
+                            своих персональных данных и принимаю условия Пользовательского соглашения
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-{{--    if заказ оформлен--}}
+    {{--    if заказ оформлен--}}
     {{--<div class="tx">
         <div class="container">
             <div class="tx__inner">

@@ -82,7 +82,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::prefix('personal')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('personal.index');
     Route::get('/setting', [UserController::class, 'setting'])->name('personal.setting');
-    Route::get('/subscribe', [UserController::class, 'subscribe'])->name('personal.subscribe');
+    Route::put('/setting', [UserController::class, 'settingPut'])->name('personal.setting.put');
+//    Route::get('/subscribe', [UserController::class, 'subscribe'])->name('personal.subscribe');
     Route::get('/orders', [UserController::class, 'orders'])->name('personal.orders');
 });
 // Корзина
