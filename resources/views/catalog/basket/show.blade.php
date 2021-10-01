@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-{{--    if подписка оформлена--}}
+    {{--    if подписка оформлена--}}
     {{--<div class="cart-banner cart-banner-tw">
         <div class="cart-banner__inner">
             <div class="cart-banner__img"><img src="{{ asset('assets/images/cart-banner2.png') }}" alt=""></div>
@@ -32,8 +32,10 @@
                         @foreach($products as $product)
                             <div class="cart__list-item" data-product-id="{{ $product['_id']  }}">
                                 <div class="cart__list-descr">
-                                    <div class="cart__list-img" style="background-image: url('{{ asset($product['image']) }}')"></div>
-                                    <a class="cart__list-title" href="{{ route('product', ['slug_product' => $product['slug']]) }}">
+                                    <div class="cart__list-img"
+                                         style="background-image: url('{{ asset($product['image']) }}')"></div>
+                                    <a class="cart__list-title"
+                                       href="{{ route('product', ['slug_product' => $product['slug']]) }}">
                                         {{ $product['title'] }}
                                     </a>
                                     <div class="cart__list-article">Артикул: {{ $product['vendorCode'] }}</div>
@@ -41,13 +43,19 @@
                                 <div class="cart__list-numb cart__list-numb-tw">
                                     <div class="cart__list-price">
                                         <div class="cart__list-price-now">
-                                            {{ $product['price']['value'] }}
+                                            <span class="one__price-now">
+                                                {{ $product['price']['value'] }}
+                                            </span>
                                             {{ $product['price']['currency'] }}
                                         </div>
-                                        <div class="cart__list-price-old">
-                                            {{ $product['oldPrice']['value'] }}
-                                            {{ $product['oldPrice']['currency'] }}
-                                        </div>
+                                        @if(!empty($product['oldPrice']))
+                                            <div class="cart__list-price-old">
+                                                <span class="one__price-old">
+                                                    {{ $product['oldPrice']['value'] }}
+                                                </span>
+                                                {{ $product['oldPrice']['currency'] }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="cart__list-numb-tx">Цена за 1 шт</div>
                                 </div>
@@ -66,20 +74,26 @@
                                 <div class="cart__list-numb">
                                     <div class="cart__list-price">
                                         <div class="cart__list-price-now">
-                                            {{ $productPrice($product) }}
+                                            <span class="price-now">{{$product['allPrice']}}</span>
                                             {{ $product['price']['currency'] }}
                                         </div>
                                     </div>
-                                    <div class="cart__list-numb-tx">Экономия
-                                        {{ $productPrice($product, $productBasket($product['_id'])) }}
-                                        {{ $product['price']['currency'] }}
-                                    </div>
+                                    @if(!empty($product['oldPrice']))
+                                        <div class="cart__list-numb-tx">Экономия
+                                            <span class="economy">{{$product['allEconomy']}}</span>
+                                            {{ $product['price']['currency'] }}
+                                        </div>
+                                    @endif
                                 </div>
-                                <div class="cart__list-delete"><svg><use xlink:href="#delete"></use></svg></div>
+                                <div class="cart__list-delete">
+                                    <svg>
+                                        <use xlink:href="#delete"></use>
+                                    </svg>
+                                </div>
                             </div>
                         @endforeach
                     </div>
-{{--                    if товары по подписке--}}
+                    {{--                    if товары по подписке--}}
                     {{--<div class="cart__list">
                         <h3>Товары по подписке</h3>
                         <div class="cart__list-item">
@@ -113,33 +127,43 @@
                             <div class="cart__list-all-title">Промокод применен</div>
                             <div class="cart__list-promo">
                                 <input type="text">
-                                <button class="cart__list-promo-btn"><img src="{{ asset('assets/images/svg/arrow3.svg') }}" alt=""></button>
+                                <button class="cart__list-promo-btn"><img
+                                        src="{{ asset('assets/images/svg/arrow3.svg') }}" alt=""></button>
                             </div>
                             <div class="cart__list-promo-done">Промокод применен</div>
                         </div>
                         <div class="cart__list-all-tx">
                             <div class="cart__list-all-tx-title">Итого:</div>
-{{--                            <div class="cart__list-all-tx-text">Общий вес: 0.4 кг</div>--}}
+                            {{--<div class="cart__list-all-tx-text">Общий вес:  кг</div>--}}
                         </div>
                         <div class="cart__list-all-price">
                             <div class="cart__list-price">
                                 <div class="cart__list-price-now">
-
+                                    <span class="total__price-now">{{$totalPrice}}</span>
                                     {{ $product['price']['currency'] }}
                                 </div>
-                                <div class="cart__list-price-old">
-                                    145
-                                    {{ $product['price']['currency'] }}
-                                </div>
+                                @if(!empty($product['oldPrice']))
+                                    <div class="cart__list-price-old">
+                                        <span class="total__price-old">{{$totalEconomy}}</span>
+                                        {{ $product['price']['currency'] }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                        <div class="cart__list-all-btn"><a class="button button-secondary" href="{{ route('basket.checkout') }}">оформить заказ</a></div>
+                        <div class="cart__list-all-btn">
+                            @if(session()->has('token'))
+                                <a class="button button-secondary" href="{{ route('basket.checkout') }}">оформить
+                                    заказ</a></div>
+                        @else
+                            <a class="button button-secondary" href="{{ route('login.create') }}">оформить заказ</a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
-    {{--    if подписка не оформлена--}}
-        <div class="cart-banner">
+        </div>
+        {{--    if подписка не оформлена--}}
+        {{--<div class="cart-banner">
             <div class="container">
                 <div class="cart-banner__inner">
                     <div class="cart-banner__img"><img src="{{ asset('assets/images/cart-banner1.png') }}" alt=""></div>
@@ -149,7 +173,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
+
+        {{--@include('layouts.catalog.offer')--}}
     @else
         <div class="tx">
             <div class="container">
@@ -157,111 +183,12 @@
                     <div class="tx__img"><img src="{{ asset('assets/images/svg/img1.svg') }}" alt=""></div>
                     <div class="tx__text">
                         <div class="tx__title">В корзине пока нет товаров</div>
-                        <p>Перейдите в каталог, посмотрите скидки или <br>воспользуйтесь поиском, чтобы найти нужный товар.</p>
+                        <p>Перейдите в каталог, посмотрите скидки или <br>воспользуйтесь поиском, чтобы найти нужный
+                            товар.</p>
                         <a class="button button-secondary" href="{{ route('home') }}">начать покупки</a>
                     </div>
                 </div>
             </div>
         </div>
-        {{--<div class="catalog-min catalog-min-tw">
-            <div class="container">
-                <h3>Возможно вас заинтересует</h3>
-                <div class="row">
-                    <div class="col-lg-2-1 col-lg-3 col-md-4 col-sm-6">
-                        <div class="catalog__item catalog__item-bt">
-                            <div class="catalog__item-top"><a class="catalog__item-img" href="#"><img src="{{ asset('assets/images/catalog-img17.jpg') }}" alt=""></a>
-                                <div class="catalog__item-fav"><svg><use xlink:href="#like"></use></svg></div>
-                                <div class="catalog__item-label catalog__item-label-hit"><span>хит</span></div>
-                            </div>
-                            <div class="catalog__item-tx"><a class="catalog__item-title" href="#">Подарочный набор «Дари тепло»</a>
-                                <div class="catalog__item-numb">12 товаров</div>
-                                <div class="catalog__item-bottom">
-                                    <div class="catalog__item-info">
-                                        <div class="catalog__item-price">
-                                            <div class="catalog__item-price-old">50 руб</div>
-                                            <div class="catalog__item-price-now">2200 {{ $product['price']['currency'] }}</div>
-                                        </div><a class="catalog__item-buy" href="#">купить<img src="{{ asset('assets/images/svg/cart.svg') }}" alt=""></a>
-                                    </div><a class="catalog__item-offer" href="#">5 предложений</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2-1 col-lg-3 col-md-4 col-sm-6">
-                        <div class="catalog__item catalog__item-bt">
-                            <div class="catalog__item-top"><a class="catalog__item-img" href="#"><img src="{{ asset('assets/images/catalog-img18.jpg') }}" alt=""></a>
-                                <div class="catalog__item-fav"><svg><use xlink:href="#like"></use></svg></div>
-                            </div>
-                            <div class="catalog__item-tx"><a class="catalog__item-title" href="#">Подарочный набор «Порция счастья»</a>
-                                <div class="catalog__item-numb">5 товаров</div>
-                                <div class="catalog__item-bottom">
-                                    <div class="catalog__item-info">
-                                        <div class="catalog__item-price">
-                                            <div class="catalog__item-price-now">1305 {{ $product['price']['currency'] }}</div>
-                                        </div>
-                                        <div class="catalog__item-amount">
-                                            <input type="text" value="1"><span class="up"><img src="{{ asset('assets/images/svg/plus.svg') }}" alt=""></span><span class="down"><img src="{{ asset('assets/images/svg/minus.svg') }}" alt=""></span>
-                                        </div>
-                                    </div><a class="catalog__item-offer" href="#">5 предложений</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2-1 col-lg-3 col-md-4 col-sm-6">
-                        <div class="catalog__item catalog__item-bt">
-                            <div class="catalog__item-top"><a class="catalog__item-img" href="#"><img src="{{ asset('assets/images/catalog-img19.jpg') }}" alt=""></a>
-                                <div class="catalog__item-fav"><svg><use xlink:href="#like"></use></svg></div>
-                            </div>
-                            <div class="catalog__item-tx"><a class="catalog__item-title" href="#">Подарочный набор «Любимым родителям»</a>
-                                <div class="catalog__item-numb">12 товаров</div>
-                                <div class="catalog__item-bottom">
-                                    <div class="catalog__item-info">
-                                        <div class="catalog__item-price">
-                                            <div class="catalog__item-price-old">50 {{ $product['price']['currency'] }}</div>
-                                            <div class="catalog__item-price-now">1500 {{ $product['price']['currency'] }}</div>
-                                        </div><a class="catalog__item-buy" href="#">купить<img src="{{ asset('assets/images/svg/cart.svg') }}" alt=""></a>
-                                    </div><a class="catalog__item-offer" href="#">5 предложений</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2-1 col-lg-3 col-md-4 col-sm-6">
-                        <div class="catalog__item catalog__item-bt">
-                            <div class="catalog__item-top"><a class="catalog__item-img" href="#"><img src="{{ asset('assets/images/catalog-img20.jpg') }}" alt=""></a>
-                                <div class="catalog__item-fav"><svg><use xlink:href="#like"></use></svg></div>
-                            </div>
-                            <div class="catalog__item-tx"><a class="catalog__item-title" href="#">Подарочный набор «Чудо»</a>
-                                <div class="catalog__item-numb">12 товаров</div>
-                                <div class="catalog__item-bottom">
-                                    <div class="catalog__item-info">
-                                        <div class="catalog__item-price">
-                                            <div class="catalog__item-price-old">50 {{ $product['price']['currency'] }}</div>
-                                            <div class="catalog__item-price-now">1900 {{ $product['price']['currency'] }}</div>
-                                        </div><a class="catalog__item-buy" href="#">купить<img src="{{ asset('assets/images/svg/cart.svg') }}" alt=""></a>
-                                    </div><a class="catalog__item-offer" href="#">5 предложений</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2-1 col-lg-3 col-md-4 col-sm-6">
-                        <div class="catalog__item catalog__item-bt">
-                            <div class="catalog__item-top"><a class="catalog__item-img" href="#"><img src="{{ asset('assets/images/catalog-img21.jpg') }}" alt=""></a>
-                                <div class="catalog__item-fav"><svg><use xlink:href="#like"></use></svg></div>
-                            </div>
-                            <div class="catalog__item-tx"><a class="catalog__item-title" href="#">Подарочный набор «Дорогому дедушке»</a>
-                                <div class="catalog__item-numb">12 товаров</div>
-                                <div class="catalog__item-bottom">
-                                    <div class="catalog__item-info">
-                                        <div class="catalog__item-price">
-                                            <div class="catalog__item-price-old">50 {{ $product['price']['currency'] }}</div>
-                                            <div class="catalog__item-price-now">2100 {{ $product['price']['currency'] }}</div>
-                                        </div><a class="catalog__item-buy" href="#">купить<img src="{{ asset('assets/images/svg/cart.svg') }}" alt=""></a>
-                                    </div><a class="catalog__item-offer" href="#">5 предложений</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>--}}
     @endif
 @endsection

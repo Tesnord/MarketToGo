@@ -195,7 +195,7 @@ const down = e => {
     const input = product.querySelector('input.count')
     basketArr.forEach((el, key) => {
         if (el.id === product_id) {
-            myFetch('/basket', 'DELETE', {id: product_id, count: input.value})
+            myFetch('/basket', 'PUT', {id: product_id, count: input.value})
                 .then(response => response.json())
                 .then(json => {
                     if (json.status === 'ok') {
@@ -241,27 +241,12 @@ if (document.querySelectorAll('.cart__list-item')) {
      */
     document.querySelectorAll('.cart__list-item span.up').forEach(t => {
         t.addEventListener('click', e => {
-            const basketArr = getBasket()
             const product = e.currentTarget.closest('[data-product-id]')
-            const product_id = product.dataset.productId
             const input = product.querySelector('input.count')
-            basketArr.forEach(el => {
-                if (el.id === product_id) {
-                    myFetch('/basket', 'PUT', {id: product_id, count: input.value})
-                        .then(response => response.json())
-                        .then(json => {
-                            if (json.status === 'ok') {
-                                input.value = input.value++ < input.max ? input.value++ : input.max
-                                el.count = input.value
-                                document.querySelector('.cart__list-price-now')
-                                log(basketArr)
-                                setBasket(basketArr)
-                            } else {
-                                log('errors')
-                            }
-                        })
-                }
-            })
+            input.value = input.value++ < input.max ? input.value : input.max
+            const event = document.createEvent("HTMLEvents");
+            event.initEvent("change", true, false);
+            input.dispatchEvent(event);
         })
     })
     /**
@@ -270,31 +255,82 @@ if (document.querySelectorAll('.cart__list-item')) {
      */
     document.querySelectorAll('.cart__list-item span.down').forEach(t => {
         t.addEventListener('click', e => {
-            const basketArr = getBasket()
             const product = e.currentTarget.closest('[data-product-id]')
+            const input = product.querySelector('input.count')
+            input.value = input.value-- > 0 ? input.value : 0
+            const event = document.createEvent("HTMLEvents");
+            event.initEvent("change", true, false);
+            input.dispatchEvent(event);
+        })
+    })
+    document.querySelectorAll('.cart__list-item input.count').forEach(t => {
+        t.addEventListener('change', _.debounce(e => {
+            const basketArr = getBasket()
+            const product = e.target.closest('[data-product-id]')
             const product_id = product.dataset.productId
             const input = product.querySelector('input.count')
-            basketArr.forEach((el, key) => {
-                if (el.id === product_id) {
-                    myFetch('/basket', 'DELETE', {id: product_id, count: input.value})
-                        .then(response => response.json())
-                        .then(json => {
-                            if (json.status === 'ok') {
-                                if (--input.value === 0) {
-                                    basketArr.splice(key, 1)
-                                    product.remove()
-                                } else {
-                                    el.count = input.value
-                                }
-                                log(basketArr)
-                                setBasket(basketArr)
-                            } else {
-                                log('errors')
-                            }
-                        })
-                }
+            const products = document.querySelectorAll('.cart__list-item').length
+            /**
+             * Изменение суммы в корзине
+             */
+            const onePriceNow = product.querySelector('.one__price-now').textContent
+            product.querySelector('.price-now').innerHTML = onePriceNow * input.value
+            let arrPrice = []
+            document.querySelectorAll('.price-now').forEach(function (item) {
+                arrPrice.push(Number(item.innerText))
             })
-        })
+            let outPrice = 0
+            for (let i = 0; i < arrPrice.length; i++) {
+                outPrice += arrPrice[i]
+            }
+            document.querySelector('.total__price-now').innerHTML = outPrice
+            /**
+             * Изменение экономии в корзине
+             */
+            if (product.querySelector('.one__price-old')) {
+                const onePriceOld = product.querySelector('.one__price-old').textContent
+                product.querySelector('.economy').innerHTML = (onePriceOld * input.value) - (onePriceNow * input.value)
+                let arrEconomy = []
+                document.querySelectorAll('.economy').forEach(function (item) {
+                    arrEconomy.push(Number(item.innerText))
+                })
+                let outEconomy = 0
+                for (let i = 0; i < arrEconomy.length; i++) {
+                    outEconomy += arrEconomy[i]
+                }
+                document.querySelector('.total__price-old').innerHTML = outPrice + outEconomy
+            }
+
+            const el = basketArr.find(el => el.id === product_id)
+            if (+input.value === 0) {
+                myFetch('/basket', 'DELETE', {id: product_id})
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json.status === 'ok') {
+                            setBasket(basketArr.filter(el => el.id !== product_id))
+                            product.remove()
+                            if (getBasket().length === 0) {
+                                location.reload()
+                            }
+                        } else {
+                            log('errors')
+                        }
+                    })
+            } else {
+                myFetch('/basket', 'PUT', {id: product_id, count: input.value})
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json.status === 'ok') {
+                            el.count = input.value
+                            log(basketArr)
+                            setBasket(basketArr)
+                        } else {
+                            input.value = input.value--
+                            log('errors')
+                        }
+                    })
+            }
+        }, 1000))
     })
     /**
      * Удаление товара из корзины

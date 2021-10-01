@@ -5,7 +5,6 @@
     <div class="check-in">
         <div class="container">
             <div class="check-in__inner">
-
                 <div class="check-in__tx">
                     <h1>Войти или зарегистрироваться</h1>
                     <div class="check-in__input" id="phoneForm">

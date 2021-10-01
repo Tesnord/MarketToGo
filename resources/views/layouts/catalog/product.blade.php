@@ -32,10 +32,12 @@
             <div class="catalog__item-bottom">
                 <div class="catalog__item-info">
                     <div class="catalog__item-price">
-                        <div class="catalog__item-price-old">
-                            {{ $product['oldPrice']['value'] }}
-                            {{ $product['oldPrice']['currency'] }}
-                        </div>
+                        @if(!empty($product['oldPrice']))
+                            <div class="catalog__item-price-old">
+                                {{ $product['oldPrice']['value'] }}
+                                {{ $product['oldPrice']['currency'] }}
+                            </div>
+                        @endif
                         <div class="catalog__item-price-now">
                             {{ $product['price']['value'] }}
                             {{ $product['price']['currency'] }}
@@ -54,21 +56,12 @@
                             <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
                         </span>
                     </div>
-                    {{--<div class="catalog__item-amount" id="count" style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
-                        <input class="count" type="text" min="1" max="{{$product['count']}}" value="{{$productBasket($product['_id'])}}">
-                        <span class="up" onclick="up(event)">
-                            <img src="{{ asset('assets/images/svg/plus.svg')}}" alt="">
-                        </span>
-                        <span class="down" onclick="down(event)">
-                            <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
-                        </span>
-                    </div>
-                    <a class="catalog__item-buy" id="buy" style="color: #ffffff; {{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">купить
-                        <img src="{{ asset('assets/images/svg/cart.svg')}}" alt="">
-                    </a>--}}
                 </div>
-                <div class="catalog__item-offer">5 предложений</div>
-{{--                <div class="catalog__item-offer" href="#">уникальный товар</div>--}}
+                @if(!empty($product['offers']))
+                    <div class="catalog__item-offer">Похожие товары: {{$product['offers']}} </div>
+                @else
+                    <div class="catalog__item-offer">уникальный товар</div>
+                @endif
             </div>
         </div>
     </div>

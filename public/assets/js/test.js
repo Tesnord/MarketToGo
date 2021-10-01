@@ -724,4 +724,3 @@
     }
     document.querySelector('.b-15').onclick = t15;
 }*/
-

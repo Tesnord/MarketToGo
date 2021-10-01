@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -13,14 +10,20 @@ class HomeController extends Controller
     {
         $categories = $this->requestHelper->getRequest('catalog/main');
         return view('home', [
-            'categories' => $categories,
+            'categories' => $categories['data'],
         ]);
     }
 
-    public function getTest()
+    public function getTest(Request $request)
     {
-        dd(session()->all());
-        return view('test');
+        $sort = $request->post('sort');
+        $result = $this->paginate->paginate('https://jsonplaceholder.typicode.com/posts', 20);
+        return view('test', [
+            'items' => $result['items'],
+            'page' => $result['page'],
+            'total_pages' => $result['total_pages'],
+            'pages' => $result['pages'],
+        ]);
     }
 
     public function postTest(Request $request)

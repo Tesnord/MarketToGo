@@ -10,7 +10,6 @@ class BrandController extends Controller
     public function index()
     {
         $brands =  $this->requestHelper->getRequest('brands');
-        // $brands = $this->requestHelper->getBrandsIndex();
         $brand = $brands['data']['letters'];
         return view('catalog.brand.index', [
             'brands' => $brand,
@@ -33,6 +32,7 @@ class BrandController extends Controller
     {
         $brands = $this->requestHelper->getRequest('brand/'.$slug_brand);
         $brand = $brands['data'];
+        $products = $brand['products'];
         $slug = [
             'slug' => $slug_brand,
             'title' => $brand['title']
@@ -40,6 +40,7 @@ class BrandController extends Controller
         return view('catalog.brand.catalog', [
             'brand' => $brand,
             'slug' => $slug,
+            'products' => $products,
         ]);
     }
 }

@@ -2,48 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryController extends Controller
 {
-    public function index($slug_category)
+    public function index(Request $request, $slug_category)
     {
-        $categories = $this->requestHelper->getRequest('catalog/' . $slug_category);
+        $number = $_GET['page'] ?? 1;
+        $sort = $_GET['sort'] ?? 'asc';
+        $categories = $this->requestHelper->getRequest('catalog/' . $slug_category, 'get', 'domain', [
+            'page' => $number,
+            // 'sort' => $sort,
+        ]);
         $category = $categories['data'];
+        $paginator = new LengthAwarePaginator($category['products'], $category['count'], 30);
+        $paginator->setPath('/catalog/' . $slug_category);
+        // $sort =
         $breadcrumbs = $category['breadcrumbs'];
         $children = $category['categories'];
         $products = $category['products'];
-//        dd($categories);
-//        if ($category["root"]) {
-//            return view('catalog.category.index', [
-//                'category' => $category,
-//                'children' => $children,
-//                'products' => $products,
-//                'breadcrumbs' => $breadcrumbs,
-//            ]);
-//        } else {
-            return view('catalog.category.show', [
-                'category' => $category,
-                'children' => $children,
-                'products' => $products,
-                'breadcrumbs' => $breadcrumbs,
-            ]);
-//        }
+        return view('catalog.category.show', [
+            'category' => $category,
+            'children' => $children,
+            'products' => $products,
+            'breadcrumbs' => $breadcrumbs,
+            'paginator' => $paginator
+        ]);
     }
 
     public function scores(Request $request)
     {
-        // if ($request->session()->has('token')) {
         $scores = $this->requestHelper->getUserRequest($request, 'score');
         // dd($scores);
         return view('catalog.scores', [
             'scores' => $scores['data'],
         ]);
-        // }
-        // $scores = $this->requestHelper->getRequest('score');
-        // return view('catalog.scores');
     }
 
 

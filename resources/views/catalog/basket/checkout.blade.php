@@ -37,7 +37,9 @@
                                             <div class="cart__list-price">
                                                 <div class="cart__list-price-now">{{$product['price']}} ₽</div>
                                             </div>
-                                            <div class="cart__list-numb-tx">Экономия {{$product['economy']}} ₽</div>
+                                            @if(!empty($product['economy']))
+                                                <div class="cart__list-numb-tx">Экономия {{$product['economy']}} ₽</div>
+                                            @endif
                                         </div>
                                     </div>
                                 @endforeach
@@ -63,32 +65,32 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="order__input-cell order__input-cell-error">
-                                            <input class="form__input-effect has-content" type="text" id="address1">
+                                            <input class="form__input-effect @if(!empty($profile['street'])) has-content @endif" type="text" id="address1">
                                             <label for="address1">Адрес *</label>
                                             {{--<span class="form__input-error">К сожалению, мы еще не осуществляем доставку в данном месте.</span>--}}
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address2">
+                                            <input class="form__input-effect @if(!empty($profile['apartment'])) has-content @endif" type="text" id="address2">
                                             <label for="address2">Квартира *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address3">
+                                            <input class="form__input-effect @if(!empty($profile['floor'])) has-content @endif" type="text" id="address3">
                                             <label for="address3">Этаж</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address4">
+                                            <input class="form__input-effect @if(!empty($profile['entrance'])) has-content @endif" type="text" id="address4">
                                             <label for="address4">Подъезд</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="address5">
+                                            <input class="form__input-effect @if(!empty($profile['intercom'])) has-content @endif" type="text" id="address5">
                                             <label for="address5">Домофон</label>
                                         </div>
                                     </div>
@@ -131,35 +133,35 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="updateAddress1"
+                                            <input class="form__input-effect @if(empty($profile['street'])) has-content @endif" type="text" id="updateAddress1"
                                                    value="{{ $address['street'] }}">
                                             <label for="address1">Адрес *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="updateAddress2"
+                                            <input class="form__input-effect @if(empty($profile['apartment'])) has-content @endif" type="text" id="updateAddress2"
                                                    value="{{ $address['apartment'] }}">
                                             <label for="address2">Квартира *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="updateAddress3"
+                                            <input class="form__input-effect @if(empty($profile['floor'])) has-content @endif" type="text" id="updateAddress3"
                                                    value="{{ $address['floor'] }}">
                                             <label for="address3">Этаж</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="updateAddress4"
+                                            <input class="form__input-effect @if(empty($profile['entrance'])) has-content @endif" type="text" id="updateAddress4"
                                                    value="{{ $address['entrance'] }}">
                                             <label for="address4">Подъезд</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect has-content" type="text" id="updateAddress5"
+                                            <input class="form__input-effect @if(empty($profile['intercom'])) has-content @endif" type="text" id="updateAddress5"
                                                    value="{{ $address['intercom'] }}">
                                             <label for="address5">Домофон</label>
                                         </div>
@@ -225,28 +227,28 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="name"
+                                            <input class="form__input-effect @if(!empty($profile['name'])) has-content @endif" type="text" id="name"
                                                    value="{{$profile['name']}}">
                                             <label for="name">Имя *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="name-f"
+                                            <input class="form__input-effect @if(!empty($profile['surname'])) has-content @endif" type="text" id="name-f"
                                                    value="{{$profile['surname']}}">
                                             <label for="name-f">Фамилия *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="tel"
+                                            <input class="form__input-effect @if(!empty($profile['phone'])) has-content @endif" type="text" id="tel"
                                                    value="{{$profile['phone']}}">
                                             <label for="tel">Телефон *</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="order__input-cell">
-                                            <input class="form__input-effect" type="text" id="mail"
+                                            <input class="form__input-effect @if(!empty($profile['email'])) has-content @endif" type="text" id="mail"
                                                    value="{{$profile['email']}}">
                                             <label for="mail">Электронная почта</label>
                                         </div>
@@ -309,7 +311,7 @@
                             <div class="order__list-all-item">Итого:</div>
                             <div class="order__list-all-item">238 ₽</div>
                         </div>
-                        <a class="button button-secondary w-100" href="javascript:void(0)">оформить заказ</a>
+                        <a class="button button-secondary w-100 buy" href="javascript:void(0)">оформить заказ</a>
                         <div class="order__list-descr">Нажимая кнопку «Оплатить заказ», я даю согласие на обработку
                             своих персональных данных и принимаю условия Пользовательского соглашения
                         </div>

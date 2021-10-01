@@ -65,7 +65,7 @@ if (document.querySelector("div.registration")) {
             }
         }).then(response => {
             if (response.ok) {
-                window.location.href = '/personal';
+                window.location.href = '/personal/setting';
             } else {
                 response.text().then(error => {
                     const codeInput = document.querySelector('input.code');

@@ -48,7 +48,6 @@
                 </div>
             </div>
         </div>
-        {{--@include('layouts.catalog.offer')--}}
     @endif
 
 @endsection

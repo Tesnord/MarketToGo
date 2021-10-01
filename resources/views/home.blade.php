@@ -28,48 +28,10 @@
             </div>
         </div>
     </div>
-
-{{--    <div class="banner">--}}
-{{--        <div class="container">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-xl-8 col-lg-12">--}}
-{{--                    <div class="banner__big">--}}
-{{--                        <div class="banner__big-slider js-banner-big">--}}
-{{--                            <div class="banner__big-slider-item" style="background-image: url('{{ asset('assets/images/banner1.jpg')}}')">--}}
-{{--                                <div class="banner__big-slider-title">Ура! Мы открылись</div>--}}
-{{--                                <div class="banner__big-slider-tx">В честь открытия дарим скидку 10% на все!</div>--}}
-{{--                                <a class="button button-bord" href="{{ route('promotions.show') }}">Узнать больше</a>--}}
-{{--                            </div>--}}
-{{--                            <div class="banner__big-slider-item" style="background-image: url('{{ asset('assets/images/banner1.jpg')}}')">--}}
-{{--                                <div class="banner__big-slider-title">Ура! Мы открылись</div>--}}
-{{--                                <div class="banner__big-slider-tx">В честь открытия дарим скидку 10% на все!</div>--}}
-{{--                                <a class="button button-bord" href="{{ route('promotions.show') }}">Узнать больше</a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col-xl-4 col-lg-12">--}}
-{{--                    <div class="banner__al">--}}
-{{--                        <div class="banner__min-in">--}}
-{{--                            <a class="banner__min" href="{{ route('promotions.show') }}" style="background-image: url('{{ asset('assets/images/banner2.jpg')}}')">--}}
-{{--                                <span class="banner__min-title">Скидки до 25%<br>на батончики Jimmy</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                        <div class="banner__min-in">--}}
-{{--                            <a class="banner__min" href="{{ route('promotions.show') }}" style="background-image: url('{{ asset('assets/images/banner3.jpg')}}')">--}}
-{{--                                <span class="banner__min-title">Спецпредложение<br>на овощи и фрукты</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-    @foreach($categories['data'] as $category)
-{{--        {{dd($category)}}--}}
+    @foreach($categories as $category)
         @include('layouts.catalog.product_min_list')
     @endforeach
-    <div class="delivery">
+    {{--<div class="delivery">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
@@ -88,7 +50,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
     <div class="delivery-tw" style="background-image: url('{{ asset('assets/images/delivery-bg2.jpg')}}')">
         <div class="container">
             <div class="row">

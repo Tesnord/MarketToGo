@@ -127,14 +127,30 @@
                     </div>
                 </div>
             </div>
-            <div class="filter__btn-b"><a class="button button-primary" href="#">Показать 40 товаров</a><a class="button button-tx" href="#">Сбросить</a></div>
+            <div class="filter__btn-b">
+                <a class="button button-primary" href="#">Показать 40 товаров</a>
+                <a class="button button-tx" href="#">Сбросить</a>
+            </div>
         </div>
     </div>
     <div class="catalog__sorting">
         <div class="catalog__sorting-title">сортировать:</div>
         <ul class="catalog__sorting-list">
-            <li><a href="#">% скидки</a></li>
-            <li class="active"><a href="#">цене</a></li>
+{{--            {{ dd(!empty($_GET['discount'])) }}--}}
+            <li class="@if(isset($_GET['discount'])) active @endif">
+                <a href="">% скидки @if(!empty($_GET['discount'])) &#8593
+                    @elseif(!empty($_GET['discount'])) &#8595 @endif</a>
+            </li>
+            {{--<li>
+                <a href="">% скидки &#8595</a>
+            </li>--}}
+            <li class="@if(isset($_GET['price'])) active @endif">
+                <a href="">цене @if(!empty($_GET['price'])) &#8593
+                    @elseif(!empty($_GET['price'])) &#8595 @endif</a>
+            </li>
+            {{--<li>
+                <a href="">цене &#8595</a>
+            </li>--}}
         </ul>
     </div>
 </div>

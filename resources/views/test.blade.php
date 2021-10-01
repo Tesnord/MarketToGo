@@ -2,34 +2,69 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row border m-2">
-            @if(!empty(session()->get('token')))
-                @foreach(session()->get('token') as $token)
-                    <pre>
-                        {{ $token }}
-                    </pre>
+    <div class="actions">
+        <div class="container">
+            <div class="catalog__top">
+                <div class="row">
+                    <div class="catalog__sorting testSort">
+                        <div class="catalog__sorting-title">сортировать:</div>
+                        <ul class="catalog__sorting-list">
+                            <li class="sortElement"><a href="javascript:void(0)">% скидки &#8593</a></li>
+                            <li class="active"><a href="javascript:void(0)">% скидки &#8595</a></li>
+                            <li class="active"><a href="javascript:void(0)">цене &#8593</a></li>
+                            <li class="active"><a href="javascript:void(0)">цене &#8595</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="result">
+
+                </div>
+            </div>
+            <div class="row">
+                @foreach($items as $item)
+                    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                        <div class="actions__item">
+                            <a class="actions__item-img" href="{{ route('promotions.show') }}"
+                               style="background-image: url('{{ asset('assets/images/action-img1.jpg') }}')">
+                                <span class="actions__item-label">{{ $item['id'] }}</span>
+                            </a>
+                            <div class="actions__item-tx">
+                                <a class="actions__item-title"
+                                   href="{{ route('promotions.show') }}">{{ $item['title'] }}</a>
+                                <div class="actions__item-firm">{{ $item['body'] }}</div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-        </div>
-        <div class="row border m-2">
-            @if(!empty($_COOKIE['market_favorites']))
-                <pre>
-                    {{ $_COOKIE['market_favorites'] }}
-                </pre>
+            </div>
+            @if (count($pages) > 1)
+                <div class="pagination-bl">
+                    <ul class="pagination">
+                        <li class="page-item prev">
+                            <a class="page-link" href="{{ "?page=".($page - 1) }}">
+                                <span class="tx">Предыдущая</span>
+                                <span class="arrow">
+                                    <img src="{{ asset('assets/images/svg/arrow2.svg') }}" alt="">
+                                </span>
+                            </a>
+                        </li>
+                        @foreach($pages as $num => $url)
+                            <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $num }}</a></li>
+                        @endforeach
+                        <li class="page-item next">
+                            <a class="page-link" href="{{ "?page=".($page + 1) }}">
+                                <span class="tx">следующая</span>
+                                <span class="arrow">
+                                    <img src="{{ asset('assets/images/svg/arrow2.svg') }}" alt="">
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             @endif
         </div>
-        <div class="row border m-2">
-            @if(!empty($_COOKIE['market_favorites']))
-                <pre>
-                    {{ $_COOKIE['market_basket'] }}
-                </pre>
-            @endif
-        </div>
-        @else
-            <pre>
-                Not Authorization
-            </pre>
-        @endif
     </div>
 
     {{-- Lesson 1 --}}

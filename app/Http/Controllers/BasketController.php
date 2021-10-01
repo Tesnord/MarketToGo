@@ -8,31 +8,36 @@ class BasketController extends Controller
 {
     public function show(Request $request)
     {
-        $productPrice = function ($product, $f = 0) {
-            foreach ($GLOBALS['basket'] as $basket) {
-                if ($product['_id'] === $basket['id']) {
-                    if ($f === 0) {
-                        return $product['price']['value'] * $basket['count'];
-                    } else {
-                        return ($product['oldPrice']['value'] * $basket['count'])-$f;
-                    }
-                }
-            }
-        };
         if ($request->session()->has('token')) {
             $products = $this->requestHelper->getUserRequest($request, 'basket');
-            return view('catalog.basket.show', [
-                'products' => $products['data'],
-                'count' => count($products['data']),
-                'productPrice' => $productPrice,
-            ]);
+        } else {
+            $products = $this->requestHelper->getRequest('basket', 'post', 'domain',
+                array_column($GLOBALS["basket"], 'id'));
         }
-        $products = $this->requestHelper->getRequest('basket', 'post', 'domain',
-            array_column($GLOBALS["basket"], 'id'));
+        $productBasket = function ($id) {
+            foreach ($GLOBALS['basket'] as $item) {
+                if ($item['id'] === $id) {
+                    return $item['count'];
+                }
+            }
+            return 1;
+        };
+        $totalPrice = 0;
+        $totalEconomy = 0;
+        foreach ($products['data'] as &$product) {
+            $product['allPrice'] = $product['price']['value'] * $productBasket($product['_id']);
+            $totalPrice += $product['allPrice'];
+            if (!empty($product['oldPrice'])) {
+                $product['allEconomy'] = $product['oldPrice']['value'] * $productBasket($product['_id']) - $product['allPrice'];
+                $totalEconomy += $product['allEconomy'];
+            }
+        }
+        $totalEconomy += $totalPrice;
         return view('catalog.basket.show', [
             'products' => $products['data'],
             'count' => count($products['data']),
-            'productPrice' => $productPrice,
+            'totalPrice' => $totalPrice,
+            'totalEconomy' => $totalEconomy,
         ]);
     }
 

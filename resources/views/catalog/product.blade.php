@@ -55,9 +55,11 @@
                             <div class="card-product__description-price-now">
                                 {{$product['price']['value']}}{{ $product['price']['currency'] }}
                             </div>
-                            <div class="card-product__description-price-old">
-                                {{$product['oldPrice']['value']}}{{ $product['oldPrice']['currency'] }}
-                            </div>
+                            @if(!empty($product['oldPrice']))
+                                <div class="card-product__description-price-old">
+                                    {{$product['oldPrice']['value']}}{{ $product['oldPrice']['currency'] }}
+                                </div>
+                            @endif
                         </div>
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
@@ -115,12 +117,9 @@
                         </div>
                     </div>
                     {{--Brand--}}
-                    {{--<div class="card-product__all-logo">
-                        <a  href="{{ route('brand.catalog', ['slug' => $product['brand']['slug']]) }}"></a>
-                        <img src="{{ asset($product['brand']['image']) }}" alt="">
-                    </div>--}}
                     <div class="card-product__all-logo">
-                        <img src="{{ asset('assets/images/logo-card.png') }}" alt="">
+                        <a  href="{{ route('brand.catalog', ['slug_brand' => $product['brand']['slug']]) }}"></a>
+                        <img src="{{ asset($product['brand']['image']) }}" alt="">
                     </div>
                     <div class="card-product__slider-label">
                         @foreach($product['label'] as $label)
@@ -354,7 +353,6 @@
                     </div>
                     <div class="card-product__other">
                         <h3>Другие предложения продавцов на сайте</h3>
-                        {{--                        {{ dd($product['offers']) }}--}}
                         <div class="card-product__product">
                             @foreach($product['offers'] as $offer)
                                 <div class="card-product__product-row">
@@ -407,25 +405,6 @@
             <div class="row">
                 @foreach($product['others'] as $product)
                     @include('layouts.catalog.product')
-                    {{--<div class="col-lg-2-1 col-lg-3 col-md-4 col-sm-6">
-                        <div class="catalog__item catalog__item-bt">
-                            <div class="catalog__item-top"><a class="catalog__item-img" href="#"><img src="{{ asset('assets/images/catalog-img17.jpg') }}" alt=""></a>
-                                <div class="catalog__item-fav"><svg><use xlink:href="#like"></use></svg></div>
-                                <div class="catalog__item-label catalog__item-label-hit"><span>хит</span></div>
-                            </div>
-                            <div class="catalog__item-tx"><a class="catalog__item-title" href="#">Подарочный набор «Дари тепло»</a>
-                                <div class="catalog__item-numb">12 товаров</div>
-                                <div class="catalog__item-bottom">
-                                    <div class="catalog__item-info">
-                                        <div class="catalog__item-price">
-                                            <div class="catalog__item-price-old">50 руб</div>
-                                            <div class="catalog__item-price-now">2200 ₽</div>
-                                        </div><a class="catalog__item-buy" href="#">купить<img src="{{ asset('assets/images/svg/cart.svg') }}" alt=""></a>
-                                    </div><a class="catalog__item-offer" href="#">5 предложений</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>--}}
                 @endforeach
             </div>
         </div>

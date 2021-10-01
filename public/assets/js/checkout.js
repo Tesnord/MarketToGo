@@ -30,6 +30,7 @@ if (document.querySelector('div.order__store')) {
         // document.querySelector('div.order__show').style.display = '';
     })
 }
+
 if (document.querySelector('div.order__show')) {
     document.querySelector('a.button__show').addEventListener('click', e => {
         document.querySelector('div.order__show').style.display = 'none';
@@ -43,6 +44,7 @@ if (document.querySelector('div.order__update')) {
         document.querySelector('div.order__update').style.display = 'none';
     })
 }
+
 
 /*let arr = {}
 arr = {

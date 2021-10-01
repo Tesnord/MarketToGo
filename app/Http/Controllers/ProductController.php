@@ -10,7 +10,7 @@ class ProductController extends Controller
     {
         $products = $this->requestHelper->getRequest('product/'.$slug_product);
         $product = $products['data'];
-//        dd($product);
+       // dd($product);
         $breadcrumbs = $product['breadcrumbs'];
         $slug = [
             'breadcrumbs' => $breadcrumbs,
