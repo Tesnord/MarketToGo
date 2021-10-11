@@ -1,4 +1,5 @@
 let input = (id) => document.querySelector(id).value
+
 if (document.querySelector('div.order__create')) {
     document.querySelector('a.button__create').addEventListener('click', e => {
         window.location.href = 'http://80.78.246.225/personal/setting';
@@ -65,7 +66,6 @@ if (document.querySelector('div.order__list')) {
                 surname: input('#name-f'),
             }
         }
-        // log(arr)
         myFetch('/basket/checkout', 'PUT', arr)
             .then(response => response.json())
             .then(json => {
@@ -77,5 +77,19 @@ if (document.querySelector('div.order__list')) {
                 }
             })
     })
+}
+
+if (document.querySelector('.order__payment-list')) {
+    document.querySelectorAll('.order__payment-list-item').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault()
+            e.currentTarget.querySelector('input').checked = true
+            document.querySelector('#paymentResult').textContent = e.currentTarget.querySelector('.tit').textContent
+        })
+    })
+
+    input('#payment2')
+    input('#payment3')
+
 }
 

@@ -47,6 +47,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="order__wrap order__create" @if(!empty($address)) style="display: none" @endif>
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
@@ -57,6 +58,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="order__wrap order__store" style="display: none">
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
@@ -312,7 +314,9 @@
                                 </div>
                                 <div class="order__list-table-row">
                                     <div class="order__list-table-item">Способ оплаты:</div>
-                                    <div class="order__list-table-item"><a href="#">Онлайн-оплата</a></div>
+                                    <div class="order__list-table-item">
+                                        <a id="paymentResult" href="javascript:void(0)">Онлайн оплата</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="order__list-table">
