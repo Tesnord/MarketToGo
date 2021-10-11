@@ -9,25 +9,23 @@ class CategoryController extends Controller
 {
     public function index(Request $request, $slug_category)
     {
-        $number = $_GET['page'] ?? 1;
-        $sort = $_GET['sort'] ?? 'asc';
-        $categories = $this->requestHelper->getRequest('catalog/' . $slug_category, 'get', 'domain', [
-            'page' => $number,
-            // 'sort' => $sort,
-        ]);
-        $category = $categories['data'];
-        $paginator = new LengthAwarePaginator($category['products'], $category['count'], 30);
-        $paginator->setPath('/catalog/' . $slug_category);
-        // $sort =
-        $breadcrumbs = $category['breadcrumbs'];
+        $categories = $this->requestHelper->getFilterRequest('catalog/' . $slug_category);
+        $category = $categories['request']['data'];
+        // dd($GLOBALS['sort']);
         $children = $category['categories'];
         $products = $category['products'];
+        $breadcrumbs = $category['breadcrumbs'];
+
+        $paginator = new LengthAwarePaginator($category['products'], $category['count'], 30);
+        $paginator->setPath('/catalog/' . $slug_category);
         return view('catalog.category.show', [
             'category' => $category,
             'children' => $children,
             'products' => $products,
             'breadcrumbs' => $breadcrumbs,
-            'paginator' => $paginator
+            'paginator' => $paginator,
+            'sort_param' => $categories['sort_param'],
+            'sort' => $categories['sort'],
         ]);
     }
 

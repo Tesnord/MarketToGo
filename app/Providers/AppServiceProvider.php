@@ -39,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Exception $e) {
             $GLOBALS["favorites"] = [];
         }
+
         try {
             // Basket
             $cookie_market_basket = $_COOKIE['market_basket'];
@@ -49,8 +50,16 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Exception $e) {
             $GLOBALS["basket"] = [];
         }
+
+        try {
+            // Sort
+            $GLOBALS["sort"] = $_COOKIE['catalog_sort'];
+        } catch (\Exception $e) {
+            $GLOBALS["sort"] = [];
+        }
         $favorite = $GLOBALS["favorites"];
         $basket = $GLOBALS["basket"];
+
 
         $productId = array_column($basket, 'id');
         $productBasket = function ($id) {

@@ -16,6 +16,7 @@ class HomeController extends Controller
 
     public function getTest(Request $request)
     {
+        dd(session()->all());
         $sort = $request->post('sort');
         $result = $this->paginate->paginate('https://jsonplaceholder.typicode.com/posts', 20);
         return view('test', [

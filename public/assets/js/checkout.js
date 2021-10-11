@@ -45,21 +45,37 @@ if (document.querySelector('div.order__update')) {
     })
 }
 
-
-/*let arr = {}
-arr = {
-    name: input('#name'),
-    surname: input('#name-f'),
-    email: input('#tel'),
-    phone: input('#mail'),
-    address: {
-        street: input('#updateAddress1'),
-        apartment: input('#updateAddress2'),
-        floor: input('#updateAddress3'),
-        entrance: input('#updateAddress4'),
-        intercom: input('#updateAddress5')
-    }
+if (document.querySelector('div.order__list')) {
+    document.querySelector('a.buy').addEventListener('click', e => {
+        let arr = {
+            payment: {
+                type: 1
+            },
+            address: {
+                street: input('#updateAddress1'),
+                apartment: input('#updateAddress2'),
+                floor: input('#updateAddress3'),
+                entrance: input('#updateAddress4'),
+                intercom: input('#updateAddress5')
+            },
+            profile: {
+                phone: input('#mail'),
+                email: input('#tel'),
+                name: input('#name'),
+                surname: input('#name-f'),
+            }
+        }
+        // log(arr)
+        myFetch('/basket/checkout', 'PUT', arr)
+            .then(response => response.json())
+            .then(json => {
+                if (json.status === 'ok') {
+                    Cookies.remove('market_basket')
+                    location.reload()
+                } else {
+                    log('errors')
+                }
+            })
+    })
 }
-console.log(arr)*/
-
 

@@ -2,25 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ShopController extends Controller
 {
     public function show($slug_shop)
     {
-        $shops = $this->requestHelper->getRequest('shop/'.$slug_shop);
-        $shop = $shops['data'];
+        $shops = $this->requestHelper->getFilterRequest('shop/' . $slug_shop);
+        $shop = $shops['request']['data'];
+
         $products = $shop['products'];
         $slug = [
             'slug' => $slug_shop,
             'title' => $shop['title']
         ];
-        // dd($shop);
+
+        $paginator = new LengthAwarePaginator($shop['products'], $shop['count'], 30);
+        $paginator->setPath('/catalog/' . $slug_shop);
+
         return view('catalog.shop.show', [
             'shop' => $shop,
             'products' => $products,
             'slug' => $slug,
+            'paginator' => $paginator,
+            'sort_param' => $shops['sort_param'],
+            'sort' => $shops['sort'],
         ]);
     }
 }

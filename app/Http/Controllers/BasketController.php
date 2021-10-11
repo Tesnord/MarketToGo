@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class BasketController extends Controller
 {
@@ -65,12 +66,27 @@ class BasketController extends Controller
 
     public function checkout(Request $request)
     {
-        $order = $this->requestHelper->getUserRequest($request, 'order');
-//        dd($order);
-        return view('catalog.basket.checkout', [
-            'order' => $order['data'],
-            'address' => $order['data']['address'],
-            'profile' => $order['data']['profile'],
-        ]);
+        if ($request->session()->has('token')) {
+            $order = $this->requestHelper->getUserRequest($request, 'order');
+            return view('catalog.basket.checkout', [
+                'order' => $order['data'],
+                'address' => $order['data']['address'],
+                'profile' => $order['data']['profile'],
+            ]);
+        }
+        return redirect()->route('login.create');
+    }
+
+    public function order(Request $request)
+    {
+        $arr = [
+            "payment" => $request->input('payment'),
+            "address" => $request->input('address'),
+            "profile" => $request->input('profile')
+        ];
+        if ($request->session()->has('token')) {
+            $this->requestHelper->getUserRequest($request, 'order', $arr, 'put');
+            return ['status' => 'ok'];
+        }
     }
 }

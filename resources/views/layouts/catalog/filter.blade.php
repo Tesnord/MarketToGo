@@ -1,11 +1,18 @@
 <div class="catalog__top">
     <div class="filter">
-        <div class="filter__btn"><svg><use xlink:href="#filter"></use></svg> фильтр</div>
-        <div class="filter__top-close js-filter-close"><img src="{{ asset('assets/images/svg/close2.svg') }}" alt=""></div>
+        <div class="filter__btn">
+            <svg>
+                <use xlink:href="#filter"></use>
+            </svg>
+            фильтр
+        </div>
+        <div class="filter__top-close js-filter-close"><img src="{{ asset('assets/images/svg/close2.svg') }}" alt="">
+        </div>
         <div class="filter-bl">
             <div class="filter__top">
                 <div class="filter__top-title">Фильтр</div>
-                <div class="filter__top-close js-filter-close"><img src="{{ asset('assets/images/svg/close2.svg') }}" alt=""></div>
+                <div class="filter__top-close js-filter-close"><img src="{{ asset('assets/images/svg/close2.svg') }}"
+                                                                    alt=""></div>
             </div>
             <div class="filter__item open">
                 <div class="filter__title open">цена</div>
@@ -136,21 +143,18 @@
     <div class="catalog__sorting">
         <div class="catalog__sorting-title">сортировать:</div>
         <ul class="catalog__sorting-list">
-{{--            {{ dd(!empty($_GET['discount'])) }}--}}
-            <li class="@if(isset($_GET['discount'])) active @endif">
-                <a href="">% скидки @if(!empty($_GET['discount'])) &#8593
-                    @elseif(!empty($_GET['discount'])) &#8595 @endif</a>
+            <li class="{{ $sort["sort"] === "discount" ? "active" : "" }}"
+                data-sort="{{$sort_param === "discount-asc" ? "discount-desc" : "discount-asc" }}">
+                <a href="javascript:void(0)">
+                    % скидки@if($sort['sort'] === 'discount') {!! $sort["order"] === 'asc' ? '&#8593' : '&#8595' !!} @endif
+                </a>
             </li>
-            {{--<li>
-                <a href="">% скидки &#8595</a>
-            </li>--}}
-            <li class="@if(isset($_GET['price'])) active @endif">
-                <a href="">цене @if(!empty($_GET['price'])) &#8593
-                    @elseif(!empty($_GET['price'])) &#8595 @endif</a>
+            <li class="{{$sort["sort"] === "price" ? "active" : "" }}"
+                data-sort="{{$sort_param === "price-asc" ? "price-desc" : "price-asc" }}">
+                <a href="javascript:void(0)">
+                    цене@if($sort['sort'] === 'price') {!! $sort["order"] === 'asc' ? '&#8593' : '&#8595' !!} @endif
+                </a>
             </li>
-            {{--<li>
-                <a href="">цене &#8595</a>
-            </li>--}}
         </ul>
     </div>
 </div>

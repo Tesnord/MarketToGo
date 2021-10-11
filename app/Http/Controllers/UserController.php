@@ -9,19 +9,21 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        // $tokens = $request->session()->get('token');
-        // dd($tokens['refreshToken']);
-//         dd($request->session()->all());
-        return view('login.user.index');
+        if ($request->session()->has('token')) {
+            return view('login.user.index');
+        }
+        return redirect()->route('login.create');
     }
 
     public function setting(Request $request)
     {
-        $profile = $this->requestHelper->getUserRequest($request, 'profile');
-//        dd($profile['data']);
-        return view('login.user.setting', [
-            'profile' => $profile['data']
-        ]);
+        if ($request->session()->has('token')) {
+            $profile = $this->requestHelper->getUserRequest($request, 'profile');
+            return view('login.user.setting', [
+                'profile' => $profile['data']
+            ]);
+        }
+        return redirect()->route('login.create');
     }
 
     public function settingPut(Request $request)
@@ -52,14 +54,20 @@ class UserController extends Controller
         return ['status' => 'ok'];
     }
 
-    public function subscribe()
+    public function subscribe(Request $request)
     {
-        return view('login.user.subscribe');
+        if ($request->session()->has('token')) {
+            return view('login.user.subscribe');
+        }
+        return redirect()->route('login.create');
     }
 
-    public function orders()
+    public function orders(Request $request)
     {
-        return view('login.user.orders');
+        if ($request->session()->has('token')) {
+            return view('login.user.orders');
+        }
+        return redirect()->route('login.create');
     }
 }
 

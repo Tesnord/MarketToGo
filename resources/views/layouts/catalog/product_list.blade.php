@@ -4,5 +4,5 @@
             @include('layouts.catalog.product')
         @endforeach
     </div>
-{{--    {{ $paginator->render('layouts.vendor.pagination.bootstrap-4') }}--}}
+    {{ $paginator->render('layouts.vendor.pagination.bootstrap-4') }}
 </div>

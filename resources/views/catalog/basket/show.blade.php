@@ -151,13 +151,10 @@
                             </div>
                         </div>
                         <div class="cart__list-all-btn">
-                            @if(session()->has('token'))
-                                <a class="button button-secondary" href="{{ route('basket.checkout') }}">оформить
-                                    заказ</a></div>
-                        @else
-                            <a class="button button-secondary" href="{{ route('login.create') }}">оформить заказ</a>
+                            <a class="button button-secondary" href="{{ route('basket.checkout') }}">оформить
+                                заказ</a>
+                        </div>
                     </div>
-                    @endif
                 </div>
             </div>
         </div>

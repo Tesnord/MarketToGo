@@ -17,11 +17,64 @@ class RequestHelper {
 
     public function getRequest(string $handler, string $method = 'get', string $entry_point = 'domain', array $data = [])
     {
-        $result = Http::get($this->$entry_point.$handler, $data)->json();
+        $result = Http::$method($this->$entry_point.$handler, $data)->json();
         if ($result['meta']['status'] === false) {
             abort(404);
         }
         return $result;
+    }
+
+    public function getFilterRequest(string $handler, string $method = 'get', string $entry_point = 'domain')
+    {
+        switch ($GLOBALS["sort"]) {
+            case "discount-asc":
+                {
+                    $sort_param = "discount-asc";
+                    $sort = array(
+                        "sort" => "discount",
+                        "order" => "asc",
+                    );
+                }
+                break;
+            case "discount-desc":
+                {
+                    $sort_param = "discount-desc";
+                    $sort = array(
+                        "sort" => "discount",
+                        "order" => "desc",
+                    );
+                }
+                break;
+            case "price-desc":
+                {
+                    $sort_param = "price-desc";
+                    $sort = array(
+                        "sort" => "price",
+                        "order" => "desc",
+                    );
+                }
+                break;
+            default:
+                {
+                    $sort_param = "price-asc";
+                    $sort = array(
+                        "sort" => "price",
+                        "order" => "asc",
+                    );
+                }
+                break;
+        }
+        $number = $_GET['page'] ?? 1;
+
+        $result = Http::$method($this->$entry_point.$handler, [
+            'page' => $number,
+            'sort' => $sort['sort'] . '_' . $sort['order'],
+        ])->json();
+        if ($result['meta']['status'] === false) {
+            abort(404);
+        }
+
+        return ['request' => $result, 'sort_param' => $sort_param, 'sort' => $sort];
     }
 
     public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get')

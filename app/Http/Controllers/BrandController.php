@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BrandController extends Controller
 {
@@ -30,17 +29,25 @@ class BrandController extends Controller
 
     public function catalog($slug_brand)
     {
-        $brands = $this->requestHelper->getRequest('brand/'.$slug_brand);
-        $brand = $brands['data'];
+        $brands = $this->requestHelper->getFilterRequest('brand/' . $slug_brand);
+        $brand = $brands['request']['data'];
+
         $products = $brand['products'];
         $slug = [
             'slug' => $slug_brand,
             'title' => $brand['title']
         ];
+
+        $paginator = new LengthAwarePaginator($brand['products'], $brand['count'], 30);
+        $paginator->setPath('/catalog/' . $slug_brand);
+
         return view('catalog.brand.catalog', [
             'brand' => $brand,
-            'slug' => $slug,
             'products' => $products,
+            'slug' => $slug,
+            'paginator' => $paginator,
+            'sort_param' => $brands['sort_param'],
+            'sort' => $brands['sort'],
         ]);
     }
 }
