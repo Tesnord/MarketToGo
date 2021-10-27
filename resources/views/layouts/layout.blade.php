@@ -377,7 +377,7 @@
 <script type="text/javascript" src="{{asset('vendors/jquery.airStickyBlock.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/slick/slick.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/app.js')}}"></script>
-/* Back Script */
+{{--/* Back Script */--}}
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/external.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/auth.js') }}"></script>

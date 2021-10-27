@@ -1,6 +1,7 @@
 <ul>
     @foreach($menu_categories['data'] as $level_1)
         <li><a href="{{ route('category.index', ['slug_category' => $level_1['slug']]) }}">{{ $level_1['title'] }}</a>
+            @if(!empty($level_1['children']))
             <div class="menu__submenu">
                 @foreach($level_1['children'] as $level_2)
                     <div class="menu__submenu-list">
@@ -25,6 +26,7 @@
                     </div>
                 @endforeach
             </div>
+            @endif
         </li>
     @endforeach
 </ul>

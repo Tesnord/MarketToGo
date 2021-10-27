@@ -12,6 +12,7 @@ class CategoryController extends Controller
         $categories = $this->requestHelper->getFilterRequest('catalog/' . $slug_category);
         $category = $categories['request']['data'];
         // dd($GLOBALS['sort']);
+        // dd($categories);
         $children = $category['categories'];
         $products = $category['products'];
         $breadcrumbs = $category['breadcrumbs'];

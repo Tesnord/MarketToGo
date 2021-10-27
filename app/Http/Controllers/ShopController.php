@@ -11,7 +11,6 @@ class ShopController extends Controller
         $shops = $this->requestHelper->getFilterRequest('shop/' . $slug_shop);
         $shop = $shops['request']['data'];
 
-        $products = $shop['products'];
         $slug = [
             'slug' => $slug_shop,
             'title' => $shop['title']
@@ -22,7 +21,7 @@ class ShopController extends Controller
 
         return view('catalog.shop.show', [
             'shop' => $shop,
-            'products' => $products,
+            'products' => $shop['products'],
             'slug' => $slug,
             'paginator' => $paginator,
             'sort_param' => $shops['sort_param'],

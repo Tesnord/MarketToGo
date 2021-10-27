@@ -9,6 +9,7 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         $categories = $this->requestHelper->getRequest('catalog/main');
+        // dd($categories);
         return view('home', [
             'categories' => $categories['data'],
         ]);

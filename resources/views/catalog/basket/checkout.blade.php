@@ -47,8 +47,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="order__wrap order__create" @if(!empty($address)) style="display: none" @endif>
+                        @if(empty($order['address']))
+                        <div class="order__wrap order__create" @if(!empty($address['street'])) style="display: none" @endif>
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
                                     <div class="order__wrap-title">Доставка</div>
@@ -112,8 +112,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="order__wrap order__show" @if(empty($address)) style="display: none" @endif>
+                        @else
+                        <div class="order__wrap order__show" @if(empty($address['street'])) style="display: none" @endif>
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
                                     <div class="order__wrap-title">Доставка</div>
@@ -147,7 +147,7 @@
                                         <div class="col-lg-12">
                                             <div class="order__input-cell">
                                                 <input
-                                                    class="form__input-effect @if(empty($profile['street'])) has-content @endif"
+                                                    class="form__input-effect @if(!empty($address['street'])) has-content @endif"
                                                     type="text" id="updateAddress1"
                                                     value="{{ $address['street'] }}">
                                                 <label for="address1">Адрес *</label>
@@ -156,7 +156,7 @@
                                         <div class="col-lg-3 col-md-6">
                                             <div class="order__input-cell">
                                                 <input
-                                                    class="form__input-effect @if(empty($profile['apartment'])) has-content @endif"
+                                                    class="form__input-effect @if(!empty($address['apartment'])) has-content @endif"
                                                     type="text" id="updateAddress2"
                                                     value="{{ $address['apartment'] }}">
                                                 <label for="address2">Квартира *</label>
@@ -165,7 +165,7 @@
                                         <div class="col-lg-3 col-md-6">
                                             <div class="order__input-cell">
                                                 <input
-                                                    class="form__input-effect @if(empty($profile['floor'])) has-content @endif"
+                                                    class="form__input-effect @if(!empty($address['floor'])) has-content @endif"
                                                     type="text" id="updateAddress3"
                                                     value="{{ $address['floor'] }}">
                                                 <label for="address3">Этаж</label>
@@ -174,7 +174,7 @@
                                         <div class="col-lg-3 col-md-6">
                                             <div class="order__input-cell">
                                                 <input
-                                                    class="form__input-effect @if(empty($profile['entrance'])) has-content @endif"
+                                                    class="form__input-effect @if(!empty($address['entrance'])) has-content @endif"
                                                     type="text" id="updateAddress4"
                                                     value="{{ $address['entrance'] }}">
                                                 <label for="address4">Подъезд</label>
@@ -183,7 +183,7 @@
                                         <div class="col-lg-3 col-md-6">
                                             <div class="order__input-cell">
                                                 <input
-                                                    class="form__input-effect @if(empty($profile['intercom'])) has-content @endif"
+                                                    class="form__input-effect @if(!empty($address['intercom'])) has-content @endif"
                                                     type="text" id="updateAddress5"
                                                     value="{{ $address['intercom'] }}">
                                                 <label for="address5">Домофон</label>
@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        @endif
                         <div class="order__wrap">
                             <div class="order__payment">
                                 <div class="order__wrap-top">
@@ -239,56 +239,109 @@
                                 </div>--}}
                             </div>
                         </div>
-                        <div class="order__wrap">
-                            <div class="order__lk">
-                                <div class="order__wrap-top">
-                                    <div class="order__wrap-title">Личные данные</div>
-                                    <div class="order__wrap-list">
-                                        <div class="order__wrap-list-item">Укажите данные получателя</div>
+                        @if(empty($order['profile']))
+                            <div class="order__wrap">
+                                <div class="order__lk">
+                                    <div class="order__wrap-top">
+                                        <div class="order__wrap-title">Личные данные</div>
+                                        <div class="order__wrap-list">
+                                            <div class="order__wrap-list-item">Укажите данные получателя</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="order__lk-inner">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect @if(!empty($profile['name'])) has-content @endif"
-                                                    type="text" id="name"
-                                                    value="{{$profile['name']}}">
-                                                <label for="name">Имя *</label>
+                                    <div class="order__lk-inner">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect @if(!empty($profile['name'])) has-content @endif"
+                                                        type="text" id="name"
+                                                        value="{{$profile['name']}}">
+                                                    <label for="name">Имя *</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect @if(!empty($profile['surname'])) has-content @endif"
-                                                    type="text" id="name-f"
-                                                    value="{{$profile['surname']}}">
-                                                <label for="name-f">Фамилия *</label>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect @if(!empty($profile['surname'])) has-content @endif"
+                                                        type="text" id="name-f"
+                                                        value="{{$profile['surname']}}">
+                                                    <label for="name-f">Фамилия *</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect @if(!empty($profile['phone'])) has-content @endif"
-                                                    type="text" id="tel"
-                                                    value="{{$profile['phone']}}">
-                                                <label for="tel">Телефон *</label>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect @if(!empty($profile['phone'])) has-content @endif"
+                                                        type="text" id="tel"
+                                                        value="{{$profile['phone']}}">
+                                                    <label for="tel">Телефон *</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect @if(!empty($profile['email'])) has-content @endif"
-                                                    type="text" id="mail"
-                                                    value="{{$profile['email']}}">
-                                                <label for="mail">Электронная почта</label>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect @if(!empty($profile['email'])) has-content @endif"
+                                                        type="text" id="mail"
+                                                        value="{{$profile['email']}}">
+                                                    <label for="mail">Электронная почта</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="order__wrap">
+                                <div class="order__lk">
+                                    <div class="order__wrap-top">
+                                        <div class="order__wrap-title">Личные данные</div>
+                                        <div class="order__wrap-list">
+                                            <div class="order__wrap-list-item">Укажите данные получателя</div>
+                                        </div>
+                                    </div>
+                                    <div class="order__lk-inner">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect"
+                                                        type="text" id="name"
+                                                        value="">
+                                                    <label for="name">Имя *</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect"
+                                                        type="text" id="name-f"
+                                                        value="">
+                                                    <label for="name-f">Фамилия *</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect @if(!empty($profile['phone'])) has-content @endif"
+                                                        type="text" id="tel"
+                                                        value="{{$profile['phone']}}">
+                                                    <label for="tel">Телефон *</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="order__input-cell">
+                                                    <input
+                                                        class="form__input-effect"
+                                                        type="text" id="mail"
+                                                        value="">
+                                                    <label for="mail">Электронная почта</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="order__right">
                         <div class="order__list">
@@ -361,7 +414,7 @@
                     <div class="tx__img"><img src="{{ asset('assets/images/svg/img-b1.svg') }}" alt=""></div>
                     <div class="tx__text">
                         <div class="tx__title">Ваш заказ успешно создан!</div>
-                        <p>Заказ №75 от 11.06.2020 15:15 создан.<br>Курьер свяжется с вами, как только привезет ваш заказ.
+                        <p>Заказ №{{ $request['numberId'] }} от {{ date($request['date']) }} создан.<br>Курьер свяжется с вами, как только привезет ваш заказ.
                         </p>
                         <a class="button button-secondary" href="{{ route('home') }}">продолжить покупки</a>
                     </div>

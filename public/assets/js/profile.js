@@ -32,7 +32,7 @@ if (document.querySelector('div.lk__setting')) {
             .then(json => {
                 if (json.status === 'ok') {
                     console.log('Status Ok')
-                    // location.reload()
+                    location.reload()
                 } else {
                     log('errors')
                 }

@@ -2,7 +2,7 @@ let input = (id) => document.querySelector(id).value
 
 if (document.querySelector('div.order__create')) {
     document.querySelector('a.button__create').addEventListener('click', e => {
-        window.location.href = 'http://80.78.246.225/personal/setting';
+        window.location.href = '/personal/setting';
         // document.querySelector('div.order__create').style.display = 'none';
         // document.querySelector('div.order__store').style.display = '';
     })
@@ -71,7 +71,7 @@ if (document.querySelector('div.order__list')) {
             .then(json => {
                 if (json.status === 'ok') {
                     Cookies.remove('market_basket')
-                    location.reload()
+
                 } else {
                     log('errors')
                 }

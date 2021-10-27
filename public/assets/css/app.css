@@ -855,14 +855,6 @@ h3 {
     .footer__tel:hover, .footer__mail:hover {
       color: #FFB800; }
 
-/*.catalog__item-amount {
-  display: none; }*/
-  .ct .catalog__item-amount {
-    display: block; }
-
-/*.ct .catalog__item-buy {
-  display: none; }*/
-
 .catalog__item-buy {
   cursor: pointer; }
 
@@ -2200,7 +2192,6 @@ h3 {
   .card-product__description {
     width: 360px; }
     .card-product__description .catalog__item-amount {
-      /*display: none;*/
       width: 120px;
       height: 37px;
       margin-right: 15px;
@@ -2295,8 +2286,8 @@ h3 {
             padding: 11px 25px; }
             .card-product__description-btns .button-all {
               padding: 7px 25px; } }
-      /*.card-product__description-btns.am .button-primary {
-        display: none; }*/
+      .card-product__description-btns.am .button-primary {
+        display: none; }
       .card-product__description-btns.am .catalog__item-amount {
         display: -webkit-inline-box;
         display: -ms-inline-flexbox;
@@ -3930,6 +3921,14 @@ h3 {
       margin-top: 30px; }
     .orders__item-product {
       padding: 30px 0 0; }
+      .orders__item-product-kl {
+        display: inline-block;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 121.03%;
+        color: #4A7336; }
+        .orders__item-product-kl + .orders__item-product-price {
+          display: inline-block; }
       .orders__item-product-btn {
         display: block;
         padding: 17px 10px;
@@ -3995,6 +3994,21 @@ h3 {
         font-size: 16px;
         line-height: 121.03%;
         color: #4F742E; }
+      .orders__item-product-rating-bt {
+        padding: 11px 20px;
+        display: inline-block;
+        color: #4F742E;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 121.03%;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        border-radius: 10px;
+        background: #DFF0D8;
+        text-align: center; }
+        .orders__item-product-rating-bt:hover {
+          background: #4F742E;
+          color: #ffffff; }
       .orders__item-product-rating-title {
         font-size: 13px;
         line-height: 18px;

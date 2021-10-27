@@ -65,7 +65,7 @@ Route::prefix('shop')->group(function () {
 // Акции
 Route::prefix('promotions')->group(function () {
     Route::get('/', [PromotionController::class, 'index'])->name('promotions.index');
-    Route::get('/show', [PromotionController::class, 'show'])->name('promotions.show');
+    Route::get('/{slug_promotion}', [PromotionController::class, 'show'])->name('promotions.show');
 });
 // Бренды
 Route::prefix('brand')->group(function () {

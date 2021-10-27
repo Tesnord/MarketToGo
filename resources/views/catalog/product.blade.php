@@ -63,7 +63,7 @@
                         </div>
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
-                    <div class="card-product__description-btns">
+{{--                    <div class="card-product__description-btns">
                         <div class="catalog__item-amount" id="count"
                              style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
                             <input class="count" type="text" min="1" max="{{$product['count']}}"
@@ -87,7 +87,38 @@
                             <a class="button button-all" href="javascript:void(0)">в избранное
                                 <img class="like" src="{{ asset('assets/images/svg/like2.svg') }}" alt=""></a>
                         @endif
+                    </div>--}}
+
+                    <div class="card-product__description-btns">
+                        <div class="catalog__item-amount" id="count"
+                             style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
+                            <input class="count" type="text" min="1" max="{{$product['count']}}"
+                                   value="{{$productBasket($product['_id'])}}">
+                            <span class="up" onclick="up(event)">
+                                <img src="{{ asset('assets/images/svg/plus.svg')}}" alt="">
+                            </span>
+                            <span class="down" onclick="down(event)">
+                                <img src="{{ asset('assets/images/svg/minus.svg')}}" alt="">
+                            </span>
+                        </div>
+                        <a class="button button-primary js-cart" href="javascript:void(0)" id="buy"
+                           style="{{ in_array($product['_id'], $productId) ? 'display: none' : '' }}">
+                            купить
+                            <img src="{{ asset('assets/images/svg/cart.svg')}}" alt="">
+                        </a>
+                        @if(empty(in_array($product['_id'], $favorites)))
+                            <a class="button button-all" href="javascript:void(0)">
+                                в избранное
+                                <img class="like" src="{{ asset('assets/images/svg/like.svg') }}" alt="">
+                            </a>
+                        @else
+                            <a class="button button-all" href="javascript:void(0)">
+                                в избранное
+                                <img class="like" src="{{ asset('assets/images/svg/like2.svg') }}" alt="">
+                            </a>
+                        @endif
                     </div>
+
                     {{-- <a class="card-product__description-link" href="#">
                          <img src="{{ asset('assets/images/svg/icon1.svg') }}" alt="">
                          <span>Получайте товары по более привлекательной цене</span>
@@ -118,10 +149,10 @@
                     </div>
                     {{--Brand--}}
                     <div class="card-product__all-logo">
-                        <a  href="{{ route('brand.catalog', ['slug_brand' => $product['brand']['slug']]) }}"></a>
+                        <a href="{{ route('brand.catalog', ['slug_brand' => $product['brand']['slug']]) }}"></a>
                         <img src="{{ asset($product['brand']['image']) }}" alt="">
                     </div>
-                    <div class="card-product__slider-label">
+                    {{--<div class="card-product__slider-label">
                         @foreach($product['label'] as $label)
                             <div class="catalog__item-label catalog__item-label-{{ $label['type'] }}">
                                 @if(!empty($label['data']))
@@ -131,7 +162,7 @@
                                 @endif
                             </div>
                         @endforeach
-                    </div>
+                    </div>--}}
                 </div>
             </div>
             <div class="card-product__inner-tw">
@@ -271,8 +302,11 @@
                                     <div class="card-product__tabs-inner">
                                         @if(empty($product['reviews']))
                                             <div class="card-product__reviews-none">
-                                                <div class="card-product__reviews-none-title">У этого товара пока нет отзывов.</div>
-                                                <p>Если вы заказывали этот товар, поделитесь своим впечатлением о нём, и<br> другие покупатели будут вам благодарны.</p>
+                                                <div class="card-product__reviews-none-title">У этого товара пока нет
+                                                    отзывов.
+                                                </div>
+                                                <p>Если вы заказывали этот товар, поделитесь своим впечатлением о нём, и<br>
+                                                    другие покупатели будут вам благодарны.</p>
                                             </div>
                                         @else
                                             <div class="card-product__reviews">

@@ -68,10 +68,11 @@ class BasketController extends Controller
     {
         if ($request->session()->has('token')) {
             $order = $this->requestHelper->getUserRequest($request, 'order');
+            // dd($order);
             return view('catalog.basket.checkout', [
                 'order' => $order['data'],
-                'address' => $order['data']['address'],
-                'profile' => $order['data']['profile'],
+                'address' => &$order['data']['address'],
+                'profile' => &$order['data']['profile'],
             ]);
         }
         return redirect()->route('login.create');
@@ -85,8 +86,11 @@ class BasketController extends Controller
             "profile" => $request->input('profile')
         ];
         if ($request->session()->has('token')) {
-            $this->requestHelper->getUserRequest($request, 'order', $arr, 'put');
-            return ['status' => 'ok'];
+            $result = $this->requestHelper->getUserRequest($request, 'order', $arr, 'put');
+            return [
+                'status' => 'ok',
+                'request' => $result['data'],
+            ];
         }
     }
 }

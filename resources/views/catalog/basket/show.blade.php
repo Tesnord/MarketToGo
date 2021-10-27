@@ -158,7 +158,6 @@
                 </div>
             </div>
         </div>
-        </div>
         {{--    if подписка не оформлена--}}
         {{--<div class="cart-banner">
             <div class="container">

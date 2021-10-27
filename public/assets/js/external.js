@@ -263,6 +263,7 @@ if (document.querySelectorAll('.cart__list-item')) {
             input.dispatchEvent(event);
         })
     })
+
     document.querySelectorAll('.cart__list-item input.count').forEach(t => {
         t.addEventListener('change', _.debounce(e => {
             const basketArr = getBasket()
