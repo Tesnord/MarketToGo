@@ -45,14 +45,14 @@
                 <a class="button button-all" href="{{ route('promotions.index') }}">смотреть все</a>
             </div>
             <div class="actions-slider__sldr js-actions-slider">
-                @foreach($shop['promotions'] as $promotion)
+                @foreach($promotions as $promotion)
                     <div class="actions-slider__item">
                         <div class="actions__item">
-                            <a class="actions__item-img" href="{{ route('promotions.show') }}{{--$promotion['slug']--}}" style="background-image: url('{{ asset($promotion['image']) }}')"></a>
+                            <a class="actions__item-img" href="{{ route('promotions.show', ['slug_promotion' => $promotion['slug']]) }}" style="background-image: url('{{ asset($promotion['image']) }}')"></a>
                             <div class="actions__item-tx">
-                                <div class="actions__item-data">{{ $promotion['date'] }}</div>
-                                <a class="actions__item-title" href="{{ route('promotions.show') }}{{--$promotion['slug']--}}">{{ $promotion['title'] }}</a>
-                                <div class="actions__item-firm">ООО «Мир здоровья»</div>
+                                <div class="actions__item-data">{{--{{ $promotion['date'] }}--}}</div>
+                                <a class="actions__item-title" href="{{ route('promotions.show', ['slug_promotion' => $promotion['slug']]) }}">{{ $promotion['title'] }}</a>
+                                <div class="actions__item-firm">{{ $promotion['shop'] }}</div>
                             </div>
                         </div>
                     </div>

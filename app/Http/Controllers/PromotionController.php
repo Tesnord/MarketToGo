@@ -11,10 +11,10 @@ class PromotionController extends Controller
     {
         $promotions = $this->requestHelper->getRequest('promotions');
         // dd($promotions);
-        $paginator = new LengthAwarePaginator($promotions['data'], count($promotions), 30);
+        $paginator = new LengthAwarePaginator($promotions['data']['promotions'], $promotions['data']['count'], 30);
         $paginator->setPath('/promotions');
         return view('catalog.promotion.index', [
-            'promotions' => $promotions['data'],
+            'promotions' => $promotions['data']['promotions'],
             'paginator' => $paginator,
         ]);
     }
@@ -24,7 +24,7 @@ class PromotionController extends Controller
         $promotion = $this->requestHelper->getFilterRequest('promotions/'.$slug_promotion);
         // dd($promotion);
 
-        $paginator = new LengthAwarePaginator($promotion['request']['data']['products'], count($promotion['request']['data']['products']), 30);
+        $paginator = new LengthAwarePaginator($promotion['request']['data']['products'], $promotion['request']['data']['count'], 30);
         $paginator->setPath('/promotions/' . $slug_promotion);
         return view('catalog.promotion.show', [
             'promotion' => $promotion['request']['data'],

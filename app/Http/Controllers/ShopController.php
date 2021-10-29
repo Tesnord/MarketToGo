@@ -22,6 +22,7 @@ class ShopController extends Controller
         return view('catalog.shop.show', [
             'shop' => $shop,
             'products' => $shop['products'],
+            'promotions' => $shop['promotions'],
             'slug' => $slug,
             'paginator' => $paginator,
             'sort_param' => $shops['sort_param'],
