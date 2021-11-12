@@ -23,6 +23,7 @@ class CategoryController extends Controller
             'category' => $category,
             'children' => $children,
             'products' => $products,
+            'filters' => $category['filters'],
             'breadcrumbs' => $breadcrumbs,
             'paginator' => $paginator,
             'sort_param' => $categories['sort_param'],

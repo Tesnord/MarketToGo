@@ -4,3 +4,7 @@ document.querySelectorAll('li[data-sort]').forEach(el => {
         location.reload()
     })
 })
+if (document.querySelector('.filter-bl')) {
+    let polzunok = document.querySelector('.polzunok-input-6-right')
+    console.log(polzunok.value)
+}

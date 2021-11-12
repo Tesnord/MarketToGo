@@ -6,13 +6,14 @@
             </svg>
             фильтр
         </div>
-        <div class="filter__top-close js-filter-close"><img src="{{ asset('assets/images/svg/close2.svg') }}" alt="">
+        <div class="filter__top-close js-filter-close">
+            <img src="{{ asset('assets/images/svg/close2.svg') }}" alt="">
         </div>
         <div class="filter-bl">
             <div class="filter__top">
                 <div class="filter__top-title">Фильтр</div>
-                <div class="filter__top-close js-filter-close"><img src="{{ asset('assets/images/svg/close2.svg') }}"
-                                                                    alt=""></div>
+                <div class="filter__top-close js-filter-close">
+                    <img src="{{ asset('assets/images/svg/close2.svg') }}" alt=""></div>
             </div>
             <div class="filter__item open">
                 <div class="filter__title open">цена</div>
@@ -20,12 +21,12 @@
                     <div class="filter__container">
                         <div class="filter__range polzunok-container-6">
                             <div class="filter__range-item">
-                                <input class="polzunok-input-6-left" type="text" value="от">
+                                <input class="polzunok-input-6-left" type="text" value="{{$filters['price']['min']}}">
                             </div>
                             <div class="filter__range-item">
-                                <input class="polzunok-input-6-right" type="text" value="до">
+                                <input class="polzunok-input-6-right" type="text" value="{{$filters['price']['max']}}">
                             </div>
-                            <div class="polzunok-6"></div>
+                            <div class="polzunok-6" data-min="{{$filters['price']['min']}}" data-max="{{$filters['price']['max']}}"></div>
                         </div>
                     </div>
                 </div>
@@ -34,54 +35,14 @@
                 <div class="filter__title open">бренд</div>
                 <div class="filter__holder" style="display: block;">
                     <div class="filter__container">
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand1" name="equipment-brand" checked>
-                                <label for="equipment-brand1">Дары Кубани</label>
+                        @foreach($filters['brands'] as $brand)
+                            <div class="filter__group-check">
+                                <div class="filter__check">
+                                    <input type="checkbox" id="{{$brand['_id']}}" name="equipment-brand" value="{{$brand['_id']}}">
+                                    <label for="{{$brand['_id']}}">{{$brand['title']}}</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand2" name="equipment-brand">
-                                <label for="equipment-brand2">Лукошко</label>
-                            </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand3" name="equipment-brand">
-                                <label for="equipment-brand3">Бабушкины рецепты</label>
-                            </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand4" name="equipment-brand">
-                                <label for="equipment-brand4">Маруся</label>
-                            </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand5" name="equipment-brand">
-                                <label for="equipment-brand5">Дары Кубани</label>
-                            </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand6" name="equipment-brand">
-                                <label for="equipment-brand6">Лукошко</label>
-                            </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand7" name="equipment-brand">
-                                <label for="equipment-brand7">Лукошко</label>
-                            </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="equipment-brand8" name="equipment-brand">
-                                <label for="equipment-brand8">Лукошко</label>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -89,24 +50,14 @@
                 <div class="filter__title open">Дополнительно</div>
                 <div class="filter__holder" style="display: block;">
                     <div class="filter__container">
+                        @foreach($filters['tags'] as $tag)
                         <div class="filter__group-check">
                             <div class="filter__check">
-                                <input type="checkbox" id="dop1" name="dop" checked>
-                                <label for="dop1">Халяль</label>
+                                <input type="checkbox" id="{{$tag['_id']}}" name="dop" value="{{$tag['_id']}}">
+                                <label for="{{$tag['_id']}}">{{$tag['title']}}</label>
                             </div>
                         </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="dop2" name="dop">
-                                <label for="dop2">Эко</label>
-                            </div>
-                        </div>
-                        <div class="filter__group-check">
-                            <div class="filter__check">
-                                <input type="checkbox" id="dop3" name="dop">
-                                <label for="dop3">Веган</label>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

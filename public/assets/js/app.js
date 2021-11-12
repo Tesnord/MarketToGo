@@ -155,6 +155,17 @@ $(function () {
     });
 
     $(".polzunok-6").slider({
+        range: true,
+        min: Number($(".polzunok-6")[0].dataset.min),
+        max: Number($(".polzunok-6")[0].dataset.max),
+        values: [Number($(".polzunok-6")[0].dataset.min), Number($(".polzunok-6")[0].dataset.max)],
+        slide: function slide(event, ui) {
+            $(".polzunok-input-6-left").val(ui.values[0]);
+            $(".polzunok-input-6-right").val(ui.values[1]);
+        }
+    });
+
+    /*$(".polzunok-6").slider({
         min: 0,
         max: 1200,
         values: [300, 11870],
@@ -196,6 +207,6 @@ $(function () {
         $(".polzunok-input-6-right").val(input_right);
         $(".polzunok-6").slider("values", [input_left, input_right]);
     });
-    $('.polzunok-6').draggable();
+    $('.polzunok-6').draggable();*/
 });
 //# sourceMappingURL=app.js.map

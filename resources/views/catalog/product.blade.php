@@ -13,11 +13,11 @@
                 <div class="card-product__top-mob">
                     <div class="card-product__description-top">
                         <div class="card-product__description-top-item">Артикул: {{$product['vendorCode']}}</div>
-                        @if($product['availability'] === true)
+                        {{--@if($product['availability'] === true)
                             <div class="card-product__description-top-item">В наличии</div>
                         @else
                             <div class="card-product__description-top-item">Отсутствует</div>
-                        @endif
+                        @endif--}}
                     </div>
                     <h1>{{ $product['title'] }}</h1>
                 </div>
@@ -41,11 +41,11 @@
                 <div class="card-product__description">
                     <div class="card-product__description-top">
                         <div class="card-product__description-top-item">Артикул: {{$product['vendorCode']}}</div>
-                        @if($product['availability'] === true)
+                        {{--@if($product['availability'] === true)
                             <div class="card-product__description-top-item">В наличии</div>
                         @else
                             <div class="card-product__description-top-item">Отсутствует</div>
-                        @endif
+                        @endif--}}
                     </div>
                     <h1>{{ $product['title'] }}</h1>
                     <p>Цена за фасованный товар указана с учетом оптимально возможного веса фасовки.</p>

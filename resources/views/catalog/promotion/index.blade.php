@@ -21,7 +21,9 @@
                     <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
                         <div class="actions__item">
                             <a class="actions__item-img" href="{{ route('promotions.show', ['slug_promotion' => $promotion['slug']]) }}" style="background-image: url('{{ asset($promotion['image']) }}')">
-                                <span class="actions__item-label">еще 7 дней</span>
+                                @if(isset($promotion['daysLeft']))
+                                <span class="actions__item-label">{{ $promotion['daysLeft'] }}</span>
+                                @endif
                             </a>
                             <div class="actions__item-tx">
                                 <div class="actions__item-data">{{ $promotion['date'] }}</div>
