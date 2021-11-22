@@ -10,9 +10,9 @@ class CategoryController extends Controller
     public function index(Request $request, $slug_category)
     {
         $categories = $this->requestHelper->getFilterRequest('catalog/' . $slug_category);
-        $category = $categories['request']['data'];
         // dd($GLOBALS['sort']);
-        // dd($categories);
+        // dd($categories['request']['data']['filters']);
+        $category = $categories['request']['data'];
         $children = $category['categories'];
         $products = $category['products'];
         $breadcrumbs = $category['breadcrumbs'];

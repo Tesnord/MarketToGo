@@ -158,26 +158,13 @@ $(function () {
         range: true,
         min: Number($(".polzunok-6")[0].dataset.min),
         max: Number($(".polzunok-6")[0].dataset.max),
-        values: [Number($(".polzunok-6")[0].dataset.min), Number($(".polzunok-6")[0].dataset.max)],
-        slide: function slide(event, ui) {
-            $(".polzunok-input-6-left").val(ui.values[0]);
-            $(".polzunok-input-6-right").val(ui.values[1]);
-        }
-    });
-
-    /*$(".polzunok-6").slider({
-        min: 0,
-        max: 1200,
-        values: [300, 11870],
-        range: true,
+        values: [Number($(".polzunok-input-6-left").val()), Number($(".polzunok-input-6-right").val())],
         animate: true,
         slide: function slide(event, ui) {
             $(".polzunok-input-6-left").val(ui.values[0]);
             $(".polzunok-input-6-right").val(ui.values[1]);
         }
     });
-    $(".polzunok-input-6-left").val($(".polzunok-6").slider("values", 0));
-    $(".polzunok-input-6-right").val($(".polzunok-6").slider("values", 1));
     $(document).focusout(function () {
         var input_left = $(".polzunok-input-6-left").val(),
             opt_left = $(".polzunok-6").slider("option", "min"),
@@ -207,6 +194,6 @@ $(function () {
         $(".polzunok-input-6-right").val(input_right);
         $(".polzunok-6").slider("values", [input_left, input_right]);
     });
-    $('.polzunok-6').draggable();*/
+    $('.polzunok-6').draggable();
 });
 //# sourceMappingURL=app.js.map

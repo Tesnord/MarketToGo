@@ -8,16 +8,17 @@ class HomeController extends Controller
 {
     public function home(Request $request)
     {
-        $categories = $this->requestHelper->getRequest('catalog/main');
+        $home = $this->requestHelper->getRequest('catalog/main');
         // dd($categories);
         return view('home', [
-            'categories' => $categories['data'],
+            'categories' => $home['data']['categories'],
+            'banners' => $home['data']['banners'],
         ]);
     }
 
     public function getTest(Request $request)
     {
-        dd(session()->all());
+        // dd(session()->all());
         $sort = $request->post('sort');
         $result = $this->paginate->paginate('https://jsonplaceholder.typicode.com/posts', 20);
         return view('test', [

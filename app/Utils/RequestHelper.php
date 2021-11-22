@@ -69,6 +69,12 @@ class RequestHelper {
         $result = Http::$method($this->$entry_point.$handler, [
             'page' => $number,
             'sort' => $sort['sort'] . '_' . $sort['order'],
+            'price_min' => $_GET['price_min'] ?? null,
+            'price_max' => $_GET['price_max'] ?? null,
+            'brands' => $_GET['brands'] ?? null,
+            'tags' => $_GET['tags'] ?? null,
+            'in_stock' => $_GET['in_stock'] ?? null,
+            'promotion' => $_GET[''] ?? null,
         ])->json();
         if ($result['meta']['status'] === false) {
             abort(404);

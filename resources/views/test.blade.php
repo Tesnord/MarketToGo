@@ -7,6 +7,11 @@
             <div class="row">
                 <div class="result">
                     <h2 class="header">111</h2>
+                    <p>Переменная А</p>
+                    <input id='a' type="number">
+                    <p>Переменная B</p>
+                    <input id='b' type="number">
+                    <button id="bt" style="display: block; margin-top: 15px;">Start!</button>
                 </div>
             </div>
         </div>

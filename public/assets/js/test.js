@@ -2,6 +2,17 @@
 // if (document.querySelector('div.lesson-2')) {}
 // if (document.querySelector('div.lesson-3')) {}
 
+document.querySelector('#bt').onclick = () => {
+    let a = document.querySelector('#a').value
+    let b = document.querySelector('#b').value
+    console.log(a)
+    console.log(b)
+    a=4<b
+    b=5>a
+    console.log(a)
+    console.log(b)
+}
+
 /*if (document.querySelector('div.lesson-4')) {
 // Task 1
     document.querySelector('button.b-1').onclick = () => {

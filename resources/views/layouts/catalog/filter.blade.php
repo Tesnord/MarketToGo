@@ -38,7 +38,7 @@
                         @foreach($filters['brands'] as $brand)
                             <div class="filter__group-check">
                                 <div class="filter__check">
-                                    <input type="checkbox" id="{{$brand['_id']}}" name="equipment-brand" value="{{$brand['_id']}}">
+                                    <input class="js_brand" type="checkbox" id="{{$brand['_id']}}" name="equipment-brand" value="{{$brand['_id']}}">
                                     <label for="{{$brand['_id']}}">{{$brand['title']}}</label>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                         @foreach($filters['tags'] as $tag)
                         <div class="filter__group-check">
                             <div class="filter__check">
-                                <input type="checkbox" id="{{$tag['_id']}}" name="dop" value="{{$tag['_id']}}">
+                                <input class="js_tag" type="checkbox" id="{{$tag['_id']}}" name="dop" value="{{$tag['_id']}}">
                                 <label for="{{$tag['_id']}}">{{$tag['title']}}</label>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                     <div class="filter__container">
                         <div class="filter__group-check">
                             <div class="filter__check">
-                                <input type="checkbox" id="act2" name="act2">
+                                <input class="js_active" type="checkbox" id="act2" name="act2">
                                 <label for="act2">В наличии</label>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                     <div class="filter__container">
                         <div class="filter__group-check">
                             <div class="filter__check">
-                                <input type="checkbox" id="act1" name="act">
+                                <input class="js_promotion" type="checkbox" id="act1" name="act">
                                 <label for="act1">Акции</label>
                             </div>
                         </div>
@@ -86,8 +86,8 @@
                 </div>
             </div>
             <div class="filter__btn-b">
-                <a class="button button-primary" href="#">Показать 40 товаров</a>
-                <a class="button button-tx" href="#">Сбросить</a>
+                <a class="button button-primary" href="javascript:void(0)">Показать товары</a>
+                <a class="button button-tx" href="javascript:void(0)">Сбросить</a>
             </div>
         </div>
     </div>

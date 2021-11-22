@@ -8,21 +8,25 @@
                 <div class="col-xl-8 col-lg-12">
                     <div class="banner__big">
                         <div class="banner__big-slider js-banner-big">
-                            <div class="banner__big-slider-item" style="background-image: url('{{ asset('assets/images/banner1.jpg')}}')">
-                                <div class="banner__big-slider-title">Ура! Мы открылись</div>
-                                <div class="banner__big-slider-tx">В честь открытия дарим скидку 10% на все!</div><a class="button button-bord" href="#">Узнать больше</a>
-                            </div>
-                            <div class="banner__big-slider-item" style="background-image: url('{{ asset('assets/images/banner1.jpg')}}')">
-                                <div class="banner__big-slider-title">Ура! Мы открылись</div>
-                                <div class="banner__big-slider-tx">В честь открытия дарим скидку 10% на все!</div><a class="button button-bord" href="#">Узнать больше</a>
-                            </div>
+                            @foreach($banners[0] as $banner)
+                                <div class="banner__big-slider-item" style="background-image: url('{{ $banner['image'] }}')">
+                                    <div class="banner__big-slider-title">{{ $banner['title'] }}</div>
+                                    <div class="banner__big-slider-tx">{{ $banner['subTitle'] }}</div>
+                                    <a class="button button-bord" href="{{ $banner['link'] }}">Узнать больше</a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-12">
                     <div class="banner__al">
-                        <div class="banner__min-in"><a class="banner__min" href="#" style="background-image: url('{{ asset('assets/images/banner2.jpg')}}')"><span class="banner__min-title">Скидки до 25%<br>на батончики Jimmy</span></a></div>
-                        <div class="banner__min-in"><a class="banner__min" href="#" style="background-image: url('{{ asset('assets/images/banner3.jpg')}}')"><span class="banner__min-title">Спецпредложение<br>на овощи и фрукты</span></a></div>
+                        @foreach($banners[1] as $banner)
+                            <div class="banner__min-in">
+                                <a class="banner__min" href="{{ $banner['link'] }}" style="background-image: url('{{ $banner['image'] }}')">
+                                    <span class="banner__min-title">{{ $banner['title'] }}<br>{{ $banner['subTitle'] }}</span>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
