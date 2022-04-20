@@ -53,7 +53,7 @@ $(function () {
         }
     });
 
-    $(".filter__item-list .filter__holder").niceScroll(".filter__container", { autohidemode: false });
+    $(".filter__item-list .filter__holder").niceScroll(".filter__container", {autohidemode: false});
 
     $(".js-filter-close").click(function (e) {
         $('.filter').removeClass('open');
@@ -154,46 +154,49 @@ $(function () {
         $(".polzunok-5").slider("value", this.value);
     });
 
-    $(".polzunok-6").slider({
-        range: true,
-        min: Number($(".polzunok-6")[0].dataset.min),
-        max: Number($(".polzunok-6")[0].dataset.max),
-        values: [Number($(".polzunok-input-6-left").val()), Number($(".polzunok-input-6-right").val())],
-        animate: true,
-        slide: function slide(event, ui) {
-            $(".polzunok-input-6-left").val(ui.values[0]);
-            $(".polzunok-input-6-right").val(ui.values[1]);
-        }
-    });
-    $(document).focusout(function () {
-        var input_left = $(".polzunok-input-6-left").val(),
-            opt_left = $(".polzunok-6").slider("option", "min"),
-            where_right = $(".polzunok-6").slider("values", 1),
-            input_right = $(".polzunok-input-6-right").val(),
-            opt_right = $(".polzunok-6").slider("option", "max"),
-            where_left = $(".polzunok-6").slider("values", 0);
-        if (input_left > where_right) {
-            input_left = where_right;
-        }
-        if (input_left < opt_left) {
-            input_left = opt_left;
-        }
-        if (input_left == "") {
-            input_left = 0;
-        }
-        if (input_right < where_left) {
-            input_right = where_left;
-        }
-        if (input_right > opt_right) {
-            input_right = opt_right;
-        }
-        if (input_right == "") {
-            input_right = 0;
-        }
-        $(".polzunok-input-6-left").val(input_left);
-        $(".polzunok-input-6-right").val(input_right);
-        $(".polzunok-6").slider("values", [input_left, input_right]);
-    });
-    $('.polzunok-6').draggable();
-});
+    if ($(".filter-bl").length) {
+        $(".polzunok-6").slider({
+            range: true,
+            min: Number($(".polzunok-6")[0].dataset.min),
+            max: Number($(".polzunok-6")[0].dataset.max),
+            values: [Number($(".polzunok-input-6-left").val()), Number($(".polzunok-input-6-right").val())],
+            animate: true,
+            slide: function slide(event, ui) {
+                $(".polzunok-input-6-left").val(ui.values[0]);
+                $(".polzunok-input-6-right").val(ui.values[1]);
+            }
+        });
+        $(document).focusout(function () {
+            let input_left = $(".polzunok-input-6-left").val(),
+                opt_left = $(".polzunok-6").slider("option", "min"),
+                where_right = $(".polzunok-6").slider("values", 1),
+                input_right = $(".polzunok-input-6-right").val(),
+                opt_right = $(".polzunok-6").slider("option", "max"),
+                where_left = $(".polzunok-6").slider("values", 0);
+            if (input_left > where_right) {
+                input_left = where_right;
+            }
+            if (input_left < opt_left) {
+                input_left = opt_left;
+            }
+            if (input_left == "") {
+                input_left = 0;
+            }
+            if (input_right < where_left) {
+                input_right = where_left;
+            }
+            if (input_right > opt_right) {
+                input_right = opt_right;
+            }
+            if (input_right == "") {
+                input_right = 0;
+            }
+            $(".polzunok-input-6-left").val(input_left);
+            $(".polzunok-input-6-right").val(input_right);
+            $(".polzunok-6").slider("values", [input_left, input_right]);
+        });
+        $('.polzunok-6').draggable();
+    }
+})
+
 //# sourceMappingURL=app.js.map

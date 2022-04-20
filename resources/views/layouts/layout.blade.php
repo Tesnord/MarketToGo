@@ -9,7 +9,7 @@
     <meta http-equiv="msthemecompatible" content="no">
     <meta name="format-detection" content="telephone=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/svg/favicon.svg')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&amp;display=swap">
     <link rel="stylesheet" href="{{asset('vendors/bootstrap/dist/css/bootstrap.min.css')}}">
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="{{asset('vendors/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/back.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
 </head>
 <svg style="display: none">
@@ -173,10 +174,10 @@
             </div>
         </div>
     </header>
-
+    <div class="main">
     @yield('content')
-
-    <div class="bottom-block">
+    </div>
+    {{--<div class="bottom-block">
         <div class="container">
             <div class="bottom-block__inner">
                 <div class="bottom-block__info">
@@ -196,7 +197,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
     <footer class="footer">
         <div class="footer__top">
             <div class="container">
@@ -231,13 +232,13 @@
                                     </svg>
                                 </a>
                             </li>
-                            <li>
+<!--                            <li>
                                 <a href="https://www.instagram.com/" target="_blank">
                                     <svg>
                                         <use xlink:href="#in"></use>
                                     </svg>
                                 </a>
-                            </li>
+                            </li>-->
                         </ul>
                         <a class="footer__dev" href="https://affetta.ru/" target="_blank">Сделано в Affetta</a>
                     </div>

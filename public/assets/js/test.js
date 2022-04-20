@@ -2,17 +2,6 @@
 // if (document.querySelector('div.lesson-2')) {}
 // if (document.querySelector('div.lesson-3')) {}
 
-document.querySelector('#bt').onclick = () => {
-    let a = document.querySelector('#a').value
-    let b = document.querySelector('#b').value
-    console.log(a)
-    console.log(b)
-    a=4<b
-    b=5>a
-    console.log(a)
-    console.log(b)
-}
-
 /*if (document.querySelector('div.lesson-4')) {
 // Task 1
     document.querySelector('button.b-1').onclick = () => {
@@ -74,6 +63,28 @@ document.querySelector('#bt').onclick = () => {
             div81.innerHTML = input8.value;
 
         }
+    }
+
+    const divOut = document.querySelector(".out-8");
+
+    function createdInput() {
+        const input = document.createElement('input');
+        input.classList.add('i-81');
+        const button = document.createElement("button");
+        button.classList.add("b-81");
+        button.innerHTML = "парапапа";
+        button.addEventListener('click', () => {
+            f81(input, button);
+        });
+        divOut.append(input);
+        divOut.append(button);
+
+    };
+
+    const f81 = function(input, button) {
+        const div = document.createElement('div');
+        div.innerHTML = input.value;
+        divOut.appendChild(div);
     }
 // Task 9
     document.querySelector('button.b-9').onclick = () => {
@@ -154,7 +165,7 @@ document.querySelector('#bt').onclick = () => {
     };
 }*/
 
-/*if (document.querySelector('div.lesson-5')) {
+if (document.querySelector('div.lesson-5')) {
 // Task-1
     document.querySelector('button.b-1').onclick = () => {
         let div1 = document.querySelector('div.out-1');
@@ -315,7 +326,7 @@ document.querySelector('#bt').onclick = () => {
         div15.innerHTML = out;
     }
     document.querySelector('button.b-15').onclick = f15;
-}*/
+}
 
 /*if (document.querySelector('div.lesson-6')) {
 // Task 1

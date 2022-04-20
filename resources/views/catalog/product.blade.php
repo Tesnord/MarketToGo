@@ -385,63 +385,67 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-product__other">
-                        <h3>Другие предложения продавцов на сайте</h3>
-                        <div class="card-product__product">
-                            @foreach($product['offers'] as $offer)
-                                <div class="card-product__product-row">
-                                    <div class="card-product__product-descr">
-                                        <div class="card-product__product-img">
-                                            <img src="{{ asset($offer['image']) }}" alt="">
+                    @if($product['offers'])
+                        <div class="card-product__other">
+                            <h3>Другие предложения продавцов на сайте</h3>
+                            <div class="card-product__product">
+                                @foreach($product['offers'] as $offer)
+                                    <div class="card-product__product-row">
+                                        <div class="card-product__product-descr">
+                                            <div class="card-product__product-img">
+                                                <img src="{{ asset($offer['image']) }}" alt="">
+                                            </div>
+                                            <a class="card-product__product-title"
+                                               href="{{ $offer['slug'] }}">{{ $offer['title'] }}</a>
+                                            <div class="card-product__product-firm">{{ $offer['subTitle'] }}</div>
                                         </div>
-                                        <a class="card-product__product-title"
-                                           href="{{ $offer['slug'] }}">{{ $offer['title'] }}</a>
-                                        <div class="card-product__product-firm">{{ $offer['subTitle'] }}</div>
+                                        <div class="card-product__product-price">
+                                            <div class="card-product__product-price-now">
+                                                {{ $offer['price']['value'] }} {{ $offer['price']['currency'] }}
+                                            </div>
+                                            @if(!empty($offer['old_price']))
+                                                <div class="card-product__product-price-old">
+                                                    {{ $offer['old_price']['value'] }} {{ $offer['old_price']['currency'] }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="card-product__product-btn">
+                                            <a class="button button-primary" href="{{ $offer['slug'] }}">подробнее
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                {{--<div class="card-product__product-row d-none">
+                                    <div class="card-product__product-descr">
+                                        <div class="card-product__product-img"><img src="{{ asset('assets/images/logo-i.png') }}" alt=""></div>
+                                        <div class="card-product__product-title">Мир здоровья</div>
+                                        <div class="card-product__product-firm">ООО «Свежие продукты»</div>
                                     </div>
                                     <div class="card-product__product-price">
-                                        <div class="card-product__product-price-now">
-                                            {{ $offer['price']['value'] }} {{ $offer['price']['currency'] }}
-                                        </div>
-                                        @if(!empty($offer['old_price']))
-                                            <div class="card-product__product-price-old">
-                                                {{ $offer['old_price']['value'] }} {{ $offer['old_price']['currency'] }}
-                                            </div>
-                                        @endif
+                                        <div class="card-product__product-price-now">121 ₽</div>
+                                        <div class="card-product__product-price-old">145 ₽</div>
                                     </div>
-                                    <div class="card-product__product-btn">
-                                        <a class="button button-primary" href="{{ $offer['slug'] }}">подробнее
-                                        </a>
-                                    </div>
+                                    <div class="card-product__product-btn"><a class="button button-primary" href="#">купить<img src="{{ asset('assets/images/svg/cart.svg') }}" alt=""></a></div>
                                 </div>
-                            @endforeach
-                            {{--<div class="card-product__product-row d-none">
-                                <div class="card-product__product-descr">
-                                    <div class="card-product__product-img"><img src="{{ asset('assets/images/logo-i.png') }}" alt=""></div>
-                                    <div class="card-product__product-title">Мир здоровья</div>
-                                    <div class="card-product__product-firm">ООО «Свежие продукты»</div>
-                                </div>
-                                <div class="card-product__product-price">
-                                    <div class="card-product__product-price-now">121 ₽</div>
-                                    <div class="card-product__product-price-old">145 ₽</div>
-                                </div>
-                                <div class="card-product__product-btn"><a class="button button-primary" href="#">купить<img src="{{ asset('assets/images/svg/cart.svg') }}" alt=""></a></div>
+                                <div class="card-product__product-btn-main js-card-product">смотреть +75 еще</div>--}}
                             </div>
-                            <div class="card-product__product-btn-main js-card-product">смотреть +75 еще</div>--}}
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-    <div class="catalog-min catalog-min-tw">
-        <div class="container">
-            <h3>Возможно вас заинтересует</h3>
-            <div class="row">
-                @foreach($product['others'] as $product)
-                    @include('layouts.catalog.product')
-                @endforeach
+    @if($product['others'])
+        <div class="catalog-min catalog-min-tw">
+            <div class="container">
+                <h3>Возможно вас заинтересует</h3>
+                <div class="row">
+                    @foreach($product['others'] as $product)
+                        @include('layouts.catalog.product')
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
 @endsection

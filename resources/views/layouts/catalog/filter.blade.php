@@ -21,10 +21,10 @@
                     <div class="filter__container">
                         <div class="filter__range polzunok-container-6">
                             <div class="filter__range-item">
-                                <input class="polzunok-input-6-left" type="text" value="{{$filters['price']['min']}}">
+                                <input class="polzunok-input-6-left" type="text" value="@if (isset($_GET['price_min'])) {{ $_GET['price_min'] }} @else {{$filters['price']['min']}} @endif">
                             </div>
                             <div class="filter__range-item">
-                                <input class="polzunok-input-6-right" type="text" value="{{$filters['price']['max']}}">
+                                <input class="polzunok-input-6-right" type="text" value="@if (isset($_GET['price_max'])) {{ $_GET['price_max'] }} @else {{$filters['price']['max']}} @endif">
                             </div>
                             <div class="polzunok-6" data-min="{{$filters['price']['min']}}" data-max="{{$filters['price']['max']}}"></div>
                         </div>
@@ -38,7 +38,7 @@
                         @foreach($filters['brands'] as $brand)
                             <div class="filter__group-check">
                                 <div class="filter__check">
-                                    <input class="js_brand" type="checkbox" id="{{$brand['_id']}}" name="equipment-brand" value="{{$brand['_id']}}">
+                                    <input class="js_brand" type="checkbox" id="{{$brand['_id']}}" name="equipment-brand" value="{{$brand['_id']}}" @if(isset($_GET['brands']) && in_array($brand['_id'], $_GET['brands'])) checked @endif>
                                     <label for="{{$brand['_id']}}">{{$brand['title']}}</label>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                         @foreach($filters['tags'] as $tag)
                         <div class="filter__group-check">
                             <div class="filter__check">
-                                <input class="js_tag" type="checkbox" id="{{$tag['_id']}}" name="dop" value="{{$tag['_id']}}">
+                                <input class="js_tag" type="checkbox" id="{{$tag['_id']}}" name="dop" value="{{$tag['_id']}}" @if(isset($_GET['tags']) && in_array($tag['_id'], $_GET['tags'])) checked @endif>
                                 <label for="{{$tag['_id']}}">{{$tag['title']}}</label>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                     <div class="filter__container">
                         <div class="filter__group-check">
                             <div class="filter__check">
-                                <input class="js_active" type="checkbox" id="act2" name="act2">
+                                <input class="js_active" type="checkbox" id="act2" name="act2" @if(isset($_GET['in_stock']) && $_GET['in_stock'] === '1') checked @endif>
                                 <label for="act2">В наличии</label>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                     <div class="filter__container">
                         <div class="filter__group-check">
                             <div class="filter__check">
-                                <input class="js_promotion" type="checkbox" id="act1" name="act">
+                                <input class="js_promotion" type="checkbox" id="act1" name="act" @if(isset($_GET['in_stock']) && $_GET['in_stock'] === '1') checked @endif>
                                 <label for="act1">Акции</label>
                             </div>
                         </div>
@@ -94,12 +94,12 @@
     <div class="catalog__sorting">
         <div class="catalog__sorting-title">сортировать:</div>
         <ul class="catalog__sorting-list">
-            <li class="{{ $sort["sort"] === "discount" ? "active" : "" }}"
+            {{--<li class="{{ $sort["sort"] === "discount" ? "active" : "" }}"
                 data-sort="{{$sort_param === "discount-asc" ? "discount-desc" : "discount-asc" }}">
                 <a href="javascript:void(0)">
                     % скидки@if($sort['sort'] === 'discount') {!! $sort["order"] === 'asc' ? '&#8593' : '&#8595' !!} @endif
                 </a>
-            </li>
+            </li>--}}
             <li class="{{$sort["sort"] === "price" ? "active" : "" }}"
                 data-sort="{{$sort_param === "price-asc" ? "price-desc" : "price-asc" }}">
                 <a href="javascript:void(0)">

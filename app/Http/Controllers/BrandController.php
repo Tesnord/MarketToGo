@@ -31,7 +31,7 @@ class BrandController extends Controller
     {
         $brands = $this->requestHelper->getFilterRequest('brand/' . $slug_brand);
         $brand = $brands['request']['data'];
-
+        // dd($brands);
         $products = $brand['products'];
         $slug = [
             'slug' => $slug_brand,
@@ -46,6 +46,7 @@ class BrandController extends Controller
             'products' => $products,
             'slug' => $slug,
             'paginator' => $paginator,
+            'filters' => $brand['filters'],
             'sort_param' => $brands['sort_param'],
             'sort' => $brands['sort'],
         ]);

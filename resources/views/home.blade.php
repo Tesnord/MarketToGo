@@ -8,7 +8,7 @@
                 <div class="col-xl-8 col-lg-12">
                     <div class="banner__big">
                         <div class="banner__big-slider js-banner-big">
-                            @foreach($banners[0] as $banner)
+                            @foreach($banners['slider'] as $banner)
                                 <div class="banner__big-slider-item" style="background-image: url('{{ $banner['image'] }}')">
                                     <div class="banner__big-slider-title">{{ $banner['title'] }}</div>
                                     <div class="banner__big-slider-tx">{{ $banner['subTitle'] }}</div>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-12">
                     <div class="banner__al">
-                        @foreach($banners[1] as $banner)
+                        @foreach($banners['blocks'] as $banner)
                             <div class="banner__min-in">
                                 <a class="banner__min" href="{{ $banner['link'] }}" style="background-image: url('{{ $banner['image'] }}')">
                                     <span class="banner__min-title">{{ $banner['title'] }}<br>{{ $banner['subTitle'] }}</span>

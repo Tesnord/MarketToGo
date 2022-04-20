@@ -30,6 +30,7 @@ class PromotionController extends Controller
             'promotion' => $promotion['request']['data'],
             'products' => $promotion['request']['data']['products'],
             'paginator' => $paginator,
+            'filters' => $promotion['request']['data']['filters'],
             'sort_param' => $promotion['sort_param'],
             'sort' => $promotion['sort'],
         ]);

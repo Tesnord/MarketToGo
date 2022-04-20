@@ -14,15 +14,16 @@
                     <use xlink:href="#like"></use>
                 </svg>
             </div>
-            {{--@foreach($product['label'] as $label)
+
+            @foreach($product['labels'] as $label)
                 <div class="catalog__item-label catalog__item-label-{{ $label['type'] }}">
                     @if(!empty($label['data']))
-                        <span>{{ $label['data'] }} %</span>
+                        <span>{{ $label['data'] }}</span>
                     @else
                         <span>{{ $label['type'] }}</span>
                     @endif
                 </div>
-            @endforeach--}}
+            @endforeach
         </div>
         <div class="catalog__item-tx">
             <a class="catalog__item-title" href="{{ route('product', ['slug_product' => $product['slug']]) }}">

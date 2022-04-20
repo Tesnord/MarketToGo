@@ -23,22 +23,26 @@ class BasketController extends Controller
             }
             return 1;
         };
+        $sale = false;
         $totalPrice = 0;
         $totalEconomy = 0;
         foreach ($products['data'] as &$product) {
             $product['allPrice'] = $product['price']['value'] * $productBasket($product['_id']);
             $totalPrice += $product['allPrice'];
             if (!empty($product['oldPrice'])) {
+                $sale = true;
                 $product['allEconomy'] = $product['oldPrice']['value'] * $productBasket($product['_id']) - $product['allPrice'];
                 $totalEconomy += $product['allEconomy'];
             }
         }
         $totalEconomy += $totalPrice;
+
         return view('catalog.basket.show', [
             'products' => $products['data'],
             'count' => count($products['data']),
             'totalPrice' => $totalPrice,
             'totalEconomy' => $totalEconomy,
+            'sale' => $sale,
         ]);
     }
 
@@ -89,7 +93,7 @@ class BasketController extends Controller
             $result = $this->requestHelper->getUserRequest($request, 'order', $arr, 'put');
             return [
                 'status' => 'ok',
-                'request' => $result['data'],
+                'result' => $result['data'],
             ];
         }
     }

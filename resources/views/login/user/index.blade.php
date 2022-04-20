@@ -35,7 +35,7 @@
                             <div class="col-xl-4">
                                 <div class="lk__group-item">
                                     <a href="{{ route('personal.orders') }}"></a>
-                                    <div class="lk__group-item-label">4 заказа</div>
+                                    {{--<div class="lk__group-item-label">4 заказа</div>--}}
                                     <div class="lk__group-item-img">
                                         <img src="{{ asset('assets/images/svg/lk-icon2.svg') }}" alt="">
                                     </div>

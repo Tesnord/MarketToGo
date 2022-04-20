@@ -10,14 +10,15 @@ class CategoryController extends Controller
     public function index(Request $request, $slug_category)
     {
         $categories = $this->requestHelper->getFilterRequest('catalog/' . $slug_category);
-        // dd($GLOBALS['sort']);
+        // dd($_GET);
+        // dd($categories);
         // dd($categories['request']['data']['filters']);
         $category = $categories['request']['data'];
         $children = $category['categories'];
         $products = $category['products'];
         $breadcrumbs = $category['breadcrumbs'];
 
-        $paginator = new LengthAwarePaginator($category['products'], $category['count'], 30);
+        $paginator = new LengthAwarePaginator($category['products'], $category['count'], 10);
         $paginator->setPath('/catalog/' . $slug_category);
         return view('catalog.category.show', [
             'category' => $category,

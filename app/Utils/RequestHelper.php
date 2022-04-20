@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -67,7 +68,8 @@ class RequestHelper {
         $number = $_GET['page'] ?? 1;
 
         $result = Http::$method($this->$entry_point.$handler, [
-            'page' => $number,
+            'offset' => ($number-1)*10,
+            'limit' => 10,
             'sort' => $sort['sort'] . '_' . $sort['order'],
             'price_min' => $_GET['price_min'] ?? null,
             'price_max' => $_GET['price_max'] ?? null,
@@ -83,11 +85,15 @@ class RequestHelper {
         return ['request' => $result, 'sort_param' => $sort_param, 'sort' => $sort];
     }
 
+    /**
+     * @throws Exception
+     */
     public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get')
     {
         $tokens = $request->session()->get('token');
-        if ($tokens === false) {
+        if (!$tokens) {
             $request->session()->remove('token');
+            throw new Exception('Auth broken');
         }
         $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
             ->$method($this->domain.$handler, $data)->json();
@@ -98,10 +104,10 @@ class RequestHelper {
                 $request->session()->put('token', $response->json()['data']);
                 return $this->getUserRequest($request, $handler, $data, $method);
             case 400:
-                abort(400);
-                break;
+                throw new Exception('Invalid request');
+            case 200:
+                return $result;
         }
-        return $result;
     }
 
     public function getCookie(Request $request, $cookieName)

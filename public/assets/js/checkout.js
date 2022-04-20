@@ -60,8 +60,8 @@ if (document.querySelector('div.order__list')) {
                 intercom: input('#updateAddress5')
             },
             profile: {
-                phone: input('#mail'),
-                email: input('#tel'),
+                phone: input('#tel'),
+                email: input('#mail'),
                 name: input('#name'),
                 surname: input('#name-f'),
             }
@@ -70,8 +70,8 @@ if (document.querySelector('div.order__list')) {
             .then(response => response.json())
             .then(json => {
                 if (json.status === 'ok') {
+                    location.search = `?numberId=${json.result.numberId}&date=${json.result.date}`
                     Cookies.remove('market_basket')
-
                 } else {
                     log('errors')
                 }

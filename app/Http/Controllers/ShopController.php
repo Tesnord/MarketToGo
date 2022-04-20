@@ -10,7 +10,7 @@ class ShopController extends Controller
     {
         $shops = $this->requestHelper->getFilterRequest('shop/' . $slug_shop);
         $shop = $shops['request']['data'];
-
+        // dd($shops);
         $slug = [
             'slug' => $slug_shop,
             'title' => $shop['title']
@@ -25,6 +25,7 @@ class ShopController extends Controller
             'promotions' => $shop['promotions'],
             'slug' => $slug,
             'paginator' => $paginator,
+            'filters' => $shop['filters'],
             'sort_param' => $shops['sort_param'],
             'sort' => $shops['sort'],
         ]);

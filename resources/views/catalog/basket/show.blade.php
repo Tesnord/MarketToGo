@@ -86,9 +86,14 @@
                                     @endif
                                 </div>
                                 <div class="cart__list-delete">
-                                    <svg>
-                                        <use xlink:href="#delete"></use>
-                                    </svg>
+                                    <button class='variousamechanics'>
+                                        <svg class='cleverlypaired'>
+                                            <use xlink:href="#delete"></use>
+                                        </svg>
+                                        <div class='kedeverything'>
+                                            <span>Удалить!</span>
+                                        </div>
+                                    </button>
                                 </div>
                             </div>
                         @endforeach
@@ -123,7 +128,7 @@
                         </div>
                     </div>--}}
                     <div class="cart__list-all">
-                        <div class="cart__list-descr">
+                        {{--<div class="cart__list-descr">
                             <div class="cart__list-all-title">Промокод применен</div>
                             <div class="cart__list-promo">
                                 <input type="text">
@@ -131,7 +136,7 @@
                                         src="{{ asset('assets/images/svg/arrow3.svg') }}" alt=""></button>
                             </div>
                             <div class="cart__list-promo-done">Промокод применен</div>
-                        </div>
+                        </div>--}}
                         <div class="cart__list-all-tx">
                             <div class="cart__list-all-tx-title">Итого:</div>
                             {{--<div class="cart__list-all-tx-text">Общий вес:  кг</div>--}}
@@ -142,7 +147,7 @@
                                     <span class="total__price-now">{{$totalPrice}}</span>
                                     {{ $product['price']['currency'] }}
                                 </div>
-                                @if(!empty($product['oldPrice']))
+                                @if($sale)
                                     <div class="cart__list-price-old">
                                         <span class="total__price-old">{{$totalEconomy}}</span>
                                         {{ $product['price']['currency'] }}

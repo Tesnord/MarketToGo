@@ -244,8 +244,7 @@ if (document.querySelectorAll('.cart__list-item')) {
             const product = e.currentTarget.closest('[data-product-id]')
             const input = product.querySelector('input.count')
             input.value = input.value++ < input.max ? input.value : input.max
-            const event = document.createEvent("HTMLEvents");
-            event.initEvent("change", true, false);
+            const event = new Event('change', { bubbles: true });
             input.dispatchEvent(event);
         })
     })
@@ -258,8 +257,7 @@ if (document.querySelectorAll('.cart__list-item')) {
             const product = e.currentTarget.closest('[data-product-id]')
             const input = product.querySelector('input.count')
             input.value = input.value-- > 0 ? input.value : 0
-            const event = document.createEvent("HTMLEvents");
-            event.initEvent("change", true, false);
+            const event = new Event('change', { bubbles: true });
             input.dispatchEvent(event);
         })
     })
@@ -275,7 +273,8 @@ if (document.querySelectorAll('.cart__list-item')) {
              * Изменение суммы в корзине
              */
             const onePriceNow = product.querySelector('.one__price-now').textContent
-            product.querySelector('.price-now').innerHTML = onePriceNow * input.value
+            let price = onePriceNow * input.value
+            product.querySelector('.price-now').innerHTML = price.toFixed(1)
             let arrPrice = []
             document.querySelectorAll('.price-now').forEach(function (item) {
                 arrPrice.push(Number(item.innerText))
@@ -290,7 +289,8 @@ if (document.querySelectorAll('.cart__list-item')) {
              */
             if (product.querySelector('.one__price-old')) {
                 const onePriceOld = product.querySelector('.one__price-old').textContent
-                product.querySelector('.economy').innerHTML = (onePriceOld * input.value) - (onePriceNow * input.value)
+                let econom = (onePriceOld * input.value) - (onePriceNow * input.value)
+                product.querySelector('.economy').innerHTML = econom.toFixed(1)
                 let arrEconomy = []
                 document.querySelectorAll('.economy').forEach(function (item) {
                     arrEconomy.push(Number(item.innerText))
@@ -299,7 +299,8 @@ if (document.querySelectorAll('.cart__list-item')) {
                 for (let i = 0; i < arrEconomy.length; i++) {
                     outEconomy += arrEconomy[i]
                 }
-                document.querySelector('.total__price-old').innerHTML = outPrice + outEconomy
+                let total = outPrice + outEconomy
+                document.querySelector('.total__price-old').innerHTML = total.toFixed(1)
             }
 
             const el = basketArr.find(el => el.id === product_id)

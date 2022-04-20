@@ -105,13 +105,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="lk__setting-form">
+                        {{--<div class="lk__setting-form">
                             <div class="lk__setting-form-title">Согласен получать новостную рассылку</div>
                             <div class="order__point-check">
                                 <input type="checkbox" id="check2" name="check2">
                                 <label for="check2">Разрешить уведомления по e-mail</label>
                             </div>
-                        </div>
+                        </div>--}}
                         <div class="button-group">
                             <a class="button button-secondary save" href="javascript:void(0)">Сохранить</a>
                             <a class="button button-tx" href="javascript:void(0)">сбросить</a>
