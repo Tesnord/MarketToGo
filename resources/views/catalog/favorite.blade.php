@@ -12,6 +12,9 @@
             <div class="title-main__inner">
                 <h1>Избранное</h1>
             </div>
+            <div class="title-main__sort">
+                @include('layouts.catalog.filter.sort')
+            </div>
         </div>
     </div>
     @if(!empty($products))

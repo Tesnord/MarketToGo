@@ -9,13 +9,13 @@ class FavoriteController extends Controller
     public function show(Request $request)
     {
         if ($request->session()->has('token')) {
-            $products = $this->requestHelper->getUserRequest($request, 'favorites');
-            // dd($products);
+            $products = $this->requestHelper->getFilterRequest('favorites');
+            dd($products);
             return view('catalog.favorite', [
                 'products' => $products['data']
             ]);
         }
-        $products = $this->requestHelper->getRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
+        $products = $this->requestHelper->getFilterRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
         return view('catalog.favorite', [
             'products' => $products['data']
         ]);

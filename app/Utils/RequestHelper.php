@@ -25,6 +25,31 @@ class RequestHelper {
         return $result;
     }
 
+    /**
+     * @throws Exception
+     */
+    public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get')
+    {
+        $tokens = $request->session()->get('token');
+        if (!$tokens) {
+            $request->session()->remove('token');
+            throw new Exception('Auth broken');
+        }
+        $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
+            ->$method($this->domain.$handler, $data)->json();
+        switch ($result['meta']['code']) {
+            case 401:
+                // refresh
+                $response = Http::post($this->auth.'refresh', ['refreshToken' => $tokens['refreshToken']]);
+                $request->session()->put('token', $response->json()['data']);
+                return $this->getUserRequest($request, $handler, $data, $method);
+            case 400:
+                throw new Exception('Invalid request');
+            case 200:
+                return $result;
+        }
+    }
+
     public function getFilterRequest(string $handler, string $method = 'get', string $entry_point = 'domain')
     {
         switch ($GLOBALS["sort"]) {
@@ -83,31 +108,6 @@ class RequestHelper {
         }
 
         return ['request' => $result, 'sort_param' => $sort_param, 'sort' => $sort];
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get')
-    {
-        $tokens = $request->session()->get('token');
-        if (!$tokens) {
-            $request->session()->remove('token');
-            throw new Exception('Auth broken');
-        }
-        $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
-            ->$method($this->domain.$handler, $data)->json();
-        switch ($result['meta']['code']) {
-            case 401:
-                // refresh
-                $response = Http::post($this->auth.'refresh', ['refreshToken' => $tokens['refreshToken']]);
-                $request->session()->put('token', $response->json()['data']);
-                return $this->getUserRequest($request, $handler, $data, $method);
-            case 400:
-                throw new Exception('Invalid request');
-            case 200:
-                return $result;
-        }
     }
 
     public function getCookie(Request $request, $cookieName)

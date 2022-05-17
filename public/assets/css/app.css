@@ -492,7 +492,7 @@ h3 {
         opacity: 1; } }
   .menu__submenu {
     padding: 55px 182px 30px 82px;
-    width: calc(100% - 279px);
+    width: 25%;
     height: 100vh;
     min-height: 100%;
     overflow: auto;
@@ -504,10 +504,15 @@ h3 {
     -webkit-transition: visibility 0.3s linear,opacity 0.3s linear;
     transition: visibility 0.3s linear,opacity 0.3s linear;
     background: #ffffff; }
+    .menu__submenu-flex {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
     .menu__submenu-list {
-      float: left;
-      width: 48%;
-      margin-bottom: 30px; }
+      width: 150px;
+      margin: 0 10px 30px 0; }
     .menu__submenu-logo {
       width: 130px;
       padding: 55px 0 30px;
@@ -2200,8 +2205,7 @@ h3 {
         .card-product__description .catalog__item-amount {
           width: 147px;
           height: 41px;
-          position: relative;
-          top: 2px; }
+          position: relative; }
           .card-product__description .catalog__item-amount input {
             height: 41px; } }
     .card-product__description h1 {
@@ -2409,16 +2413,8 @@ h3 {
       left: 0;
       bottom: 0;
       background: #EBEBEB; }
-  .card-product__tabs-holder {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between; }
-  .card-product__tabs-inner {
-    padding-right: 120px;
-    width: calc(100% - 303px); }
+  .card-product__tabs-holder {}
+  .card-product__tabs-inner {}
   .card-product__tabs-text {
     margin-bottom: 30px; }
     .card-product__tabs-text-mob-btn {
@@ -4929,7 +4925,7 @@ h3 {
     width: 260px;
     padding: 12px 20px; }
     .menu__submenu {
-      width: calc(100% - 240px);
+      width: 50%;
       left: 240px; }
   .wrapper {
     padding-left: 260px; }
@@ -5372,7 +5368,9 @@ h3 {
         pointer-events: none;
         cursor: default; }
       .menu > ul > li.open .menu__submenu {
-        display: block; }
+        display: block;
+          opacity: 1;
+          visibility: visible;}
     .menu__top {
       display: block;
       position: relative;

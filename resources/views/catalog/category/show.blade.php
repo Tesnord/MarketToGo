@@ -27,7 +27,7 @@
                 @endforeach
             </div>
             <div class="catalog__inner">
-                @include('layouts.catalog.filter')
+                @include('layouts.catalog.filter.filter_wrapper')
                 @include('layouts.catalog.product_list')
             </div>
         </div>
