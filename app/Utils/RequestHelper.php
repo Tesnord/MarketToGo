@@ -50,7 +50,7 @@ class RequestHelper {
         }
     }
 
-    public function getFilterRequest(string $handler, string $method = 'get', string $entry_point = 'domain')
+    public function getFilterRequest(string $handler, string $method = 'get', string $entry_point = 'domain', array $data = [])
     {
         switch ($GLOBALS["sort"]) {
             case "discount-asc":
@@ -92,7 +92,7 @@ class RequestHelper {
         }
         $number = $_GET['page'] ?? 1;
 
-        $result = Http::$method($this->$entry_point.$handler, [
+        $result = Http::$method($this->$entry_point.$handler, $data, [
             'offset' => ($number-1)*10,
             'limit' => 10,
             'sort' => $sort['sort'] . '_' . $sort['order'],

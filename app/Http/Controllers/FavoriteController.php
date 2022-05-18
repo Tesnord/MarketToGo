@@ -15,9 +15,13 @@ class FavoriteController extends Controller
                 'products' => $products['data']
             ]);
         }
-        $products = $this->requestHelper->getFilterRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
+        $result = $this->requestHelper->getFilterRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
+        dd($result);
+        $products = $result['request']['data'];
         return view('catalog.favorite', [
-            'products' => $products['data']
+            'products' => $products,
+            'sort_param' => $result['sort_param'],
+            'sort' => $result['sort'],
         ]);
     }
 

@@ -12,12 +12,14 @@
             <div class="title-main__inner">
                 <h1>Избранное</h1>
             </div>
-            <div class="title-main__sort">
-                @include('layouts.catalog.filter.sort')
-            </div>
+            @if(!isset($products))
+                <div class="title-main__sort">
+                    @include('layouts.catalog.filter.sort')
+                </div>
+            @endif
         </div>
     </div>
-    @if(!empty($products))
+    @if(!isset($products))
         <div class="catalog">
             <div class="container">
                 <div class="catalog__inner">
