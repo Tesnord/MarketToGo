@@ -12,27 +12,17 @@
             <div class="title-main__inner">
                 <h1>Избранное</h1>
             </div>
-            @if(!isset($products))
+            @if(!empty($categories))
                 <div class="title-main__sort">
                     @include('layouts.catalog.filter.sort')
                 </div>
             @endif
         </div>
     </div>
-    @if(!isset($products))
-        <div class="catalog">
-            <div class="container">
-                <div class="catalog__inner">
-                    <div class="catalog__list">
-                        <div class="row">
-                            @foreach($products as $product)
-                                @include('layouts.catalog.product')
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    @if(!empty($categories))
+        @foreach($categories as $category)
+            @include('layouts.catalog.product_min_list')
+        @endforeach
     @else
         <div class="tx">
             <div class="container">

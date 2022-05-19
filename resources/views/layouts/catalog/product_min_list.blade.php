@@ -9,9 +9,11 @@
                 @endif
                 {{ $category['title'] }}
             </div>
-            <a class="button button-all" href="{{ route('category.index', ['slug_category' => $category['slug']]) }}">
-                смотреть еще
-            </a>
+            @if(Route::current()->uri() != 'favorite')
+                <a class="button button-all" href="{{ route('category.index', ['slug_category' => $category['slug']]) }}">
+                    смотреть еще
+                </a>
+            @endif
         </div>
         <div class="row">
             @foreach($category['products'] as $product)

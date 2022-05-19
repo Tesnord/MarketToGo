@@ -16,31 +16,46 @@
 .card-product__all-logo {
     position: relative;
 }
-
-@media (max-width: 768px) {
-    .card-product__product-descr {
-        width: 100%;
-    }
+.card-product__product-descr {
+    width: 100%;
+}
+.card-product-left {
+    width: 100%;
+}
+@media (min-width: 769px) {
     .card-product-left {
-        width: 100%;
+        width: calc(100% - 303px);
     }
 }
-@media (max-width: 1025px) {
+@media (min-width: 1025px) {
     .card-product-left {
         padding-right: 120px;
     }
 }
-.card-product-left {
-    width: calc(100% - 303px);
-}
+
 
 
 .card-product__container {
     display: flex;
     flex-wrap: wrap;
 }
-
-
+@media (min-width: 769px) {
+    .title-main .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+@media (max-width: 768px) {
+    .title-main .container {
+        display: flex;
+        align-content: flex-start;
+        flex-direction: column;
+    }
+    .title-main .container .title-main__sort {
+        margin-top: 15px;
+    }
+}
 
 button {
     display: flex;

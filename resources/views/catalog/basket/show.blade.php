@@ -11,7 +11,9 @@
         <div class="container">
             <div class="title-main__inner">
                 <h1>Корзина</h1>
-                <div class="title-main__numb">{{ $count }} товара</div>
+                @if($count)
+                    <div class="title-main__numb">{{ $count }} товар(а)</div>
+                @endif
             </div>
         </div>
     </div>

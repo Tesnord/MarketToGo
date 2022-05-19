@@ -50,7 +50,7 @@ class RequestHelper {
         }
     }
 
-    public function getFilterRequest(string $handler, string $method = 'get', string $entry_point = 'domain', array $data = [])
+    public function SortProduct()
     {
         switch ($GLOBALS["sort"]) {
             case "discount-asc":
@@ -90,12 +90,22 @@ class RequestHelper {
                 }
                 break;
         }
+        return ['sort_param' => $sort_param, 'sort' => $sort];
+    }
+
+
+
+
+    public function getFilterRequest(string $handler, string $method = 'get', string $entry_point = 'domain', array $data = [])
+    {
+        $sort = $this->SortProduct();
         $number = $_GET['page'] ?? 1;
+
 
         $result = Http::$method($this->$entry_point.$handler, $data, [
             'offset' => ($number-1)*10,
             'limit' => 10,
-            'sort' => $sort['sort'] . '_' . $sort['order'],
+            'sort' => $sort['sort']['sort'] . '_' . $sort['sort']['order'],
             'price_min' => $_GET['price_min'] ?? null,
             'price_max' => $_GET['price_max'] ?? null,
             'brands' => $_GET['brands'] ?? null,
@@ -103,11 +113,8 @@ class RequestHelper {
             'in_stock' => $_GET['in_stock'] ?? null,
             'promotion' => $_GET[''] ?? null,
         ])->json();
-        if ($result['meta']['status'] === false) {
-            abort(404);
-        }
 
-        return ['request' => $result, 'sort_param' => $sort_param, 'sort' => $sort];
+        return ['request' => $result, 'sort_param' => $sort['sort_param'], 'sort' => $sort['sort']];
     }
 
     public function getCookie(Request $request, $cookieName)

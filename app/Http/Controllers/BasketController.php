@@ -15,6 +15,7 @@ class BasketController extends Controller
             $products = $this->requestHelper->getRequest('basket', 'post', 'domain',
                 array_column($GLOBALS["basket"], 'id'));
         }
+// dd($products);
         $productBasket = function ($id) {
             foreach ($GLOBALS['basket'] as $item) {
                 if ($item['id'] === $id) {
@@ -26,20 +27,23 @@ class BasketController extends Controller
         $sale = false;
         $totalPrice = 0;
         $totalEconomy = 0;
-        foreach ($products['data'] as &$product) {
-            $product['allPrice'] = $product['price']['value'] * $productBasket($product['_id']);
-            $totalPrice += $product['allPrice'];
-            if (!empty($product['oldPrice'])) {
-                $sale = true;
-                $product['allEconomy'] = $product['oldPrice']['value'] * $productBasket($product['_id']) - $product['allPrice'];
-                $totalEconomy += $product['allEconomy'];
+        if ($products['data']) {
+            foreach ($products['data'] as &$product) {
+                $product['allPrice'] = $product['price']['value'] * $productBasket($product['_id']);
+                $totalPrice += $product['allPrice'];
+                if (!empty($product['oldPrice'])) {
+                    $sale = true;
+                    $product['allEconomy'] = $product['oldPrice']['value'] * $productBasket($product['_id']) - $product['allPrice'];
+                    $totalEconomy += $product['allEconomy'];
+                }
             }
+            $totalEconomy += $totalPrice;
         }
-        $totalEconomy += $totalPrice;
 
+        $count = $products['data'] ? count($products['data']) : null;
         return view('catalog.basket.show', [
             'products' => $products['data'],
-            'count' => count($products['data']),
+            'count' => $count,
             'totalPrice' => $totalPrice,
             'totalEconomy' => $totalEconomy,
             'sale' => $sale,

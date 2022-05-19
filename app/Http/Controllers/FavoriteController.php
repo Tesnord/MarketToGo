@@ -8,18 +8,21 @@ class FavoriteController extends Controller
 {
     public function show(Request $request)
     {
-        if ($request->session()->has('token')) {
-            $products = $this->requestHelper->getFilterRequest('favorites');
-            dd($products);
+        /*if ($request->session()->has('token')) {
+            $result = $this->requestHelper->getFilterRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
+            $products = $result['request']['data'];
+            // dd($result);
             return view('catalog.favorite', [
-                'products' => $products['data']
+                'products' => $products,
+                'sort_param' => $result['sort_param'],
+                'sort' => $result['sort'],
             ]);
-        }
+        }*/
         $result = $this->requestHelper->getFilterRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
-        dd($result);
-        $products = $result['request']['data'];
+        $categories = $result['request']['data'];
+        // dd($result);
         return view('catalog.favorite', [
-            'products' => $products,
+            'categories' => $categories,
             'sort_param' => $result['sort_param'],
             'sort' => $result['sort'],
         ]);

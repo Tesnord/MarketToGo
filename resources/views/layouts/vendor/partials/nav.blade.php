@@ -19,13 +19,13 @@
                     @endforeach
                 </div>
                 <div class="menu__submenu-logo">
-                    <img src="{{asset('assets/images/logo-menu1.png')}}" alt="">
-                    <img src="{{asset('assets/images/logo-menu2.png')}}" alt="">
-                    <img src="{{asset('assets/images/logo-menu3.png')}}" alt="">
-                    <img src="{{asset('assets/images/logo-menu4.png')}}" alt="">
-                    <img src="{{asset('assets/images/logo-menu5.png')}}" alt="">
-                    <img src="{{asset('assets/images/logo-menu6.png')}}" alt="">
-                    <img src="{{asset('assets/images/logo-menu7.png')}}" alt="">
+                    <a href="#"><img src="{{asset('assets/images/logo-menu1.png')}}" alt=""></a>
+                    <a href="#"><img src="{{asset('assets/images/logo-menu2.png')}}" alt=""></a>
+                    <a href="#"><img src="{{asset('assets/images/logo-menu3.png')}}" alt=""></a>
+                    <a href="#"><img src="{{asset('assets/images/logo-menu4.png')}}" alt=""></a>
+                    <a href="#"><img src="{{asset('assets/images/logo-menu5.png')}}" alt=""></a>
+                    <a href="#"><img src="{{asset('assets/images/logo-menu6.png')}}" alt=""></a>
+                    <a href="#"><img src="{{asset('assets/images/logo-menu7.png')}}" alt=""></a>
                 </div>
             </div>
             @endif
