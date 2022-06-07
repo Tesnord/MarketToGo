@@ -62,7 +62,7 @@
                         <div class="card-product__description-numb">{{ $product['subTitle'] }}</div>
                     </div>
                     <div class="card-product__description-btns">
-                        <div class="catalog__item-amount" id="count"
+                        <div class="catalog__item-amount catalog__item-amount-product" id="count"
                              style="{{ in_array($product['_id'], $productId) ? '' : 'display: none' }}">
                             <input class="count" type="text" min="1" max="{{$product['count']}}"
                                    value="{{$productBasket($product['_id'])}}">

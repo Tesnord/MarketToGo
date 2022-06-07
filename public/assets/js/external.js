@@ -283,6 +283,20 @@ if (document.querySelectorAll('.cart__list-item')) {
             for (let i = 0; i < arrPrice.length; i++) {
                 outPrice += arrPrice[i]
             }
+            let totalDeficiency = document.querySelector('.total__price--deficiency')
+            let totalDeficiencyCount = document.querySelector('.total__price--deficiency span')
+            let btnDisable = document.querySelector('.cart__list-all-btn button')
+            let btnAccess = document.querySelector('.cart__list-all-btn a')
+            if (outPrice >= 1000) {
+                totalDeficiency.style.display = 'none'
+                btnDisable.style.display = 'none'
+                btnAccess.style.display = ''
+            } else if (outPrice < 1000) {
+                totalDeficiency.style.display = ''
+                totalDeficiencyCount.textContent = (1000 - outPrice).toFixed(1)
+                btnDisable.style.display = ''
+                btnAccess.style.display = 'none'
+            }
             document.querySelector('.total__price-now').innerHTML = outPrice
             /**
              * Изменение экономии в корзине

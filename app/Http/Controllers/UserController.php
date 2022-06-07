@@ -61,10 +61,11 @@ class UserController extends Controller
 
     public function orders(Request $request)
     {
+
         if ($request->session()->has('token')) {
             $orders = $this->requestHelper->getUserRequest($request, 'profile/orders');
-            // dd($orders['data']);
-            if ($orders['data']['count'] > 0) {
+
+            if ($orders['data']['count']) {
                 $order = $orders['data']['orders'];
                 // $paginator = new LengthAwarePaginator($order['products'], $order['count'], 30);
                 // $paginator->setPath('/catalog/' . $slug_category);

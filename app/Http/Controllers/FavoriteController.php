@@ -3,26 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class FavoriteController extends Controller
 {
     public function show(Request $request)
     {
         /*if ($request->session()->has('token')) {
-            $result = $this->requestHelper->getFilterRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
-            $products = $result['request']['data'];
-            // dd($result);
+            $userFavorite = $this->requestHelper->getUserRequest($request, 'favorites');
+            $favorites = array();
+            foreach ($userFavorite['data'] as $item) {
+                $favorites[] = $item['_id'];
+            }
+            $result = $this->requestHelper->getFilterPaginateRequest('favorites', $favorites, 'post', );
+            $categories = $result['request']['data'];
+            setcookie("catalog_sort","",time()-10000);
             return view('catalog.favorite', [
-                'products' => $products,
+                'categories' => $categories ?? null,
+                'products' => $categories ?? null,
                 'sort_param' => $result['sort_param'],
                 'sort' => $result['sort'],
             ]);
         }*/
-        $result = $this->requestHelper->getFilterRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
+        $result = $this->requestHelper->getFilterPaginateRequest('favorites', $GLOBALS["favorites"], 'post', );
         $categories = $result['request']['data'];
-        // dd($result);
+
+        // $paginator = new LengthAwarePaginator($categories, count($categories), 10);
+        // $paginator->setPath('/favorite');
+
+        setcookie("catalog_sort","",time()-10000);
         return view('catalog.favorite', [
-            'categories' => $categories,
+            'categories' => $categories ?? null,
+            'products' => $categories ?? null,
             'sort_param' => $result['sort_param'],
             'sort' => $result['sort'],
         ]);

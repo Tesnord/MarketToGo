@@ -76,7 +76,7 @@
                 {{--@if(session()->has('token'))
                     <a class="header__menu-icon-item" href="{{route('scores')}}">
                         <img src="{{asset('assets/images/svg/icon-menu3.svg')}}" alt="">
-    --}}{{--                    <span class="header__menu-icon-notif">4</span>--}}{{--
+                            <span class="header__menu-icon-notif">4</span>
                         <span class="header__menu-icon-tit">баллы</span>
                     </a>
                 @endif--}}
@@ -88,7 +88,7 @@
             </div>
             <div class="header__menu-btn-catalog js-menu-btn-catalog">каталог товаров</div>
             <ul class="header__menu-main">
-{{--                <li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
+                {{--<li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
                 <li><a href="{{ route('about') }}">О нас</a></li>
                 <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                 <li><a href="{{ route('brand.index') }}">Бренды</a></li>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="header__top-menu">
                         <ul>
-{{--                            <li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
+                            <li><a href="{{ route('provider') }}">Поставщикам</a></li>
                             <li><a href="{{ route('about') }}">О нас</a></li>
                             <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                             <li><a href="{{ route('brand.index') }}">Бренды</a></li>
@@ -148,7 +148,7 @@
                         {{--@if(session()->has('token'))
                             <a class="header__bottom-info-item" href="{{ route('scores') }}">
                                 <img src="{{asset('assets/images/svg/icon-header1.svg')}}" alt=""> баллы
-    --}}{{--                            <span class="header__bottom-info-notif">4</span>--}}{{--
+                                <span class="header__bottom-info-notif">4</span>
                             </a>
                         @endif--}}
                         <a class="header__bottom-info-item" href="{{ route('favorite.show') }}">
@@ -284,7 +284,10 @@
                 </div>
                 <div class="modal-reviews__upload">
                     <div class="modal-reviews__upload-list">
-                        <div class="modal-reviews__upload-item modal-reviews__upload-item-none" style="background-image: url('{{asset('assets/images/img-upload.jpg')}}')"></div>
+                        <label class="custom-file-upload">
+                            <input type="file"/>
+                        </label>
+{{--                        <input type="file" name=""pic class="modal-reviews__upload-item modal-reviews__upload-item-none" >--}}
                     </div>
                     <div class="modal-reviews__upload-tx">
                         <div class="modal-reviews__upload-tx-title">Добавьте фото, нажав на кнопку, или перетащите фото в эту область</div>
@@ -296,13 +299,27 @@
                         <input type="checkbox" id="check-modal" name="check-modal">
                         <label for="check-modal">Оставить анонимный отзыв</label>
                     </div>
-                    <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">оставить отзыв</a>
+                    <a class="button button-primary" data-toggle="modal" data-target="#modalReviewsThanks" data-dismiss="modal" aria-label="Close" href="">оставить отзыв</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="modalReviews2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalReviewsThanks" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content__thanks">
+            <div class="close" data-dismiss="modal" aria-label="Close"><img src="{{asset('assets/images/svg/close2.svg')}}" alt=""></div>
+            <div class="modal-reviews__thanks">
+                <div class="modal-reviews__thanks__title">Мы получили ваше сообщение и приняли его в обработку</div>
+                <div class="modal-reviews__thanks__text">Некоторые отзывы требуют проверки, поэтому публикация может происходить с задержкой</div>
+                <div class="modal-reviews__thanks__bottom">
+                    <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">хорошо</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="modal fade" id="modalReviews2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="close" data-dismiss="modal" aria-label="Close"><img src="{{asset('assets/images/svg/close2.svg')}}" alt=""></div>
@@ -339,7 +356,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <div class="modal fade" id="modalReviews3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -387,6 +404,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/checkout.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/filter.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/test.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/userOrders.js') }}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/hasget/dist/hasget.min.js"></script>
 </html>

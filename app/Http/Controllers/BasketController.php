@@ -13,7 +13,7 @@ class BasketController extends Controller
             $products = $this->requestHelper->getUserRequest($request, 'basket');
         } else {
             $products = $this->requestHelper->getRequest('basket', 'post', 'domain',
-                array_column($GLOBALS["basket"], 'id'));
+                $GLOBALS["basket"]);
         }
 // dd($products);
         $productBasket = function ($id) {
@@ -41,6 +41,7 @@ class BasketController extends Controller
         }
 
         $count = $products['data'] ? count($products['data']) : null;
+
         return view('catalog.basket.show', [
             'products' => $products['data'],
             'count' => $count,
