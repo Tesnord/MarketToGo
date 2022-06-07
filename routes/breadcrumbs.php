@@ -145,3 +145,8 @@ Breadcrumbs::for('home', function ($trail) {
             $trail->parent('personal.index');
             $trail->push('Заказы', route('personal.orders'));
         });
+            // Home > Personal > Orders > Order
+            Breadcrumbs::for('personal.order', function ($trail, $param) {
+                $trail->parent('personal.orders');
+                $trail->push($param['title'], route('personal.order', $param['slug']));
+            });

@@ -74,7 +74,7 @@
                                             </div>
                                             <div class="orders__item-product-right"><a class="orders__item-product-rating-bt" href="#">ОЦЕНИТЬ ТОВАР</a></div>
                                         </div>
-                                        <a href="#" class="orders__item-product-btn"><span>подробнее</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <a href="{{route('personal.order', '1')}}" class="orders__item-product-btn"><span>подробнее</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M6.74815 5.40594L1.46799 0.246288C1.1321 -0.0820971 0.587529 -0.0820971 0.25181 0.246288C-0.0839366 0.574382 -0.0839366 1.10652 0.25181 1.43458L4.92394 6.00009L0.251945 10.5654C-0.0838008 10.8937 -0.0838008 11.4257 0.251945 11.7538C0.587692 12.0821 1.13224 12.0821 1.46812 11.7538L6.74829 6.5941C6.91616 6.42998 7 6.2151 7 6.00011C7 5.78502 6.916 5.56998 6.74815 5.40594Z" fill="#3F4042"/>
                                             </svg>
                                         </a>

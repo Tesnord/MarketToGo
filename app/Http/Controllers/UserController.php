@@ -79,5 +79,12 @@ class UserController extends Controller
         }
         return redirect()->route('login.create');
     }
+
+    public function order() {
+        /*if ($request->session()->has('token')) {
+            $orders = $this->requestHelper->getUserRequest($request,'profile/orders', $slug_order);
+        }*/
+        return view('login.user.order_item');
+    }
 }
 

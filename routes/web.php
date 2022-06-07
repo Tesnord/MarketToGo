@@ -84,7 +84,10 @@ Route::prefix('personal')->group(function () {
     Route::get('/setting', [UserController::class, 'setting'])->name('personal.setting');
     Route::put('/setting', [UserController::class, 'settingPut'])->name('personal.setting.put');
 //    Route::get('/subscribe', [UserController::class, 'subscribe'])->name('personal.subscribe');
-    Route::get('/orders', [UserController::class, 'orders'])->name('personal.orders');
+    Route::prefix('/orders')->group(function () {
+        Route::get('/', [UserController::class, 'orders'])->name('personal.orders');
+        Route::get('/{slug_order}', [UserController::class, 'order'])->name('personal.order');
+    });
 });
 // Корзина
 Route::prefix('basket')->group(function () {

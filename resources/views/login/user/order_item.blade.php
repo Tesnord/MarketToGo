@@ -4,7 +4,7 @@
 
     <div class="breadcrumb-block">
         <div class="container">
-            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('personal.orders') }}
+{{--            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('personal.order', $slug_order) }}--}}
         </div>
     </div>
 
