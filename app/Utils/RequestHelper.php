@@ -52,12 +52,8 @@ class RequestHelper
         }
         $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
             ->$method($this->domain . $handler, $data)->json();
+        // dd($result['meta'], $tokens);
         switch ($result['meta']['code']) {
-            case 500:
-                // refresh
-                $response = Http::post($this->auth . 'refresh', ['refreshToken' => $tokens['refreshToken']]);
-                $request->session()->put('token', $response->json()['data']);
-                return $this->getUserRequest($request, $handler, $data, $method);
             case 401:
                 // refresh
                 $response = Http::post($this->auth . 'refresh', ['refreshToken' => $tokens['refreshToken']]);
@@ -68,6 +64,7 @@ class RequestHelper
             case 200:
                 return $result;
         }
+
     }
 
     /**

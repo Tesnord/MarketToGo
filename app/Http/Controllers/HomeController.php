@@ -34,9 +34,10 @@ class HomeController extends Controller
             'promotion' => $_GET[''] ?? null,
         ];
 
-        $result = Http::post('http://80.78.246.225:4002/v1/site/favorites', $GLOBALS["favorites"])->json();
-        // $result = $this->requestHelper->getRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
-        dd($result);
+        // $result = Http::post('http://80.78.246.225:4002/v1/site/favorites', $GLOBALS["favorites"])->json();
+        // // $result = $this->requestHelper->getRequest('favorites', 'post', 'domain', $GLOBALS["favorites"]);
+        // dd($result);
+        dd($request->session()->get('token'));
     }
 
     public function postTest(Request $request)

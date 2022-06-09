@@ -5246,7 +5246,7 @@ h3 {
 }
 
 .orders {
-    margin-bottom: 80px;
+    /*margin-bottom: 80px;*/
 }
 
 .orders__prod {
@@ -5370,6 +5370,7 @@ h3 {
 }
 
 .orders__item-product-btn {
+    margin-top: 40px;
     display: block;
     padding: 17px 10px;
     font-weight: 500;

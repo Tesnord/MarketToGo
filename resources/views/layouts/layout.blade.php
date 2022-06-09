@@ -73,13 +73,13 @@
     <header class="header">
         <div class="header__menu-mob">
             <div class="header__menu-icon">
-                {{--@if(session()->has('token'))
+                @if(session()->has('token'))
                     <a class="header__menu-icon-item" href="{{route('scores')}}">
                         <img src="{{asset('assets/images/svg/icon-menu3.svg')}}" alt="">
                             <span class="header__menu-icon-notif">4</span>
                         <span class="header__menu-icon-tit">баллы</span>
                     </a>
-                @endif--}}
+                @endif
                 <a class="header__menu-icon-item" href="{{ route('favorite.show') }}">
                     <img src="{{asset('assets/images/svg/icon-menu4.svg')}}" alt="">
                     <span class="header__menu-icon-notif favoriteCount {{ empty($favorites) ? 'd-none' : '' }}">{{ count($favorites) }}</span>
@@ -88,11 +88,12 @@
             </div>
             <div class="header__menu-btn-catalog js-menu-btn-catalog">каталог товаров</div>
             <ul class="header__menu-main">
-                {{--<li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
+                <li><a href="{{ route('provider') }}">Поставщикам</a></li>
                 <li><a href="{{ route('about') }}">О нас</a></li>
                 <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                 <li><a href="{{ route('brand.index') }}">Бренды</a></li>
                 <li><a href="{{ route('promotions.index') }}">Акции</a></li>
+                <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>
             </ul>
             <div class="header__menu-info">
                 <div class="header__city">
@@ -121,6 +122,7 @@
                             <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                             <li><a href="{{ route('brand.index') }}">Бренды</a></li>
                             <li><a href="{{ route('promotions.index') }}">Акции</a></li>
+                            <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>
                         </ul>
                     </div>
                 </div>
@@ -145,12 +147,12 @@
                         </form>
                     </div>
                     <div class="header__bottom-info">
-                        {{--@if(session()->has('token'))
+                        @if(session()->has('token'))
                             <a class="header__bottom-info-item" href="{{ route('scores') }}">
                                 <img src="{{asset('assets/images/svg/icon-header1.svg')}}" alt=""> баллы
                                 <span class="header__bottom-info-notif">4</span>
                             </a>
-                        @endif--}}
+                        @endif
                         <a class="header__bottom-info-item" href="{{ route('favorite.show') }}">
                             <img src="{{asset('assets/images/svg/icon-header2.svg')}}" alt=""> избранное
                             <span class="header__bottom-info-notif favoriteCount {{ empty($favorites) ? 'd-none' : '' }}">{{ count($favorites) }}</span>
@@ -204,9 +206,10 @@
                 <div class="footer__top-inner">
                     <ul class="footer__menu">
                         <li><a href="{{ route('about') }}">О нас</a></li>
-{{--                        <li><a href="{{ route('provider') }}">Поставщикам</a></li>--}}
+                        <li><a href="{{ route('provider') }}">Поставщикам</a></li>
                         <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                         <li><a href="{{ route('brand.index') }}">Бренды</a></li>
+                        <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>
                     </ul>
                     <div class="footer__top-info">
                         <a class="footer__tel" href="tel:8 800 456 25 14">8 800 456 25 14</a>
@@ -377,6 +380,33 @@
                 </div>
                 <div class="modal-reviews__bottom">
                     <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">Вернуться</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalOrderCheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-content--order">
+            <div class="close" data-dismiss="modal" aria-label="Close"><img src="{{asset('assets/images/svg/close2.svg')}}" alt=""></div>
+            <div class="order__check">
+                <h3 class="order__check--title">Чек покупки</h3>
+                <p class="order__check--payment">РНКО “Деньги.Мэйл.ру” (ООО)</p>
+                <div class="order__check--case">
+                    <span>Номер ЭСП</span>
+                    <p>10800417427864006623</p>
+                </div>
+                <div class="order__check--case">
+                    <span>Вид</span>
+                    <p>Оплата</p>
+                </div>
+                <div class="order__check--case">
+                    <span>Дата</span>
+                    <p>08 ноября 2020, 11:31</p>
+                </div>
+                <div class="order__check--case">
+                    <span>Сумма</span>
+                    <p>121 ₽</p>
+                </div>
             </div>
         </div>
     </div>

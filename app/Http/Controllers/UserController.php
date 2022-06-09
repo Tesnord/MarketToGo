@@ -62,6 +62,7 @@ class UserController extends Controller
     public function orders(Request $request)
     {
 
+
         if ($request->session()->has('token')) {
             $orders = $this->requestHelper->getUserRequest($request, 'profile/orders');
 

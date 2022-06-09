@@ -31,10 +31,10 @@ class CategoryController extends Controller
 
     public function scores(Request $request)
     {
-        $scores = $this->requestHelper->getUserRequest($request, 'score');
+        // $scores = $this->requestHelper->getUserRequest($request, 'score');
         // dd($scores);
         return view('catalog.scores', [
-            'scores' => $scores['data'],
+            // 'scores' => $scores['data'],
         ]);
     }
 

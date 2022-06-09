@@ -38,6 +38,8 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('/provider', [StaticController::class, 'provider'])->name('provider');
     // Публичная оферта
     Route::get('/public', [StaticController::class, 'public'])->name('public');
+    // Вопросы и ответы
+    Route::get('/faq', [StaticController::class, 'faq'])->name('faq');
 // Товар
 Route::get('/product/{slug_product}', [ProductController::class, 'show'])->name('product');
 // Каталог
@@ -57,7 +59,10 @@ Route::prefix('subscribe')->group(function () {
     Route::get('/item', [SubscribeController::class, 'show'])->name('subscribe.show');
 });
 // Баллы
-Route::get('/scores', [CategoryController::class, 'scores'])->name('scores');
+Route::prefix('scores')->group(function () {
+    Route::get('/', [CategoryController::class, 'scores'])->name('scores');
+    Route::get('/score-info', [StaticController::class, 'scoreInfo'])->name('score.info');
+});
 // Страница магазина
 Route::prefix('shop')->group(function () {
     Route::get('/{slug_shop}', [ShopController::class, 'show'])->name('shop.show');

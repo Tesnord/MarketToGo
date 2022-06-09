@@ -31,4 +31,14 @@ class StaticController extends Controller
         return view('static.public');
     }
 
+    public function faq()
+    {
+        return view('static.faq');
+    }
+
+    public function scoreInfo()
+    {
+        return view('static.score-info');
+    }
+
 }
