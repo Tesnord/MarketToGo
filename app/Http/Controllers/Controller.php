@@ -13,8 +13,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected RequestHelper $requestHelper;
-    protected MarketPaginate $paginate;
+    protected $requestHelper;
+    protected $paginate;
 
     public function __construct()
     {

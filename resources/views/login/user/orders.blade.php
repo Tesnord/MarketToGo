@@ -138,7 +138,7 @@
                                                 </div>
                                             </div>
                                             <div class="orders__button">
-                                                <button class="orders__button orders__button--cancel-order">отменить заказ</button>
+{{--                                                <button class="orders__button orders__button--cancel-order">отменить заказ</button>--}}
                                                 <button class="orders__button orders__button--repeat-order">Повторить</button>
                                             </div>
                                         </div>
@@ -187,7 +187,7 @@
                                                 </div>
                                             </div>
                                             <div class="orders__button">
-                                                <button class="orders__button orders__button--cancel-order">отменить заказ</button>
+{{--                                                <button class="orders__button orders__button--cancel-order">отменить заказ</button>--}}
                                                 <button class="orders__button orders__button--repeat-order">Повторить</button>
                                             </div>
                                         </div>
@@ -236,7 +236,7 @@
                                                 </div>
                                             </div>
                                             <div class="orders__button">
-                                                <button class="orders__button orders__button--cancel-order">отменить заказ</button>
+{{--                                                <button class="orders__button orders__button--cancel-order">отменить заказ</button>--}}
                                                 <button class="orders__button orders__button--repeat-order">Повторить</button>
                                             </div>
                                         </div>

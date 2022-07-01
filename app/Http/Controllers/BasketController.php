@@ -12,10 +12,8 @@ class BasketController extends Controller
         if ($request->session()->has('token')) {
             $products = $this->requestHelper->getUserRequest($request, 'basket');
         } else {
-            $products = $this->requestHelper->getRequest('basket', 'post', 'domain',
-                $GLOBALS["basket"]);
+            $products = $this->requestHelper->getRequest('basket', $GLOBALS["basket"], 'post');
         }
-// dd($products);
         $productBasket = function ($id) {
             foreach ($GLOBALS['basket'] as $item) {
                 if ($item['id'] === $id) {

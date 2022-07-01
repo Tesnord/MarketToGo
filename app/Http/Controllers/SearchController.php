@@ -9,14 +9,15 @@ class SearchController extends Controller
     public function show(Request $request)
     {
         $string = $request->input('search');
-        $products = $this->requestHelper->getRequest('search/'.$string);
-        // dd($products);
-        // $file = fopen('search.json','w+');
-        // fwrite($file, $string);
-        // fclose($file);
+        $result = $this->requestHelper->getRequest('search/'.$string);
+        $search = $result['data'];
+        // dd($search);
+        // $paginator = $this->requestHelper->pagination($search['products'], $search['count'], $string);
+
         return view('catalog.search', [
-            'products' => $products['data'],
+            'products' => $search,
             'string' => $string,
+            // 'paginator' => $paginator
         ]);
     }
 }

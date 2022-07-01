@@ -8,26 +8,22 @@ class ShopController extends Controller
 {
     public function show($slug_shop)
     {
-        $shops = $this->requestHelper->getFilterRequest('shop/' . $slug_shop);
-        $shop = $shops['request']['data'];
-        // dd($shops);
+        $shops = $this->requestHelper->getRequest('shop/' . $slug_shop);
+        $shop = $shops['data'];
+        // dd($shop);
         $slug = [
             'slug' => $slug_shop,
             'title' => $shop['title']
         ];
-
-        $paginator = new LengthAwarePaginator($shop['products'], $shop['count'], 30);
-        $paginator->setPath('/catalog/' . $slug_shop);
+        $paginator = $this->requestHelper->pagination($shop['products'], $shop['count'], $slug_shop);
 
         return view('catalog.shop.show', [
             'shop' => $shop,
             'products' => $shop['products'],
             'promotions' => $shop['promotions'],
+            'filters' => $shop['filters'],
             'slug' => $slug,
             'paginator' => $paginator,
-            'filters' => $shop['filters'],
-            'sort_param' => $shops['sort_param'],
-            'sort' => $shops['sort'],
         ]);
     }
 }

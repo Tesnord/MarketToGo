@@ -20,17 +20,17 @@
                 <div class="filter__container">
                     <div class="filter__range polzunok-container-6">
                         <div class="filter__range-item">
-                            <input class="polzunok-input-6-left" type="text" value="@if (isset($_GET['price_min'])) {{ $_GET['price_min'] }} @else {{$filters['price']['min']}} @endif">
+                            <input class="polzunok-input-6-left" type="text" value="@if (isset($_GET['price_min'])){{$_GET['price_min']}}@else{{$filters['price']['min']}}@endif">
                         </div>
                         <div class="filter__range-item">
-                            <input class="polzunok-input-6-right" type="text" value="@if (isset($_GET['price_max'])) {{ $_GET['price_max'] }} @else {{$filters['price']['max']}} @endif">
+                            <input class="polzunok-input-6-right" type="text" value="@if (isset($_GET['price_max'])){{$_GET['price_max']}}@else{{$filters['price']['max']}}@endif">
                         </div>
                         <div class="polzunok-6" data-min="{{$filters['price']['min']}}" data-max="{{$filters['price']['max']}}"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="filter__item filter__item-list open">
+        <div class="filter__item open"><!--filter__item-list-->
             <div class="filter__title open">бренд</div>
             <div class="filter__holder" style="display: block;">
                 <div class="filter__container">
@@ -77,7 +77,7 @@
                 <div class="filter__container">
                     <div class="filter__group-check">
                         <div class="filter__check">
-                            <input class="js_promotion" type="checkbox" id="act1" name="act" @if(isset($_GET['in_stock']) && $_GET['in_stock'] === '1') checked @endif>
+                            <input class="js_promotion" type="checkbox" id="act1" name="act" @if(isset($_GET['sales']) && $_GET['sales'] === '1') checked @endif>
                             <label for="act1">Акции</label>
                         </div>
                     </div>

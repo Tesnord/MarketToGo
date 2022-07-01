@@ -9,34 +9,15 @@ class FavoriteController extends Controller
 {
     public function show(Request $request)
     {
-        /*if ($request->session()->has('token')) {
-            $userFavorite = $this->requestHelper->getUserRequest($request, 'favorites');
-            $favorites = array();
-            foreach ($userFavorite['data'] as $item) {
-                $favorites[] = $item['_id'];
-            }
-            $result = $this->requestHelper->getFilterPaginateRequest('favorites', $favorites, 'post', );
-            $categories = $result['request']['data'];
-            setcookie("catalog_sort","",time()-10000);
-            return view('catalog.favorite', [
-                'categories' => $categories ?? null,
-                'products' => $categories ?? null,
-                'sort_param' => $result['sort_param'],
-                'sort' => $result['sort'],
-            ]);
-        }*/
-        $result = $this->requestHelper->getFilterPaginateRequest('favorites', $GLOBALS["favorites"], 'post', );
-        $categories = $result['request']['data'];
+        $result = $this->requestHelper->getRequest('favorites', $GLOBALS["favorites"], 'post');
+        $products = $result['data'];
+        // dd($result);
 
-        // $paginator = new LengthAwarePaginator($categories, count($categories), 10);
-        // $paginator->setPath('/favorite');
+        $paginator = $this->requestHelper->pagination($products, count($products), 'favorites');
 
-        setcookie("catalog_sort","",time()-10000);
         return view('catalog.favorite', [
-            'categories' => $categories ?? null,
-            'products' => $categories ?? null,
-            'sort_param' => $result['sort_param'],
-            'sort' => $result['sort'],
+            'products' => $products,
+            'paginator' => $paginator,
         ]);
     }
 

@@ -1732,6 +1732,7 @@ h3 {
     left: 0;
     border-radius: 1000px;
     background: #ffffff;
+    overflow: hidden;
 }
 
 .catalog-brand-title__logo img {
@@ -4391,7 +4392,7 @@ h3 {
     margin-bottom: 35px;
     border: 1px solid #EBEBEB;
     border-radius: 15px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .order__wrap-top {
@@ -4671,7 +4672,7 @@ h3 {
     padding-left: 24px;
     font-size: 14px;
     line-height: 16px;
-    color: #333333;
+    color: #707378;
     cursor: pointer;
 }
 
@@ -5129,7 +5130,7 @@ h3 {
     font-weight: 500;
     font-size: 18px;
     line-height: 130%;
-    color: #333333;
+    color: #707378;
 }
 
 .lk__setting-form-title {
@@ -6754,9 +6755,9 @@ h3 {
         max-width: 33.333%;
     }
 
-    .catalog-min .col-lg-2-1:nth-of-type(4) {
-        display: none;
-    }
+    /*.catalog-min .col-lg-2-1:nth-of-type(4) {*/
+    /*    display: none;*/
+    /*}*/
 
     .catalog-subscription .col-lg-2-1 {
         -webkit-box-flex: 0;

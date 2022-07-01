@@ -21,14 +21,15 @@ class LoginController extends Controller
     {
         $phone = $request->post('phone');
         $code = $request->post('code');
+
         if (empty($code)) {
             $login = $this->requestHelper
-                ->getRequest('login', 'post', 'auth', ['phone' => $phone]);
+                ->getRequest('login', ['phone' => $phone], 'post', 'auth');
             $login = $login['data'];
             return ['status' => 'ok', 'code' => $login];
         } else {
             $login = $this->requestHelper
-                ->getRequest('login', 'post', 'auth', ['phone' => $phone, 'code' => $code]);
+                ->getRequest('login', ['phone' => $phone, 'code' => $code], 'post', 'auth', );
             if ($login['meta']['code'] === 400) {
                 return response($login['meta']['message'], 400);
             }
@@ -39,18 +40,14 @@ class LoginController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        $tokens = session()->get('token');
-        $result = $this->requestHelper
-            ->getRequest('logout', 'post', 'auth', ['refreshToken' => $tokens['refreshToken']]);
+        $tokens = $request->session()->get('token');
+        $this->requestHelper->getRequest('logout', ['refreshToken' => $tokens['refreshToken']], 'post', 'auth');
+        // dd($result);
+
         session()->remove('token');
-        // TODO запись в файл УДАЛИТЬ!!!
-        if ($result['meta']['code'] !== 200) {
-            $file = fopen('logs_logout_errors.json','w+');
-            fwrite($file, $result);
-            fclose($file);
-        }
+
         return ['status' => 'ok', 'uri' => '/'];
     }
 }

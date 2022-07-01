@@ -4,18 +4,22 @@ namespace App\Utils;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class RequestHelper
 {
-    private string $domain;
-    private string $auth;
+    private $domain;
+    private $auth;
+    private $page_limit;
 
     public function __construct()
     {
         $this->domain = config('app.api_entry_point');
         $this->auth = config('app.api_entry_auth');
+        $this->page_limit = 10;
     }
 
     /**
@@ -26,13 +30,18 @@ class RequestHelper
      * @return mixed
      * Общий запрос на APi
      */
-    public function getRequest(
-        string $handler,
-        string $method = 'get',
-        string $entry_point = 'domain',
-        array $data = []
-    ) {
-        $result = Http::$method($this->$entry_point . $handler, $data)->json();
+    public function getRequest(string $handler, array $data = [], string $method = 'get', string $entry_point = 'domain')
+    {
+        $query = $this->queryParams();
+        // dd($query);
+        if ($method === 'get') {
+            $result = Http::get($this->$entry_point . $handler . $query)->json();
+            // dd($result);
+        } elseif ($method === 'post') {
+            $result = Http::post($this->$entry_point . $handler . $query, $data)->json();
+        }
+
+
         if ($result['meta']['status'] === false) {
             abort(404);
         }
@@ -52,7 +61,7 @@ class RequestHelper
         }
         $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
             ->$method($this->domain . $handler, $data)->json();
-        // dd($result['meta'], $tokens);
+        // dd($result);
         switch ($result['meta']['code']) {
             case 401:
                 // refresh
@@ -60,105 +69,34 @@ class RequestHelper
                 $request->session()->put('token', $response->json()['data']);
                 return $this->getUserRequest($request, $handler, $data, $method);
             case 400:
-                throw new Exception('Invalid request');
+                abort(404);
+                break;
             case 200:
                 return $result;
         }
-
     }
 
-    /**
-     * @return array
-     * Проверка данных сортировки
-     */
-    public function SortProduct()
+    public function queryParams()
     {
-        switch ($GLOBALS["sort"]) {
-            case "discount-asc":
-                {
-                    $sort_param = "discount-asc";
-                    $sort = array(
-                        "sort" => "discount",
-                        "order" => "asc",
-                    );
-                }
-                break;
-            case "discount-desc":
-                {
-                    $sort_param = "discount-desc";
-                    $sort = array(
-                        "sort" => "discount",
-                        "order" => "desc",
-                    );
-                }
-                break;
-            case "price-desc":
-                {
-                    $sort_param = "price-desc";
-                    $sort = array(
-                        "sort" => "price",
-                        "order" => "desc",
-                    );
-                }
-                break;
-            default:
-                {
-                    $sort_param = "price-asc";
-                    $sort = array(
-                        "sort" => "price",
-                        "order" => "asc",
-                    );
-                }
-                break;
-        }
-        return ['sort_param' => $sort_param ?? null, 'sort' => $sort ?? null];
-    }
-
-    public function getFilterPaginateRequest(string $handler, $data = [], string $method = 'get', string $entry_point = 'domain')
-    {
-        $sort = $this->SortProduct();
-        $number = $_GET['page'] ?? 1;
-
-        if($sort['sort_param'] !== null || $sort['sort'] !== null){
-            $getSort = 'sort='.$sort['sort']['sort'] . '_' . $sort['sort']['order'];
+        $query_arr = $_GET;
+        $query_arr['limit'] = $this->page_limit;
+        if (isset($query_arr['page'])) {
+            $query_arr['offset'] = $this->page_limit * ($query_arr['page'] - 1);
+            unset($query_arr['page']);
         } else {
-            $getSort = '';
+            $query_arr['offset'] = 0;
         }
-        // dd($getSort);
-        $filter = [
-            'offset' => ($number - 1) * 10,
-            'limit' => 10,
-            'sort' => $getSort
-        ];
-
-        $filterResult = '?'.$getSort.'&limit='.$filter['limit'].'&offset='.$filter['offset'];
-
-        $result = Http::$method($this->$entry_point . $handler.$filterResult , $data)->json();
-
-        return ['request' => $result, 'sort_param' => $sort['sort_param'] ?? 'price-asc', 'sort' => $sort['sort'] ?? ["sort" => "price", "order" => "asc"]];
+        return '?' . http_build_query($query_arr);
     }
 
-
-    public function getFilterRequest(string $handler, string $method = 'get', string $entry_point = 'domain')
+    public function pagination($data, $count, $path)
     {
-        $sort = $this->SortProduct();
-        $number = $_GET['page'] ?? 1;
-
-        $filter = [
-            'offset' => ($number - 1) * 10,
-            'limit' => 10,
-            'sort' => $sort['sort']['sort'] . '_' . $sort['sort']['order'],
-            'price_min' => $_GET['price_min'] ?? null,
-            'price_max' => $_GET['price_max'] ?? null,
-            'brands' => $_GET['brands'] ?? null,
-            'tags' => $_GET['tags'] ?? null,
-            'in_stock' => $_GET['in_stock'] ?? null,
-            'promotion' => $_GET[''] ?? null,
-        ];
-
-        $result = Http::$method($this->$entry_point . $handler, $filter)->json();
-
-        return ['request' => $result, 'sort_param' => $sort['sort_param'], 'sort' => $sort['sort']];
+        $paginator = new LengthAwarePaginator($data, $count, $this->page_limit);
+        $query = '';
+        if (count($_GET) > 0) {
+            unset($_GET['page']);
+        }
+        return $paginator->setPath($path . $query);
     }
 
     public function getCookie(Request $request, $cookieName)

@@ -23,7 +23,7 @@
     <div class="catalog">
         <div class="container">
             <div class="catalog__inner">
-                @include('layouts.catalog.filter')
+                @include('layouts.catalog.filter.filter_wrapper')
                 @include('layouts.catalog.product_list')
             </div>
         </div>

@@ -1,6 +1,6 @@
 // Авторизация
 if (document.querySelector("div.registration")) {
-    $("#tel").mask("8(999) 999-9999");
+    $("#tel").mask("+7(999) 999-9999");
     // $("#code").mask("9999");
     // Отправка номера (валидация номера)
     document.querySelector("button.phone").addEventListener('click', e => {
@@ -27,7 +27,6 @@ if (document.querySelector("div.registration")) {
                 .then(json => {
                     if (json.status === 'ok') {
                         $('span.phone').text(phone);
-                        $('span.newCode').text(json.code.debug);
 
                         document.querySelector('div.phone').style.display = 'none';
                         document.querySelector('div.code').style.display = '';
@@ -51,6 +50,28 @@ if (document.querySelector("div.registration")) {
                 })
         }
     })
+    // Повторная отправка номера
+    document.querySelector("p.codelink a").addEventListener('click', e => {
+        let phone = $('#tel').val();
+        fetch('/login', {
+            method: 'POST',
+            body: JSON.stringify({phone: phone}),
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                if (json.status === 'ok') {
+                    document.querySelector('p.codelink').style.display = 'none';
+                    document.querySelector('.codemessage').style.display = ''
+                } else {
+                    log('errors')
+                }
+            })
+    })
     // Отправка кода
     document.querySelector('button.code').addEventListener('click', e => {
         let phone = $('span.phone').html();
@@ -65,7 +86,7 @@ if (document.querySelector("div.registration")) {
             }
         }).then(response => {
             if (response.ok) {
-                window.location.href = '/personal/setting';
+                window.location.href = document.referrer;
             } else {
                 response.text().then(error => {
                     const codeInput = document.querySelector('input.code');
@@ -97,7 +118,7 @@ if (document.querySelector('div.lk__menu')) {
                     location.href = json.uri;
                     log('ok')
                 } else {
-                    log('error')
+                    log(response)
                 }
             })
     })

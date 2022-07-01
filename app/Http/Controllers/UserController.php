@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -18,37 +16,44 @@ class UserController extends Controller
 
     public function setting(Request $request)
     {
-        if (!$request->session()->has('token')) {
-            return redirect()->route('login.create');
-        }
-        try {
+        if ($request->session()->has('token')) {
             $profile = $this->requestHelper->getUserRequest($request, 'profile');
-        } catch (\Exception $e) {
-            return redrect()->route('login.create');
+            // dd($profile);
+            return view('login.user.setting', [
+                'profile' => $profile['data']
+            ]);
         }
-        return view('login.user.setting', [
-            'profile' => $profile['data']
-        ]);
+        return redirect()->route('login.create');
     }
 
     public function settingPut(Request $request)
     {
-        if (!$request->session()->has('token')) {
-            return ['status' => 'ok'];
+        if ($request->input('name')) {
+            $profile = [
+                "name" => $request->input('name'),
+                "surname" => $request->input('surname'),
+                "email" => $request->input('email')
+            ];
+            // dd($profile);
+            if ($request->session()->has('token')) {
+                $this->requestHelper->getUserRequest($request, 'profile', $profile, 'put');
+                return ['status' => 'ok'];
+            }
         }
-        $this->requestHelper->getUserRequest($request, 'profile', [
-            "name" => $request->input('name'),
-            "surname" => $request->input('surname'),
-            "email" => $request->input('email'),
-            "address" => [
-                "street" => $request->input('address.street'),
-                "apartment" => $request->input('address.apartment'),
-                "floor" => $request->input('address.floor'),
-                "entrance" => $request->input('address.entrance'),
-                "intercom" => $request->input('address.intercom')
-            ]
-        ], 'put');
-        return ['status' => 'ok'];
+        if ($request->input('address.street')) {
+            $addresses = [
+                "street" => $request->input('street'),
+                "apartment" => $request->input('apartment'),
+                "floor" => $request->input('floor'),
+                "entrance" => $request->input('entrance'),
+                "intercom" => $request->input('intercom')
+            ];
+            // dd($addresses);
+            if ($request->session()->has('token')) {
+                $this->requestHelper->getUserRequest($request, 'profile/address', $addresses, 'put');
+                return ['status' => 'ok'];
+            }
+        }
     }
 
     public function subscribe(Request $request)
@@ -61,15 +66,11 @@ class UserController extends Controller
 
     public function orders(Request $request)
     {
-
-
         if ($request->session()->has('token')) {
             $orders = $this->requestHelper->getUserRequest($request, 'profile/orders');
-
+            // dd($orders);
             if ($orders['data']['count']) {
                 $order = $orders['data']['orders'];
-                // $paginator = new LengthAwarePaginator($order['products'], $order['count'], 30);
-                // $paginator->setPath('/catalog/' . $slug_category);
                 return view('login.user.orders', [
                     'orders' => $order,
                 ]);

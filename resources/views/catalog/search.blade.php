@@ -25,13 +25,7 @@
         <div class="catalog">
             <div class="container">
                 <div class="catalog__inner">
-                    <div class="catalog__list">
-                        <div class="row">
-                            @foreach($products as $product)
-                                @include('layouts.catalog.product')
-                            @endforeach
-                        </div>
-                    </div>
+                    @include('layouts.catalog.product_list')
                 </div>
             </div>
         </div>

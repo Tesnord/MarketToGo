@@ -1,7 +1,73 @@
 @extends('layouts.layout')
 
 @section('content')
-
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new CustomSelect('#select-1', {
+                name: 'day',
+                targetValue: 'today',
+                options: [
+                    ['today', 'Сегодня'],
+                    ['27 may', 'Вт, 27 мая'],
+                    ['28 may', 'Ср, 28 мая'],
+                    ['29 may', 'Чт, 29 мая']
+                ],
+                onSelected(select, option) {
+                    // выбранное значение
+                    console.log(`Выбранное значение: ${select.value}`);
+                    // индекс выбранной опции
+                    console.log(`Индекс выбранной опции: ${select.selectedIndex}`);
+                    // выбранный текст опции
+                    const text = option ? option.textContent : '';
+                    console.log(`Выбранный текст опции: ${text}`);
+                },
+            });
+            document.querySelector('.select').addEventListener('select.change', (e) => {
+                const btn = e.target.querySelector('.select__toggle');
+                // выбранное значение
+                console.log(`Выбранное значение: ${btn.value}`);
+                // индекс выбранной опции
+                console.log(`Индекс выбранной опции: ${btn.dataset.index}`);
+                // выбранный текст опции
+                const selected = e.target.querySelector('.select__option_selected');
+                const text = selected ? selected.textContent : '';
+                console.log(`Выбранный текст опции: ${text}`);
+            });
+        })
+        document.addEventListener('DOMContentLoaded', () => {
+            new CustomSelect('#select-2', {
+                name: 'day',
+                targetValue: '10',
+                options: [
+                    ['10', '10:00-11:00'],
+                    ['11', '11:00-12:00'],
+                    ['12', '12:00-13:00'],
+                    ['13', '13:00-14:00'],
+                    ['14', '14:00-15:00']
+                ],
+                onSelected(select, option) {
+                    // выбранное значение
+                    console.log(`Выбранное значение: ${select.value}`);
+                    // индекс выбранной опции
+                    console.log(`Индекс выбранной опции: ${select.selectedIndex}`);
+                    // выбранный текст опции
+                    const text = option ? option.textContent : '';
+                    console.log(`Выбранный текст опции: ${text}`);
+                },
+            });
+            document.querySelector('.select').addEventListener('select.change', (e) => {
+                const btn = e.target.querySelector('.select__toggle');
+                // выбранное значение
+                console.log(`Выбранное значение: ${btn.value}`);
+                // индекс выбранной опции
+                console.log(`Индекс выбранной опции: ${btn.dataset.index}`);
+                // выбранный текст опции
+                const selected = e.target.querySelector('.select__option_selected');
+                const text = selected ? selected.textContent : '';
+                console.log(`Выбранный текст опции: ${text}`);
+            });
+        })
+    </script>
     <div class="breadcrumb-block">
         <div class="container">
             {{ Diglactic\Breadcrumbs\Breadcrumbs::render('checkout') }}
@@ -47,7 +113,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="order__wrap order__create" @if(isset($address['street'])) style="display: none" @endif>
+<!--                        <div class="order__wrap order__create" @if(isset($address['street'])) style="display: none" @endif>
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
                                     <div class="order__wrap-title">Доставка</div>
@@ -56,8 +122,8 @@
                                     <a class="button button-gr button__create" href="javascript:void(0)">добавить адрес</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="order__wrap order__show" @if(!isset($address['street'])) style="display: none" @endif>
+                        </div>-->
+                        <div class="order__wrap order__show" {{--@if(!isset($address['street'])) style="display: none" @endif--}}>
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
                                     <div class="order__wrap-title">Доставка</div>
@@ -67,7 +133,56 @@
                                         <div class="order__wrap-list-item">{{$order['deliveryPrice']}} ₽</div>
                                     </div>
                                 </div>
-                                <div class="order__payment-list fl">
+                                <div class="order__payment-list-item">
+                                    <input type="radio" id="address-1" name="address" checked="">
+                                    <label for="address-1">
+                                        <span class="tit">Краснодар, улица им. Котлярова Н.С., д.24</span>
+                                    </label>
+                                </div>
+                                <div class="order__payment-list-item">
+                                    <input type="radio" id="address-2" name="address">
+                                    <label for="address-2">
+                                        <span class="tit">г. Краснодар (Краснодарский край), улица имени Сергея Есенина, д. 113</span>
+                                    </label>
+                                </div>
+                                <div class="lk__setting__address--add order__payment--btn">
+                                    <button type="button">добавить адрес</button>
+                                </div>
+                                <div class="order__wrap-title order__delivery__time--title">Время</div>
+                                <div class="order__delivery__time">
+                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="order__payment-list-item" role="presentation">
+                                            <a class="delivery__time--js" id="pills-time-1-tab" data-toggle="pill" href="#pills-time-1" role="tab" aria-controls="pills-time-1" aria-selected="true">
+                                                <input type="radio" id="delivery-time-1" name="delivery-time" checked="">
+                                                <label for="delivery-time-1">
+                                                    <span class="">Как можно быстрее</span>
+                                                </label>
+                                            </a>
+                                        </li>
+                                        <li class="order__payment-list-item" role="presentation">
+                                            <a class="delivery__time--js" id="pills-time-2-tab" data-toggle="pill" href="#pills-time-2" role="tab" aria-controls="pills-time-2" aria-selected="false">
+                                                <input type="radio" id="delivery-time-2" name="delivery-time">
+                                                <label for="delivery-time-2">
+                                                    <span class="">К определенному времени</span>
+                                                </label>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-time-1" role="tabpanel" aria-labelledby="pills-time-1-tab"></div>
+                                    <div class="tab-pane fade" id="pills-time-2" role="tabpanel" aria-labelledby="pills-time-2-tab">
+                                        <div class="delivery__date--wrapper">
+                                            <div class="delivery__date">
+                                                <div id="select-1"></div>
+                                            </div>
+                                            <div class="delivery__date">
+                                                <div id="select-2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+<!--                                <div class="order__payment-list fl">
                                     <div class="order__payment-list-change-tx">
                                         @if(isset($address['street'])){{ $address['street'] }}@endif
                                     </div>
@@ -77,7 +192,7 @@
                                         </svg>
                                         Изменить
                                     </a>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="order__wrap order__update" style="display: none">
@@ -139,7 +254,7 @@
                             </div>
                         </div>
 
-                        <div class="order__wrap">
+                        <div class="order__wrap payment__variables--js">
                             <div class="order__payment">
                                 <div class="order__wrap-top">
                                     <div class="order__wrap-title">Оплата</div>
@@ -147,23 +262,43 @@
                                         <div class="order__wrap-list-item">Выберите способ оплаты</div>
                                     </div>
                                 </div>
-                                <div class="order__payment-list">
-                                    <div class="order__payment-list-item-in">
-                                        <div class="order__payment-list-item">
+                                <div class="order__payment-list nav" id="payment">
+                                    <a class="order__payment-list-item-in" data-toggle="tab" href="#payment-1">
+                                        <div class="order__payment-list-item payment--js">
                                             <input type="radio" id="payment1" name="payment" checked>
                                             <label for="payment1"><span class="tit">Онлайн оплата</span></label>
                                         </div>
-                                    </div>
-                                    <div class="order__payment-list-item-in">
-                                        <div class="order__payment-list-item">
+                                    </a>
+                                    <a class="order__payment-list-item-in collapsed" data-toggle="tab" href="#payment-2">
+                                        <div class="order__payment-list-item payment--js">
                                             <input type="radio" id="payment2" name="payment">
                                             <label for="payment2"><span class="tit">Наличными курьеру</span></label>
                                         </div>
-                                    </div>
-                                    <div class="order__payment-list-item-in">
-                                        <div class="order__payment-list-item">
+                                    </a>
+                                    <a class="order__payment-list-item-in collapsed" for="payment3" data-toggle="tab" href="#payment-3">
+                                        <div class="order__payment-list-item payment--js">
                                             <input type="radio" id="payment3" name="payment">
                                             <label for="payment3"><span class="tit">По QR коду клиенту</span></label>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="tab-content payment__tab--js" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="payment-1"></div>
+                                    <div class="tab-pane fade" id="payment-2">
+                                        <div class="payment__cash">
+                                            <p class="payment__cash--title">Нужна сдача с</p>
+                                            <input type="number" class="payment__cash--input">
+                                            <div class="payment__cash--btn--wrapper">
+                                                <button class="payment__cash--btn payment__cash--btn--active">Без сдачи</button>
+                                                <button class="payment__cash--btn">2000</button>
+                                                <button class="payment__cash--btn">5000</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="payment-3">
+                                        <div class="payment__qr">
+                                            <p class="payment__qr--text">Курьер приедет с QR кодом. Вам нужно будет открыть банковское приложение, отсканировать QR код и подтвердить оплату</p>
                                         </div>
                                     </div>
                                 </div>

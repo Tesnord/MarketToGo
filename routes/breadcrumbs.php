@@ -33,6 +33,11 @@ Breadcrumbs::for('home', function ($trail) {
         $trail->parent('home');
         $trail->push('Публичная оферта', route('public'));
     });
+    // Home > FAQ
+    Breadcrumbs::for('faq', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Вопросы и ответы', route('public'));
+    });
 
     // Корзина
     // Home > Basket
@@ -79,10 +84,10 @@ Breadcrumbs::for('home', function ($trail) {
         $trail->push('Акции', route('promotions.index'));
     });
         // Home > Promotions > Action
-        // Breadcrumbs::for('promotions.show', function ($trail, $promotion) {
-        //     $trail->parent('promotions.index');
-        //     $trail->push($promotion->name, route('promotions.show', $promotion));
-        // });
+        Breadcrumbs::for('promotions.show', function ($trail, $param) {
+            $trail->parent('promotions.index');
+            $trail->push($param['title'], route('promotions.show', $param['slug']));
+        });
 
     // Магазин
     // Home > Shop

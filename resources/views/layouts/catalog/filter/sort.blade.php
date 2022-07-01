@@ -7,10 +7,10 @@
                 % скидки@if($sort['sort'] === 'discount') {!! $sort["order"] === 'asc' ? '&#8593' : '&#8595' !!} @endif
             </a>
         </li>--}}
-        <li class="{{$sort["sort"] === "price" ? "active" : "" }}"
-            data-sort="{{$sort_param === "price-asc" ? "price-desc" : "price-asc" }}">
+        <li class="{{isset($_GET['sort']) ? "active" : "" }}"
+            data-sort="{{$_GET['sort'] ?? ''}}">
             <a href="javascript:void(0)">
-                цене@if($sort['sort'] === 'price') {!! $sort["order"] === 'asc' ? '&#8593' : '&#8595' !!} @endif
+                цене@if(isset($_GET['sort'])) {!! $_GET["sort"] === "price_asc" ? '&#8593' : '&#8595' !!} @endif
             </a>
         </li>
     </ul>

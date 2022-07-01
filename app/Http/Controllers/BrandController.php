@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class BrandController extends Controller
 {
@@ -18,7 +17,7 @@ class BrandController extends Controller
     public function show($slug_letter)
     {
 
-        $brands = $this->requestHelper->getRequest('brands/'.$slug_letter);
+        $brands = $this->requestHelper->getRequest('brands/' . $slug_letter);
         $brand = $brands['data']['letters'];
         $brand_item = $brands['data'];
         return view('catalog.brand.show', [
@@ -29,26 +28,22 @@ class BrandController extends Controller
 
     public function catalog($slug_brand)
     {
-        $brands = $this->requestHelper->getFilterRequest('brand/' . $slug_brand);
-        $brand = $brands['request']['data'];
+        $brands = $this->requestHelper->getRequest('brand/' . $slug_brand);
+        $brand = $brands['data'];
         // dd($brands);
-        $products = $brand['products'];
         $slug = [
             'slug' => $slug_brand,
             'title' => $brand['title']
         ];
 
-        $paginator = new LengthAwarePaginator($brand['products'], $brand['count'], 30);
-        $paginator->setPath('/catalog/' . $slug_brand);
+        $paginator = $this->requestHelper->pagination($brand['products'], $brand['count'], $slug_brand);
 
         return view('catalog.brand.catalog', [
             'brand' => $brand,
-            'products' => $products,
+            'products' => $brand['products'],
+            'filters' => $brand['filters'],
             'slug' => $slug,
             'paginator' => $paginator,
-            'filters' => $brand['filters'],
-            'sort_param' => $brands['sort_param'],
-            'sort' => $brands['sort'],
         ]);
     }
 }

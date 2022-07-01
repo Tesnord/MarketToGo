@@ -4,7 +4,7 @@
 
     <div class="breadcrumb-block">
         <div class="container">
-            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('product', $slug) }}
+            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('product', $breadcrumbs) }}
         </div>
     </div>
     <div class="card-product">
@@ -97,7 +97,7 @@
                      </a>--}}
                 </div>
                 <div class="card-product__all lnk">
-                    @if(isset($product['reviews']['score']))
+                    @if($product['reviews']['score'])
                         <div class="card-product__all-reviews">
                             <a class="card-product__all-lnk" href="#card-item3"></a>
                             <div class="card-product__all-reviews-rating">
@@ -114,7 +114,7 @@
                                         </div>
                                     @else
                                         <div class="card-product__all-reviews-list-item">
-                                            <img src="{{ asset('assets/images/svg/rating-active.svg') }}" alt="">
+                                            <img src="{{ asset('assets/images/svg/rating.svg') }}" alt="">
                                         </div>
                                     @endif
                                 @endfor
@@ -218,7 +218,7 @@
                                 <div class="tab-pane fade" id="card-item3" role="tabpanel" aria-labelledby="card-item3-tab">
                                     <div class="card-product__tabs-holder">
                                         <div class="card-product__tabs-inner">
-                                            @if(empty($product['reviews']))
+                                            @if($product['reviews']['count'] == 0)
                                                 <div class="card-product__reviews-none">
                                                     <div class="card-product__reviews-none-title">У этого товара пока нет
                                                         отзывов.
@@ -229,32 +229,35 @@
                                             @else
                                                 <div class="card-product__reviews">
                                                     @foreach($product['reviews']['list'] as $review)
+
                                                         <div class="card-product__reviews-item">
                                                             <div class="card-product__reviews-info">
                                                                 <div
                                                                     class="card-product__reviews-title">{{ $review['name'] }}</div>
-                                                                <div class="card-product__reviews-rating">
-                                                                    @for($i = 0; $i < 5; $i++)
-                                                                        @if(floor($review['rating']) - $i >= 1)
-                                                                            <div class="card-product__reviews-rating-item">
-                                                                                <img
-                                                                                    src="{{asset('assets/images/svg/rating-active.svg')}}"
-                                                                                    alt="">
-                                                                            </div>
-                                                                        @else
-                                                                            <div class="card-product__reviews-rating-item">
-                                                                                <img
-                                                                                    src="{{asset('assets/images/svg/rating.svg')}}"
-                                                                                    alt="">
-                                                                            </div>
-                                                                        @endif
-                                                                    @endfor
-                                                                </div>
+                                                                @if(!empty($review['rating']))
+                                                                    <div class="card-product__reviews-rating">
+                                                                        @for($i = 0; $i < 5; $i++)
+                                                                            @if(floor($review['rating']) - $i >= 1)
+                                                                                <div class="card-product__reviews-rating-item">
+                                                                                    <img
+                                                                                        src="{{asset('assets/images/svg/rating-active.svg')}}"
+                                                                                        alt="">
+                                                                                </div>
+                                                                            @else
+                                                                                <div class="card-product__reviews-rating-item">
+                                                                                    <img
+                                                                                        src="{{asset('assets/images/svg/rating.svg')}}"
+                                                                                        alt="">
+                                                                                </div>
+                                                                            @endif
+                                                                        @endfor
+                                                                    </div>
+                                                                @endif
                                                                 <div
                                                                     class="card-product__reviews-data">{{ $review['date'] }}</div>
                                                             </div>
                                                             <div class="card-product__reviews-description">
-                                                                <p>{{ $review['text'] }}</p>
+                                                                <p>{{ $review['text'] ?? '' }}</p>
                                                                 @if(!empty($review['images']))
                                                                     <div class="card-product__reviews-list">
                                                                         @foreach($review['images'] as $image)
@@ -303,7 +306,7 @@
                             </div>
                         </div>
                     </div>
-                    @if(isset($product['offers']))
+                    @if(!empty($product['offers']))
                         <div class="card-product__other">
                             <h3>Другие предложения продавцов на сайте</h3>
                             <div class="card-product__product">
@@ -352,8 +355,177 @@
                 </div>
             </div>
         </div>
+        <!--Modal-->
+        <style>
+            .modal-reviews__rating-item {
+                overflow: hidden;
+                position: relative;
+            }
+            .modal-reviews__rating-item label {
+                width: 17px;
+                height: 17px;
+            }
+            .modal-reviews__rating-item label svg {
+                width: 17px;
+                height: 17px;
+                fill: #D9DED4;
+                position: absolute;
+            }
+            .modal-reviews__rating-item:not(:checked) > input {
+                display: none;
+            }
+            .modal-reviews__rating-item:not(:checked) > label {
+                float: right;
+                padding: 0;
+                cursor: pointer;
+            }
+
+            .modal-reviews__rating-item > input:checked ~ label svg {
+                fill: #7ABC2F;
+            }
+            .modal-reviews__rating-item:not(:checked) > label:hover svg,
+            .modal-reviews__rating-item:not(:checked) > label:hover ~ label svg {
+                fill: #7ABC2F;
+            }
+            .modal-reviews__rating-item > input:checked + label:hover svg,
+            .modal-reviews__rating-item > input:checked + label:hover ~ label svg,
+            .modal-reviews__rating-item > input:checked ~ label:hover svg,
+            .modal-reviews__rating-item > input:checked ~ label:hover ~ label svg,
+            .modal-reviews__rating-item > label:hover ~ input:checked ~ label svg {
+                fill: #7ABC2F;
+            }
+            .modal-reviews__rating-item > label:active {
+                position: relative;
+            }
+        </style>
+        <div class="modal fade" id="modalReviews" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('assets/images/svg/close2.svg')}}" alt="">
+                    </div>
+                    <div class="modal-reviews">
+                        <div class="modal-reviews__title">Оставить отзыв</div>
+                        <div class="modal-reviews__rating">
+                            <div class="modal-reviews__rating-title">Оцените товар</div>
+                            <div class="modal-reviews__rating-list">
+                                <div class="modal-reviews__rating-item">
+                                    <input type="radio" id="star-5" name="rating" value="5">
+                                    <label for="star-5" title="Оценка «5»">
+                                        <svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.955 6.5082C16.8262 6.11197 16.4428 5.83973 15.903 5.76126L11.5032 5.12184L9.53539 1.135C9.29402 0.645905 8.91659 0.365234 8.5 0.365234C8.0834 0.365234 7.70598 0.645905 7.46461 1.13513L5.49706 5.12184L1.09713 5.76126C0.55719 5.83973 0.173668 6.11197 0.045006 6.5082C-0.0836561 6.90444 0.0665362 7.35009 0.457192 7.73075L3.64106 10.8341L2.88932 15.2162C2.79321 15.7767 2.95702 16.1125 3.11137 16.2956C3.29243 16.5104 3.5565 16.6287 3.85493 16.6287C4.07944 16.6287 4.31822 16.5629 4.56478 16.4333L8.5 14.3645L12.4355 16.4335C12.6819 16.563 12.9207 16.6287 13.1452 16.6287H13.1453C13.4436 16.6287 13.7078 16.5104 13.8889 16.2956C14.0431 16.1126 14.207 15.7767 14.1108 15.2162L13.3592 10.8341L16.5429 7.73075C16.9335 7.35009 17.0837 6.90444 16.955 6.5082Z"/>
+                                        </svg>
+                                    </label>
+                                    <input type="radio" id="star-4" name="rating" value="4">
+                                    <label for="star-4" title="Оценка «4»">
+                                        <svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.955 6.5082C16.8262 6.11197 16.4428 5.83973 15.903 5.76126L11.5032 5.12184L9.53539 1.135C9.29402 0.645905 8.91659 0.365234 8.5 0.365234C8.0834 0.365234 7.70598 0.645905 7.46461 1.13513L5.49706 5.12184L1.09713 5.76126C0.55719 5.83973 0.173668 6.11197 0.045006 6.5082C-0.0836561 6.90444 0.0665362 7.35009 0.457192 7.73075L3.64106 10.8341L2.88932 15.2162C2.79321 15.7767 2.95702 16.1125 3.11137 16.2956C3.29243 16.5104 3.5565 16.6287 3.85493 16.6287C4.07944 16.6287 4.31822 16.5629 4.56478 16.4333L8.5 14.3645L12.4355 16.4335C12.6819 16.563 12.9207 16.6287 13.1452 16.6287H13.1453C13.4436 16.6287 13.7078 16.5104 13.8889 16.2956C14.0431 16.1126 14.207 15.7767 14.1108 15.2162L13.3592 10.8341L16.5429 7.73075C16.9335 7.35009 17.0837 6.90444 16.955 6.5082Z"/>
+                                        </svg>
+                                    </label>
+                                    <input type="radio" id="star-3" name="rating" value="3">
+                                    <label for="star-3" title="Оценка «3»">
+                                        <svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.955 6.5082C16.8262 6.11197 16.4428 5.83973 15.903 5.76126L11.5032 5.12184L9.53539 1.135C9.29402 0.645905 8.91659 0.365234 8.5 0.365234C8.0834 0.365234 7.70598 0.645905 7.46461 1.13513L5.49706 5.12184L1.09713 5.76126C0.55719 5.83973 0.173668 6.11197 0.045006 6.5082C-0.0836561 6.90444 0.0665362 7.35009 0.457192 7.73075L3.64106 10.8341L2.88932 15.2162C2.79321 15.7767 2.95702 16.1125 3.11137 16.2956C3.29243 16.5104 3.5565 16.6287 3.85493 16.6287C4.07944 16.6287 4.31822 16.5629 4.56478 16.4333L8.5 14.3645L12.4355 16.4335C12.6819 16.563 12.9207 16.6287 13.1452 16.6287H13.1453C13.4436 16.6287 13.7078 16.5104 13.8889 16.2956C14.0431 16.1126 14.207 15.7767 14.1108 15.2162L13.3592 10.8341L16.5429 7.73075C16.9335 7.35009 17.0837 6.90444 16.955 6.5082Z"/>
+                                        </svg>
+                                    </label>
+                                    <input type="radio" id="star-2" name="rating" value="2">
+                                    <label for="star-2" title="Оценка «2»">
+                                        <svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.955 6.5082C16.8262 6.11197 16.4428 5.83973 15.903 5.76126L11.5032 5.12184L9.53539 1.135C9.29402 0.645905 8.91659 0.365234 8.5 0.365234C8.0834 0.365234 7.70598 0.645905 7.46461 1.13513L5.49706 5.12184L1.09713 5.76126C0.55719 5.83973 0.173668 6.11197 0.045006 6.5082C-0.0836561 6.90444 0.0665362 7.35009 0.457192 7.73075L3.64106 10.8341L2.88932 15.2162C2.79321 15.7767 2.95702 16.1125 3.11137 16.2956C3.29243 16.5104 3.5565 16.6287 3.85493 16.6287C4.07944 16.6287 4.31822 16.5629 4.56478 16.4333L8.5 14.3645L12.4355 16.4335C12.6819 16.563 12.9207 16.6287 13.1452 16.6287H13.1453C13.4436 16.6287 13.7078 16.5104 13.8889 16.2956C14.0431 16.1126 14.207 15.7767 14.1108 15.2162L13.3592 10.8341L16.5429 7.73075C16.9335 7.35009 17.0837 6.90444 16.955 6.5082Z"/>
+                                        </svg>
+                                    </label>
+                                    <input type="radio" id="star-1" name="rating" value="1">
+                                    <label for="star-1" title="Оценка «1»">
+                                        <svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.955 6.5082C16.8262 6.11197 16.4428 5.83973 15.903 5.76126L11.5032 5.12184L9.53539 1.135C9.29402 0.645905 8.91659 0.365234 8.5 0.365234C8.0834 0.365234 7.70598 0.645905 7.46461 1.13513L5.49706 5.12184L1.09713 5.76126C0.55719 5.83973 0.173668 6.11197 0.045006 6.5082C-0.0836561 6.90444 0.0665362 7.35009 0.457192 7.73075L3.64106 10.8341L2.88932 15.2162C2.79321 15.7767 2.95702 16.1125 3.11137 16.2956C3.29243 16.5104 3.5565 16.6287 3.85493 16.6287C4.07944 16.6287 4.31822 16.5629 4.56478 16.4333L8.5 14.3645L12.4355 16.4335C12.6819 16.563 12.9207 16.6287 13.1452 16.6287H13.1453C13.4436 16.6287 13.7078 16.5104 13.8889 16.2956C14.0431 16.1126 14.207 15.7767 14.1108 15.2162L13.3592 10.8341L16.5429 7.73075C16.9335 7.35009 17.0837 6.90444 16.955 6.5082Z"/>
+                                        </svg>
+                                    </label>
+                                </div>
+
+{{--                                <img src="{{ asset('assets/images/svg/rating-active.svg')}}" alt="">--}}
+                            </div>
+
+                        </div>
+                        <div class="modal-reviews__inp">
+                            <textarea class="form__input-effect" id="tx"></textarea>
+                            <label for="tx">Комментарий</label>
+                        </div>
+                        {{--<div class="modal-reviews__upload">
+                            <div class="modal-reviews__upload-list">
+                                <label class="custom-file-upload">
+                                    <input type="file"/>
+                                </label>
+                                <!--<input type="file" name=""pic class="modal-reviews__upload-item modal-reviews__upload-item-none" >-->
+                            </div>
+                            <div class="modal-reviews__upload-tx">
+                                <div class="modal-reviews__upload-tx-title">Добавьте фото, нажав на кнопку, или перетащите фото в эту область</div>
+                                <div class="modal-reviews__upload-tx-text">До 10 изображений в формате PNG, JPEG</div>
+                            </div>
+                        </div>--}}
+                        <div class="modal-reviews__bottom">
+                            <div class="order__point-check">
+                                <input type="checkbox" id="check-modal" name="check-modal">
+                                <label for="check-modal">Оставить анонимный отзыв</label>
+                            </div>
+                            <a class="button button-primary" data-toggle="modal" data-target="#modalReviewsThanks" data-dismiss="modal" aria-label="Close" href="javascript:void(0)">оставить отзыв</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalReviewsThanks" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content__thanks">
+                    <div class="close" data-dismiss="modal" aria-label="Close"><img src="{{asset('assets/images/svg/close2.svg')}}" alt=""></div>
+                    <div class="modal-reviews__thanks">
+                        <div class="modal-reviews__thanks__title">Мы получили ваше сообщение и приняли его в обработку</div>
+                        <div class="modal-reviews__thanks__text">Некоторые отзывы требуют проверки, поэтому публикация может происходить с задержкой</div>
+                        <div class="modal-reviews__thanks__bottom">
+                            <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">хорошо</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalReviews3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{asset('assets/images/svg/close2.svg')}}" alt="">
+                    </div>
+                    <div class="modal-reviews">
+                        <div class="modal-reviews__title">Оставить отзыв</div>
+                        <p>Вы ещё не покупали этот товар в нашем магазине. Купите его и поделитесь отзывом.</p>
+                        <div class="modal-reviews__rating">
+                            <div class="modal-reviews__rating-list">
+                                @for($i = 0; $i < 5; $i++)
+                                    @if(floor($product['reviews']['score']) - $i >= 1)
+                                        <div class="card-product__reviews-rating-item">
+                                            <img
+                                                src="{{asset('assets/images/svg/rating-active.svg')}}"
+                                                alt="">
+                                        </div>
+                                    @else
+                                        <div class="card-product__reviews-rating-item">
+                                            <img
+                                                src="{{asset('assets/images/svg/rating.svg')}}"
+                                                alt="">
+                                        </div>
+                                    @endif
+                                @endfor
+                            </div>
+                            <div class="modal-reviews__rating-numb">{{$product['reviews']['score']}}</div>
+                            <div class="modal-reviews__rating-all">({{$product['reviews']['count']}} отзыва)</div>
+                        </div>
+                        <div class="modal-reviews__bottom">
+                            <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">Вернуться</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/Modal-->
     </div>
-    @if(isset($product['others']))
+    @if(!empty($product['others']))
         <div class="catalog-min catalog-min-tw">
             <div class="container">
                 <h3>Возможно вас заинтересует</h3>
@@ -365,5 +537,4 @@
             </div>
         </div>
     @endif
-
 @endsection

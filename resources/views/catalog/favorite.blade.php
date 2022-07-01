@@ -12,23 +12,19 @@
             <div class="title-main__inner">
                 <h1>Избранное</h1>
             </div>
-            @if(!empty($categories))
+            @if(!empty($products))
                 <div class="title-main__sort">
                     @include('layouts.catalog.filter.sort')
                 </div>
             @endif
         </div>
     </div>
-    @if(!empty($categories) && !empty($GLOBALS["sort"]))
-        @foreach($categories as $category)
-            @include('layouts.catalog.product_min_list')
-        @endforeach
-    @elseif(empty($GLOBALS["sort"]))
-        <div class="container">
-            <div class="catalog__inner">
-                @include('layouts.catalog.product_list')
+    @if(!empty($products))
+            <div class="container">
+                <div class="catalog__inner">
+                    @include('layouts.catalog.product_list')
+                </div>
             </div>
-        </div>
     @else
         <div class="tx">
             <div class="container">

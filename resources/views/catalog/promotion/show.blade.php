@@ -4,7 +4,7 @@
 
     <div class="breadcrumb-block">
         <div class="container">
-{{--            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('promotions.show') }}--}}
+            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('promotions.show', $breadcrumbs) }}
         </div>
     </div>
     <div class="title-main">
@@ -51,7 +51,7 @@
     <div class="catalog">
         <div class="container">
             <div class="catalog__inner">
-                @include('layouts.catalog.filter')
+                @include('layouts.catalog.filter.filter_wrapper')
                 @include('layouts.catalog.product_list')
             </div>
         </div>

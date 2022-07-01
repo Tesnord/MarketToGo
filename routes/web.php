@@ -42,6 +42,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('/faq', [StaticController::class, 'faq'])->name('faq');
 // Товар
 Route::get('/product/{slug_product}', [ProductController::class, 'show'])->name('product');
+Route::post('/review', [ProductController::class, 'review'])->name('product.review');
 // Каталог
 Route::prefix('catalog')->group(function () {
     // Категория

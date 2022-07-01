@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/back.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/backSelect.css')}}">
+    <script defer src="{{asset('assets/js/backSelect.js')}}"></script>
 </head>
 <svg style="display: none">
     <symbol id="vk" viewBox="0 0 22 12" fill="none">
@@ -73,13 +75,13 @@
     <header class="header">
         <div class="header__menu-mob">
             <div class="header__menu-icon">
-                @if(session()->has('token'))
-                    <a class="header__menu-icon-item" href="{{route('scores')}}">
-                        <img src="{{asset('assets/images/svg/icon-menu3.svg')}}" alt="">
-                            <span class="header__menu-icon-notif">4</span>
-                        <span class="header__menu-icon-tit">баллы</span>
-                    </a>
-                @endif
+{{--                @if(session()->has('token'))--}}
+{{--                    <a class="header__menu-icon-item" href="{{route('scores')}}">--}}
+{{--                        <img src="{{asset('assets/images/svg/icon-menu3.svg')}}" alt="">--}}
+{{--                            <span class="header__menu-icon-notif">4</span>--}}
+{{--                        <span class="header__menu-icon-tit">баллы</span>--}}
+{{--                    </a>--}}
+{{--                @endif--}}
                 <a class="header__menu-icon-item" href="{{ route('favorite.show') }}">
                     <img src="{{asset('assets/images/svg/icon-menu4.svg')}}" alt="">
                     <span class="header__menu-icon-notif favoriteCount {{ empty($favorites) ? 'd-none' : '' }}">{{ count($favorites) }}</span>
@@ -89,11 +91,11 @@
             <div class="header__menu-btn-catalog js-menu-btn-catalog">каталог товаров</div>
             <ul class="header__menu-main">
                 <li><a href="{{ route('provider') }}">Поставщикам</a></li>
-                <li><a href="{{ route('about') }}">О нас</a></li>
+{{--                <li><a href="{{ route('about') }}">О нас</a></li>--}}
                 <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
-                <li><a href="{{ route('brand.index') }}">Бренды</a></li>
+{{--                <li><a href="{{ route('brand.index') }}">Бренды</a></li>--}}
                 <li><a href="{{ route('promotions.index') }}">Акции</a></li>
-                <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>
+{{--                <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>--}}
             </ul>
             <div class="header__menu-info">
                 <div class="header__city">
@@ -118,11 +120,11 @@
                     <div class="header__top-menu">
                         <ul>
                             <li><a href="{{ route('provider') }}">Поставщикам</a></li>
-                            <li><a href="{{ route('about') }}">О нас</a></li>
+{{--                            <li><a href="{{ route('about') }}">О нас</a></li>--}}
                             <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
-                            <li><a href="{{ route('brand.index') }}">Бренды</a></li>
+{{--                            <li><a href="{{ route('brand.index') }}">Бренды</a></li>--}}
                             <li><a href="{{ route('promotions.index') }}">Акции</a></li>
-                            <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>
+{{--                            <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>--}}
                         </ul>
                     </div>
                 </div>
@@ -147,12 +149,12 @@
                         </form>
                     </div>
                     <div class="header__bottom-info">
-                        @if(session()->has('token'))
-                            <a class="header__bottom-info-item" href="{{ route('scores') }}">
-                                <img src="{{asset('assets/images/svg/icon-header1.svg')}}" alt=""> баллы
-                                <span class="header__bottom-info-notif">4</span>
-                            </a>
-                        @endif
+{{--                        @if(session()->has('token'))--}}
+{{--                            <a class="header__bottom-info-item" href="{{ route('scores') }}">--}}
+{{--                                <img src="{{asset('assets/images/svg/icon-header1.svg')}}" alt=""> баллы--}}
+{{--                                <span class="header__bottom-info-notif">4</span>--}}
+{{--                            </a>--}}
+{{--                        @endif--}}
                         <a class="header__bottom-info-item" href="{{ route('favorite.show') }}">
                             <img src="{{asset('assets/images/svg/icon-header2.svg')}}" alt=""> избранное
                             <span class="header__bottom-info-notif favoriteCount {{ empty($favorites) ? 'd-none' : '' }}">{{ count($favorites) }}</span>
@@ -253,137 +255,6 @@
 </body>
 
 <!-- Modal -->
-<div class="modal fade" id="modalReviews" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="close" data-dismiss="modal" aria-label="Close">
-                <img src="{{ asset('assets/images/svg/close2.svg')}}" alt="">
-            </div>
-            <div class="modal-reviews">
-                <div class="modal-reviews__title">Оставить отзыв</div>
-                <div class="modal-reviews__rating">
-                    <div class="modal-reviews__rating-title">Оцените товар</div>
-                    <div class="modal-reviews__rating-list">
-                        <div class="modal-reviews__rating-item">
-                            <img src="{{ asset('assets/images/svg/rating-active.svg')}}" alt="">
-                        </div>
-                        <div class="modal-reviews__rating-item">
-                            <img src="{{ asset('assets/images/svg/rating-active.svg')}}" alt="">
-                        </div>
-                        <div class="modal-reviews__rating-item">
-                            <img src="{{ asset('assets/images/svg/rating-active.svg')}}" alt="">
-                        </div>
-                        <div class="modal-reviews__rating-item">
-                            <img src="{{ asset('assets/images/svg/rating-active.svg')}}" alt="">
-                        </div>
-                        <div class="modal-reviews__rating-item">
-                            <img src="{{ asset('assets/images/svg/rating.svg')}}" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-reviews__inp">
-                    <textarea class="form__input-effect" id="tx"></textarea>
-                    <label for="tx">Комментарий</label>
-                </div>
-                <div class="modal-reviews__upload">
-                    <div class="modal-reviews__upload-list">
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                        </label>
-{{--                        <input type="file" name=""pic class="modal-reviews__upload-item modal-reviews__upload-item-none" >--}}
-                    </div>
-                    <div class="modal-reviews__upload-tx">
-                        <div class="modal-reviews__upload-tx-title">Добавьте фото, нажав на кнопку, или перетащите фото в эту область</div>
-                        <div class="modal-reviews__upload-tx-text">До 10 изображений в формате PNG, JPEG</div>
-                    </div>
-                </div>
-                <div class="modal-reviews__bottom">
-                    <div class="order__point-check">
-                        <input type="checkbox" id="check-modal" name="check-modal">
-                        <label for="check-modal">Оставить анонимный отзыв</label>
-                    </div>
-                    <a class="button button-primary" data-toggle="modal" data-target="#modalReviewsThanks" data-dismiss="modal" aria-label="Close" href="">оставить отзыв</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modalReviewsThanks" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content__thanks">
-            <div class="close" data-dismiss="modal" aria-label="Close"><img src="{{asset('assets/images/svg/close2.svg')}}" alt=""></div>
-            <div class="modal-reviews__thanks">
-                <div class="modal-reviews__thanks__title">Мы получили ваше сообщение и приняли его в обработку</div>
-                <div class="modal-reviews__thanks__text">Некоторые отзывы требуют проверки, поэтому публикация может происходить с задержкой</div>
-                <div class="modal-reviews__thanks__bottom">
-                    <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">хорошо</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--<div class="modal fade" id="modalReviews2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="close" data-dismiss="modal" aria-label="Close"><img src="{{asset('assets/images/svg/close2.svg')}}" alt=""></div>
-            <div class="modal-reviews">
-                <div class="modal-reviews__title">Оставить отзыв</div>
-                <div class="modal-reviews__rating">
-                    <div class="modal-reviews__rating-title">Оцените товар</div>
-                    <div class="modal-reviews__rating-list">
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating.svg')}}" alt=""></div>
-                    </div>
-                </div>
-                <div class="modal-reviews__inp">
-                    <textarea class="form__input-effect" id="tx"></textarea>
-                    <label for="tx">Комментарий</label>
-                </div>
-                <div class="modal-reviews__upload">
-                    <div class="modal-reviews__upload-list">
-                        <div class="modal-reviews__upload-item" style="background-image: url('{{asset('assets/images/card-img2.jpg')}}')">
-                            <span class="close-i"><img src="{{asset('assets/images/svg/close-i.svg')}}" alt=""></span></div>
-                        <div class="modal-reviews__upload-item modal-reviews__upload-item-none" style="background-image: url('{{asset('assets/images/img-upload.jpg')}}')"></div>
-                    </div>
-                </div>
-                <div class="modal-reviews__bottom">
-                    <div class="order__point-check">
-                        <input type="checkbox" id="check-modal" name="check-modal">
-                        <label for="check-modal">Оставить анонимный отзыв</label>
-                    </div>
-                    <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">оставить отзыв</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-<div class="modal fade" id="modalReviews3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="close" data-dismiss="modal" aria-label="Close"><img src="{{asset('assets/images/svg/close2.svg')}}" alt=""></div>
-            <div class="modal-reviews">
-                <div class="modal-reviews__title">Оставить отзыв</div>
-                <p>Вы ещё не покупали этот товар в нашем магазине. Купите его и поделитесь отзывом.</p>
-                <div class="modal-reviews__rating">
-                    <div class="modal-reviews__rating-list">
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating-active.svg')}}" alt=""></div>
-                        <div class="modal-reviews__rating-item"><img src="{{asset('assets/images/svg/rating.svg')}}" alt=""></div>
-                    </div>
-                    <div class="modal-reviews__rating-numb">3,6</div>
-                    <div class="modal-reviews__rating-all">(3 отзыва)</div>
-                </div>
-                <div class="modal-reviews__bottom">
-                    <a class="button button-primary" data-dismiss="modal" aria-label="Close" href="">Вернуться</a></div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="modalOrderCheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-content--order">
@@ -435,6 +306,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/filter.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/test.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/userOrders.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/requestProduct.js') }}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/hasget/dist/hasget.min.js"></script>
 </html>

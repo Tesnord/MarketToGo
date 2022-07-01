@@ -20,18 +20,19 @@
                             </button>
                         </div>
                         <div class="check-in__tx code" style="display: none">
-                            <p>Мы отправили код <span class="newCode"></span> подтверждения на номер <span class="phone"></span></p>
+                            <p>Мы отправили код подтверждения на номер <span class="phone"></span></p>
                             <div class="order__input-cell">
                                 <input class="form__input-effect code" type="text" id="code">
                                 <label for="tl">Код из SMS</label>
                             </div>
                             <p class="codetime">Отправить код ещё раз через <span class="time"></span> сек.</p>
+                            <p class="codemessage" style="display: none">Код отправлен</p>
                             <p class="codelink" style="display: none"><a href="javascript:void(0)">Отправить ещё раз</a></p>
                             <button type="submit" class="button button-secondary w-100 code">
                                 Подтвердить
                             </button>
                         </div>
-                        <div class="check-in__soc">
+<!--                        <div class="check-in__soc">
                             <a class="check-in__soc-item" href="#">С помощью Facebook
                                 <img src="{{ asset('assets/images/svg/fc.svg') }}" alt="">
                             </a>
@@ -41,7 +42,7 @@
                             <a class="check-in__soc-item" href="#">С помощью ВКонтакте
                                 <img src="{{ asset('assets/images/svg/vk2.svg') }}" alt="">
                             </a>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
