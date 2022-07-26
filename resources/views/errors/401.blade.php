@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="catalog-min catalog-min-tw">
+<!--    <div class="catalog-min catalog-min-tw">
         <div class="container">
             <h3>Возможно вас заинтересует</h3>
             <div class="row">
@@ -114,6 +114,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 @endsection
