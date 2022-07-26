@@ -54,7 +54,7 @@ class RequestHelper
      * @throws Exception
      * Запрос авторизованного пользователя на APi
      */
-    public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get')
+    public function getUserRequest(Request $request, $handler, array $data = [], string $method = 'get', $asMultipart = false)
     {
         $tokens = $request->session()->get('token');
         if (!$tokens) {
