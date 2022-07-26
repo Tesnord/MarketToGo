@@ -36,13 +36,15 @@ class RequestHelper
         // dd($query);
         if ($method === 'get') {
             $result = Http::get($this->$entry_point . $handler . $query)->json();
-            // dd($result);
         } elseif ($method === 'post') {
             $result = Http::post($this->$entry_point . $handler . $query, $data)->json();
+        } else {
+            $result = Http::$method($this->$entry_point . $handler . $query, $data)->json();
         }
+        // dump($result);
 
 
-        if ($result['meta']['status'] === false) {
+        if ($result['meta']['code'] === 404) {
             abort(404);
         }
         return $result;
@@ -57,11 +59,19 @@ class RequestHelper
         $tokens = $request->session()->get('token');
         if (!$tokens) {
             $request->session()->remove('token');
-            // throw new Exception('Auth broken');
+            abort(404);
         }
-        $result = Http::withHeaders(['Authorization' => $tokens['accessToken']])
-            ->$method($this->domain . $handler, $data)->json();
-        // dd($result);
+        $res = Http::withHeaders(['Authorization' => $tokens['accessToken']]);
+        if ($asMultipart) $res->asMultipart();
+
+        if (!empty($data['images']['file'])) {
+            foreach ($data['images']['file'] as $image) {
+                $res = $res->attach('images', $image->get());
+            }
+        }
+        unset($data['images']);
+
+        $result = $res->$method($this->domain . $handler, $data)->json();
         switch ($result['meta']['code']) {
             case 401:
                 // refresh
@@ -69,6 +79,7 @@ class RequestHelper
                 $request->session()->put('token', $response->json()['data']);
                 return $this->getUserRequest($request, $handler, $data, $method);
             case 400:
+                dd($result);
                 abort(404);
                 break;
             case 200:

@@ -4,7 +4,7 @@
 
     <div class="breadcrumb-block">
         <div class="container">
-            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('scores') }}
+            {{ Diglactic\Breadcrumbs\Breadcrumbs::render('score-info') }}
         </div>
     </div>
     <div class="title-main">

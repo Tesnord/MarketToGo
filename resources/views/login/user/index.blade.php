@@ -72,7 +72,9 @@
                         </div>
                     </div>--}}
                 </div>
-                @include('layouts.user.nav')
+                <div class="lk__menu">
+                    @include('layouts.user.nav')
+                </div>
             </div>
         </div>
     </div>

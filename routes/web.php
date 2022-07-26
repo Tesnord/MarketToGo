@@ -37,9 +37,11 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
     // Поставщикам
     Route::get('/provider', [StaticController::class, 'provider'])->name('provider');
     // Публичная оферта
-    Route::get('/public', [StaticController::class, 'public'])->name('public');
+    Route::get('/publics', [StaticController::class, 'publics'])->name('publics');
     // Вопросы и ответы
     Route::get('/faq', [StaticController::class, 'faq'])->name('faq');
+    // Документы
+    Route::get('/requisites', [StaticController::class, 'requisites'])->name('requisites');
 // Товар
 Route::get('/product/{slug_product}', [ProductController::class, 'show'])->name('product');
 Route::post('/review', [ProductController::class, 'review'])->name('product.review');
@@ -88,7 +90,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::prefix('personal')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('personal.index');
     Route::get('/setting', [UserController::class, 'setting'])->name('personal.setting');
-    Route::put('/setting', [UserController::class, 'settingPut'])->name('personal.setting.put');
+    Route::post('/setting', [UserController::class, 'settingPut'])->name('personal.setting.put');
+    Route::delete('/setting', [UserController::class, 'settingDelete'])->name('personal.setting.delete');
 //    Route::get('/subscribe', [UserController::class, 'subscribe'])->name('personal.subscribe');
     Route::prefix('/orders')->group(function () {
         Route::get('/', [UserController::class, 'orders'])->name('personal.orders');

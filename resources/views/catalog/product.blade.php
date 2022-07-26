@@ -25,14 +25,14 @@
                             @foreach($product['images'] as $image)
                                 <div class="card-product__slider-nav-item">
                                     <div class="card-product__slider-nav-item-img"
-                                         style="background-image: url({{ $image }})"></div>
+                                         style="background-image: url({{ $image['small'] }})"></div>
                                 </div>
                             @endforeach
                         </div>
-                        <div class="card-product__slider-for">
+                        <div class="card-product__slider-for banner__big-slider">
                             @foreach($product['images'] as $image)
-                                <a class="card-product__slider-for-item" href="{{ asset($image) }}"
-                                   data-fancybox="cart-prod" style="background-image: url({{ asset($image) }})">
+                                <a class="card-product__slider-for-item" href="{{ asset($image['big']) }}"
+                                   data-fancybox="cart-prod" style="background-image: url({{ asset($image['big']) }})">
                                 </a>
                             @endforeach
                         </div>
@@ -450,10 +450,10 @@
                             <textarea class="form__input-effect" id="tx"></textarea>
                             <label for="tx">Комментарий</label>
                         </div>
-                        {{--<div class="modal-reviews__upload">
+                        <div class="modal-reviews__upload">
                             <div class="modal-reviews__upload-list">
                                 <label class="custom-file-upload">
-                                    <input type="file"/>
+                                    <input type="file" accept=".png, .jpg, .jpeg" multiple/>
                                 </label>
                                 <!--<input type="file" name=""pic class="modal-reviews__upload-item modal-reviews__upload-item-none" >-->
                             </div>
@@ -461,7 +461,7 @@
                                 <div class="modal-reviews__upload-tx-title">Добавьте фото, нажав на кнопку, или перетащите фото в эту область</div>
                                 <div class="modal-reviews__upload-tx-text">До 10 изображений в формате PNG, JPEG</div>
                             </div>
-                        </div>--}}
+                        </div>
                         <div class="modal-reviews__bottom">
                             <div class="order__point-check">
                                 <input type="checkbox" id="check-modal" name="check-modal">

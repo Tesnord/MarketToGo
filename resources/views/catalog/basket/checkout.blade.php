@@ -12,15 +12,15 @@
                     ['28 may', 'Ср, 28 мая'],
                     ['29 may', 'Чт, 29 мая']
                 ],
-                onSelected(select, option) {
-                    // выбранное значение
-                    console.log(`Выбранное значение: ${select.value}`);
-                    // индекс выбранной опции
-                    console.log(`Индекс выбранной опции: ${select.selectedIndex}`);
-                    // выбранный текст опции
-                    const text = option ? option.textContent : '';
-                    console.log(`Выбранный текст опции: ${text}`);
-                },
+                // onSelected(select, option) {
+                //     // выбранное значение
+                //     console.log(`Выбранное значение: ${select.value}`);
+                //     // индекс выбранной опции
+                //     console.log(`Индекс выбранной опции: ${select.selectedIndex}`);
+                //     // выбранный текст опции
+                //     const text = option ? option.textContent : '';
+                //     console.log(`Выбранный текст опции: ${text}`);
+                // },
             });
             document.querySelector('.select').addEventListener('select.change', (e) => {
                 const btn = e.target.querySelector('.select__toggle');
@@ -39,11 +39,11 @@
                 name: 'day',
                 targetValue: '10',
                 options: [
-                    ['10', '10:00-11:00'],
-                    ['11', '11:00-12:00'],
-                    ['12', '12:00-13:00'],
-                    ['13', '13:00-14:00'],
-                    ['14', '14:00-15:00']
+                    ['10', '10:00-12:00'],
+                    ['12', '12:00-14:00'],
+                    ['14', '14:00-16:00'],
+                    ['16', '16:00-18:00'],
+                    ['18', '18:00-20:00']
                 ],
                 onSelected(select, option) {
                     // выбранное значение
@@ -91,8 +91,7 @@
                                     @foreach($order['products'] as $product)
                                         <div class="cart__list-item">
                                             <div class="cart__list-descr">
-                                                <div class="cart__list-img"
-                                                     style="background-image: url('{{ asset($product['image']) }}')"></div>
+                                                <div class="cart__list-img" style="background-image: url('{{ asset($product['image']) }}')"></div>
                                                 <a class="cart__list-title" href="#">{{$product['title']}}</a>
                                                 <div class="cart__list-article">Артикул: {{$product['vendorCode']}}</div>
                                             </div>
@@ -113,17 +112,8 @@
                                 </div>
                             </div>
                         </div>
-<!--                        <div class="order__wrap order__create" @if(isset($address['street'])) style="display: none" @endif>
-                            <div class="order__delivery">
-                                <div class="order__wrap-top">
-                                    <div class="order__wrap-title">Доставка</div>
-                                </div>
-                                <div class="order__input">
-                                    <a class="button button-gr button__create" href="javascript:void(0)">добавить адрес</a>
-                                </div>
-                            </div>
-                        </div>-->
-                        <div class="order__wrap order__show" {{--@if(!isset($address['street'])) style="display: none" @endif--}}>
+
+                        <div class="order__wrap order__show">
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
                                     <div class="order__wrap-title">Доставка</div>
@@ -133,21 +123,131 @@
                                         <div class="order__wrap-list-item">{{$order['deliveryPrice']}} ₽</div>
                                     </div>
                                 </div>
-                                <div class="order__payment-list-item">
-                                    <input type="radio" id="address-1" name="address" checked="">
-                                    <label for="address-1">
-                                        <span class="tit">Краснодар, улица им. Котлярова Н.С., д.24</span>
-                                    </label>
-                                </div>
-                                <div class="order__payment-list-item">
-                                    <input type="radio" id="address-2" name="address">
-                                    <label for="address-2">
-                                        <span class="tit">г. Краснодар (Краснодарский край), улица имени Сергея Есенина, д. 113</span>
-                                    </label>
-                                </div>
-                                <div class="lk__setting__address--add order__payment--btn">
-                                    <button type="button">добавить адрес</button>
-                                </div>
+                                    @foreach($addresses as $address)
+                                        <div class="address__js--wrapper">
+                                            <div class="order__payment-list-item address__js">
+                                                <input type="radio" id="{{$address['id']}}" name="address" checked>
+                                                <label for="{{$address['id']}}">
+                                                    <span class="tit">{{$address['street']}}</span>
+                                                    <a class="order__payment-list-change button__show address__checked" href="javascript:void(0)">
+                                                        <svg>
+                                                            <use xlink:href="#pen"></use>
+                                                        </svg>
+                                                        Уточнить
+                                                    </a>
+                                                </label>
+                                            </div>
+                                            <form method="POST" action="/personal/setting" class="order__input address" style="display: none">
+                                                @csrf
+                                                @if(!empty($address['id']))
+                                                    <input type="hidden" name="id" class="address-id" value="{{$address['id']}}">
+                                                @endif
+                                                <div class="order__delivery">
+                                                    <div class="order__input">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="order__input-cell">
+                                                                    <input class="form__input-effect @if(!empty($address['street'])) has-content @endif street" name="street" type="text" id="address-street-1"
+                                                                           value="{{ $address['street']}}">
+                                                                    <label for="address-street-1">Адрес</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="order__input-cell">
+                                                                    <input class="form__input-effect @if(!empty($address['apartment'])) has-content @endif apartment" name="apartment" type="number" id="address-apartment-1"
+                                                                           value="{{ $address['apartment']}}">
+                                                                    <label for="address-apartment-1">Квартира</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="order__input-cell">
+                                                                    <input class="form__input-effect @if(!empty($address['floor'])) has-content @endif floor" name="floor" type="number" id="address-floor-1"
+                                                                           value="{{ $address['floor']}}">
+                                                                    <label for="address-floor-1">Этаж</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="order__input-cell">
+                                                                    <input class="form__input-effect @if(!empty($address['entrance'])) has-content @endif entrance" name="entrance" type="number" id="address-entrance-1"
+                                                                           value="{{ $address['entrance']}}">
+                                                                    <label for="address-entrance-1">Подъезд</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="order__input-cell">
+                                                                    <input class="form__input-effect @if(!empty($address['intercom'])) has-content @endif intercom" name="intercom" type="text" id="address-intercom-1"
+                                                                           value="{{ $address['intercom']}}">
+                                                                    <label for="address-intercom-1">Домофон</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="button-group__back">
+                                                        <button type="submit" class="button button-secondary save">Сохранить</button>
+                                                        <a class="button button-gr button__cancel order__input--btn" href="javascript:void(0)">Отменить</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            {{--<form method="POST" action="/personal/setting" class="order__input" style="display: none">
+                                                <div class="row">
+                                                    <input type="hidden" name="id" class="address-id" value="{{$address['id']}}">
+                                                    <div class="col-lg-12">
+                                                        <div class="order__input-cell">
+                                                            <input
+                                                                class="form__input-effect {{ $address['street'] ?? '' ? 'has-content' : '' }}"
+                                                                type="text" id="address-street-{{$address['id']}}"
+                                                                value="{{ $address['street'] ?? ''}}">
+                                                            <label for="address-street-{{$address['id']}}">Адрес *</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6">
+                                                        <div class="order__input-cell">
+                                                            <input
+                                                                class="form__input-effect {{ $address['apartment'] ?? '' ? 'has-content' : '' }}"
+                                                                type="text" id="address-apartment-{{$address['id']}}"
+                                                                value="{{ $address['apartment'] ?? '' }}">
+                                                            <label for="address-apartment-{{$address['id']}}">Квартира</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6">
+                                                        <div class="order__input-cell">
+                                                            <input
+                                                                class="form__input-effect {{ $address['floor'] ?? '' ? 'has-content' : '' }}"
+                                                                type="text" id="address-floor-{{$address['id']}}"
+                                                                value="{{ $address['floor'] ?? '' }}">
+                                                            <label for="address-floor-{{$address['id']}}">Этаж</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6">
+                                                        <div class="order__input-cell">
+                                                            <input
+                                                                class="form__input-effect {{ $address['entrance'] ?? '' ? 'has-content' : '' }}"
+                                                                type="text" id="address-entrance-{{$address['id']}}"
+                                                                value="{{ $address['entrance'] ?? '' }}">
+                                                            <label for="address-entrance-{{$address['id']}}">Подъезд</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6">
+                                                        <div class="order__input-cell">
+                                                            <input
+                                                                class="form__input-effect {{ $address['intercom'] ?? '' ? 'has-content' : '' }}"
+                                                                type="text" id="address-intercom-{{$address['id']}}"
+                                                                value="{{ $address['intercom'] ?? '' }}">
+                                                            <label for="address-intercom-{{$address['id']}}">Домофон</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="button-group__back">
+                                                    <button type="submit" class="button button-secondary save">Сохранить</button>
+                                                    <a class="button button-gr button__cancel order__input--btn" href="javascript:void(0)">Отменить</a>
+                                                </div>
+                                            </form>--}}
+                                        </div>
+                                    @endforeach
+                                    <div class="lk__setting__address--add order__payment--btn">
+                                        <button type="button">добавить адрес</button>
+                                    </div>
+
                                 <div class="order__wrap-title order__delivery__time--title">Время</div>
                                 <div class="order__delivery__time">
                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -181,75 +281,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-<!--                                <div class="order__payment-list fl">
-                                    <div class="order__payment-list-change-tx">
-                                        @if(isset($address['street'])){{ $address['street'] }}@endif
-                                    </div>
-                                    <a class="order__payment-list-change button__show" href="javascript:void(0)">
-                                        <svg>
-                                            <use xlink:href="#pen"></use>
-                                        </svg>
-                                        Изменить
-                                    </a>
-                                </div>-->
-                            </div>
-                        </div>
-                        <div class="order__wrap order__update" style="display: none">
-                            <div class="order__delivery">
-                                <div class="order__wrap-top">
-                                    <div class="order__wrap-title">Доставка</div>
-                                </div>
-                                <div class="order__input">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect has-content"
-                                                    type="text" id="updateAddress1"
-                                                    value="@if(isset($address['street'])){{ $address['street'] }}@endif">
-                                                <label for="address1">Адрес *</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect has-content"
-                                                    type="text" id="updateAddress2"
-                                                    value="@if(isset($address['apartment'])){{ $address['apartment'] }}@endif">
-                                                <label for="address2">Квартира *</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect has-content"
-                                                    type="text" id="updateAddress3"
-                                                    value="@if(isset($address['floor'])){{ $address['floor'] }}@endif">
-                                                <label for="address3">Этаж</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect has-content"
-                                                    type="text" id="updateAddress4"
-                                                    value="@if(isset($address['entrance'])){{ $address['entrance'] }}@endif">
-                                                <label for="address4">Подъезд</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input
-                                                    class="form__input-effect has-content"
-                                                    type="text" id="updateAddress5"
-                                                    value="@if(isset($address['intercom'])){{ $address['intercom'] }}@endif">
-                                                <label for="address5">Домофон</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a class="button button-gr button__update" href="javascript:void(0)">Сохранить
-                                        изменения</a>
                                 </div>
                             </div>
                         </div>
@@ -302,19 +333,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{--<div class="order__point">
+                                <div class="order__point">
                                     <div class="order__point-check">
-                                        <input type="checkbox" id="check" name="check">
+                                        <input class="scores__checked" type="checkbox" id="check" name="check">
                                         <label for="check">Списать баллы</label>
                                     </div>
                                     <div class="order__range">
                                         <div class="order__range-item">
-                                            <input class="polzunok-input-5-left" type="text" value="13" id="rng">
+                                            <input class="polzunok-input-5-left scores__js" type="text" value="13" id="rng">
                                             <label for="rng">Баллы</label>
                                         </div>
                                         <div class="polzunok-5"></div>
                                     </div>
-                                </div>--}}
+                                </div>
                             </div>
                         </div>
                         <div class="order__wrap">
@@ -377,14 +408,14 @@
                                     <div class="order__list-table-item">{{ $order['totalCount'] }} шт</div>
                                 </div>
                             </div>
-                            {{--<div class="order__list-promo">
+                            <div class="order__list-promo">
                                 <div class="cart__list-promo">
                                     <input type="text">
                                     <button class="cart__list-promo-btn"><img
                                             src="{{ asset('assets/images/svg/arrow3.svg')}}" alt=""></button>
                                 </div>
                                 <div class="cart__list-promo-done">Промокод применен</div>
-                            </div>--}}
+                            </div>
                             <div class="order__list-table order__list-table-tw">
                                 <div class="order__list-table-row">
                                     <div class="order__list-table-item">Доставка:</div>
@@ -393,7 +424,7 @@
                                 <div class="order__list-table-row">
                                     <div class="order__list-table-item">Способ оплаты:</div>
                                     <div class="order__list-table-item">
-                                        <a id="paymentResult" href="javascript:void(0)">Онлайн оплата</a>
+                                        <div class="order__list-table-item" id="paymentResult">Онлайн оплата</div>
                                     </div>
                                 </div>
                             </div>
@@ -406,19 +437,19 @@
                                     <div class="order__list-table-item">Доставка:</div>
                                     <div class="order__list-table-item">{{$order['deliveryPrice']}} ₽</div>
                                 </div>
-                                {{--<div class="order__list-table-row">
+                                <div class="order__list-table-row">
                                     <div class="order__list-table-item">Начислено баллов:</div>
                                     <div class="order__list-table-item">15</div>
-                                </div>--}}
+                                </div>
                                 <div class="order__list-table-row">
                                     <div class="order__list-table-item">Экономия:</div>
                                     <div class="order__list-table-item">{{ $order['totalEconomy'] }} ₽</div>
                                 </div>
                             </div>
-                            {{--<div class="order__list-all prom">
+                            <div class="order__list-all prom">
                                 <div class="order__list-all-item">Промокод:</div>
                                 <div class="order__list-all-item">-120 ₽</div>
-                            </div>--}}
+                            </div>
                             <div class="order__list-all">
                                 <div class="order__list-all-item">Итого:</div>
                                 <div class="order__list-all-item">{{$order['totalPrice']}} ₽</div>

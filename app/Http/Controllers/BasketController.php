@@ -14,6 +14,7 @@ class BasketController extends Controller
         } else {
             $products = $this->requestHelper->getRequest('basket', $GLOBALS["basket"], 'post');
         }
+        // dd($products);
         $productBasket = function ($id) {
             foreach ($GLOBALS['basket'] as $item) {
                 if ($item['id'] === $id) {
@@ -75,10 +76,12 @@ class BasketController extends Controller
     {
         if ($request->session()->has('token')) {
             $order = $this->requestHelper->getUserRequest($request, 'order');
-            // dd($order);
+            $addresses = $this->requestHelper->getUserRequest($request, 'profile/addresses');
+//            dd($order);
+//            dd($addresses);
             return view('catalog.basket.checkout', [
                 'order' => $order['data'],
-                'address' => &$order['data']['address'],
+                'addresses' => &$addresses['data'],
                 'profile' => &$order['data']['profile'],
             ]);
         }

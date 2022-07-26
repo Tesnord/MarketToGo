@@ -99,7 +99,12 @@
                                 <button type="button" data-toggle="modal" data-target="#modalOrderCheck" class="orders__item-product-btn order__item--btn">чек покупки</button>
                             </div>
                         </div>
-                        <div class="orders__item order__support">
+                    </div>
+                </div>
+                <div class="lk__menu">
+                    @include('layouts.user.nav')
+                    <div class="orders__wrapper">
+                        <div class="orders__item">
                             <div class="order__support--wrapper">
                                 <h3>Служба поддержки</h3>
                                 <p>Если возникли проблемы с заказом, дайте нам знать</p>
@@ -113,7 +118,6 @@
                         </div>
                     </div>
                 </div>
-                @include('layouts.user.nav')
             </div>
         </div>
     </div>

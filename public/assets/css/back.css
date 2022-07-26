@@ -762,6 +762,17 @@ button:hover .kedeverything span {
     justify-content: space-between;
 }
 
+@media screen and (max-width: 1025px) {
+    .score__inner {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+    .score__privilege__card--request {
+        top: 200px;
+    }
+}
+
 .score__inner--left {
 
 }
@@ -786,6 +797,11 @@ button:hover .kedeverything span {
 .score__privilege__card:not(:last-child) {
     margin-right: 16px;
 }
+@media screen and (max-width: 320px){
+    .score__privilege__card {
+        margin-right: 0;
+    }
+}
 
 .score__privilege__card--img {
     display: inline-block;
@@ -793,6 +809,8 @@ button:hover .kedeverything span {
     border-radius: 10px;
     margin-bottom: 10px;
 }
+
+
 
 .score__privilege--1 {
     background: linear-gradient(180deg, #F6A882 0%, #F4BDA2 100%);
@@ -815,6 +833,12 @@ button:hover .kedeverything span {
     color: #000000;
 }
 
+@media screen and (max-width: 502px){
+    .score__privilege__card--text {
+        /*flex-direction: column;*/
+    }
+}
+
 .score__privilege__card--text span {
     margin-left: 6px;
     display: inline-block;
@@ -822,6 +846,12 @@ button:hover .kedeverything span {
     width: 16px;
     background: url(../images/svg/score-request.svg);
 }
+
+/*@media screen and (max-width: 665px){*/
+/*    .score__privilege__card--text span {*/
+/*        display: none;*/
+/*    }*/
+/*}*/
 
 .score__privilege__card--text span:hover + .score__privilege__card--request {
     display: block;
@@ -838,6 +868,22 @@ button:hover .kedeverything span {
     top: 130px;
     left: 150px;
     z-index: 100;
+}
+@media screen and (max-width: 1025px) {
+    .score__privilege__card--request {
+        top: 200px;
+        left: 0;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .score__privilege {
+        flex-direction: column;
+    }
+    .score__privilege__card--request {
+
+        width: 270px;
+    }
 }
 
 .score__privilege__card--request h3 {
@@ -915,6 +961,12 @@ button:hover .kedeverything span {
     border-radius: 15px;
     padding: 24px 24px 77px;
     position: relative;
+}
+
+@media screen and (max-width: 376px){
+    .score__wrapper {
+        width: 260px;
+    }
 }
 
 .score__wrapper h3 {
@@ -1180,3 +1232,59 @@ input::-webkit-inner-spin-button {
 .button-group__back {
 
 }
+
+.faq__list {
+    margin-top: 10px;
+}
+
+.faq__item {
+    list-style: disc inside;
+}
+
+.faq__item--text {
+    display: inline-block;
+}
+
+
+.orders__wrapper {
+    margin-top: 10px;
+}
+
+
+.requisites {
+    margin-bottom: 100px;
+}
+
+.requisites tbody {
+}
+
+.requisites p {
+    margin: 0;
+}
+
+.requisites th {
+    border: 1px solid black;
+    padding: 10px 15px;
+}
+
+.requisites td {
+    border: 1px solid black;
+    padding: 10px 15px;
+}
+
+.order__point {
+    margin-top: 10px;
+}
+
+.order__input--btn {
+    margin-bottom: 24px;
+}
+
+.address__checked {
+    display: none;
+}
+
+.order__payment-list-item input:checked + label .address__checked {
+    display: block;
+}
+

@@ -29,14 +29,19 @@ Breadcrumbs::for('home', function ($trail) {
         $trail->push('Поставщикам', route('provider'));
     });
     // Home > Public
-    Breadcrumbs::for('public', function ($trail) {
+    Breadcrumbs::for('publics', function ($trail) {
         $trail->parent('home');
-        $trail->push('Публичная оферта', route('public'));
+        $trail->push('Публичная оферта', route('publics'));
     });
     // Home > FAQ
     Breadcrumbs::for('faq', function ($trail) {
         $trail->parent('home');
-        $trail->push('Вопросы и ответы', route('public'));
+        $trail->push('Вопросы и ответы', route('faq'));
+    });
+    // Home > Documents
+    Breadcrumbs::for('requisites', function ($trail) {
+        $trail->parent('home');
+        $trail->push('Реквизиты', route('requisites'));
     });
 
     // Корзина
@@ -120,6 +125,12 @@ Breadcrumbs::for('home', function ($trail) {
     Breadcrumbs::for('scores', function ($trail) {
         $trail->parent('home');
         $trail->push('Баллы', route('scores'));
+    });
+
+    // Home > Scores > Info
+    Breadcrumbs::for('score-info', function ($trail) {
+        $trail->parent('scores');
+        $trail->push('Бонусная программа', route('score.info'));
     });
 
     // Поиск

@@ -23,7 +23,6 @@
                             безопасности.</p>
                         <form method="POST" action="/personal/setting" class="order__wrap mt-4 profile--data__js">
                             @csrf
-                            @method('PUT')
                             <div class="order__delivery">
                                 <div class="order__wrap-top">
                                     <div class="order__wrap-title">Личные данные</div>
@@ -65,64 +64,70 @@
                                 </div>
                             </div>
                         </form>
-                        <form method="POST" action="/personal/setting" class="order__wrap address" id="address-1">
-                            @csrf
-                            @method('PUT')
-                            <div class="order__delivery">
-                                <div class="order__wrap-top">
-                                    <div class="order__wrap-title">Адрес доставки</div>
-                                </div>
-                                <div class="order__input">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="order__input-cell">
-                                                <input class="form__input-effect @if(!empty($profile['address']['street'])) has-content @endif street" name="street" type="text" id="address-street-1"
-                                                    value="{{ $profile['address']['street'] }}">
-                                                <label for="address-street-1">Адрес</label>
+                        @foreach($addresses as $address)
+                            <form method="POST" action="/personal/setting" class="order__wrap address" id="{{$address['id']}}">
+                                @csrf
+                                @if(!empty($address['id']))
+                                    <input type="hidden" name="id" class="address-id" value="{{$address['id']}}">
+                                @endif
+                                <div class="order__delivery">
+                                    <div class="order__wrap-top">
+                                        <div class="order__wrap-title">Адрес доставки</div>
+                                    </div>
+                                    <div class="order__input">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="order__input-cell">
+                                                    <input class="form__input-effect @if(!empty($address['street'])) has-content @endif street" name="street" type="text" id="address-street-{{$address['id']}}"
+                                                        value="{{ $address['street']}}">
+                                                    <label for="address-street-{{$address['id']}}">Адрес</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input class="form__input-effect @if(!empty($profile['address']['apartment'])) has-content @endif apartment" name="apartment" type="number" id="address-apartment-1"
-                                                    value="{{ $profile['address']['apartment'] }}">
-                                                <label for="address-apartment-1">Квартира</label>
+                                            <div class="col-md-6">
+                                                <div class="order__input-cell">
+                                                    <input class="form__input-effect @if(!empty($address['apartment'])) has-content @endif apartment" name="apartment" type="number" id="address-apartment-{{$address['id']}}"
+                                                        value="{{ $address['apartment']}}">
+                                                    <label for="address-apartment-{{$address['id']}}">Квартира</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input class="form__input-effect @if(!empty($profile['address']['floor'])) has-content @endif floor" name="floor" type="number" id="address-floor-1"
-                                                    value="{{ $profile['address']['floor'] }}">
-                                                <label for="address-floor-1">Этаж</label>
+                                            <div class="col-md-6">
+                                                <div class="order__input-cell">
+                                                    <input class="form__input-effect @if(!empty($address['floor'])) has-content @endif floor" name="floor" type="number" id="address-floor-{{$address['id']}}"
+                                                        value="{{ $address['floor']}}">
+                                                    <label for="address-floor-{{$address['id']}}">Этаж</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input class="form__input-effect @if(!empty($profile['address']['entrance'])) has-content @endif entrance" name="entrance" type="number" id="address-entrance-1"
-                                                    value="{{ $profile['address']['entrance'] }}">
-                                                <label for="address-entrance-1">Подъезд</label>
+                                            <div class="col-md-6">
+                                                <div class="order__input-cell">
+                                                    <input class="form__input-effect @if(!empty($address['entrance'])) has-content @endif entrance" name="entrance" type="number" id="address-entrance-{{$address['id']}}"
+                                                        value="{{ $address['entrance']}}">
+                                                    <label for="address-entrance-{{$address['id']}}">Подъезд</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="order__input-cell">
-                                                <input class="form__input-effect @if(!empty($profile['address']['intercom'])) has-content @endif intercom" name="intercom" type="text" id="address-intercom-1"
-                                                    value="{{ $profile['address']['intercom'] }}">
-                                                <label for="address-intercom-1">Домофон</label>
+                                            <div class="col-md-6">
+                                                <div class="order__input-cell">
+                                                    <input class="form__input-effect @if(!empty($address['intercom'])) has-content @endif intercom" name="intercom" type="text" id="address-intercom-{{$address['id']}}"
+                                                        value="{{ $address['intercom']}}">
+                                                    <label for="address-intercom-{{$address['id']}}">Домофон</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="button-group__back">
+                                        <button type="submit" class="button button-secondary save">Сохранить</button>
+                                        <button type="reset" class="button button-tx clear">удалить</button>
+                                    </div>
                                 </div>
-                                <div class="button-group__back">
-                                    <button type="submit" class="button button-secondary save">Сохранить</button>
-                                    <button type="reset" class="button button-tx clear">сбросить</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        @endforeach
                         <div class="lk__setting__address--add">
                             <button type="button">добавить адрес</button>
                         </div>
                     </div>
                 </div>
-                @include('layouts.user.nav')
+                <div class="lk__menu">
+                    @include('layouts.user.nav')
+                </div>
             </div>
         </div>
     </div>

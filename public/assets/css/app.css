@@ -4407,7 +4407,7 @@ h3 {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    background: #FAFAFA;
+    /*background: #FAFAFA;*/
 }
 
 .order__wrap-title {
@@ -4574,6 +4574,11 @@ h3 {
 
 .order__delivery .order__payment-list-item {
     margin-bottom: 7px;
+}
+
+.order__delivery .order__payment-list-item label {
+    display: flex;
+    justify-content: space-between;
 }
 
 .order__payment-list-item-in {
@@ -5639,6 +5644,14 @@ h3 {
     -ms-flex-pack: justify;
     justify-content: space-between;
     position: relative;
+}
+
+@media screen and (max-width: 1025px) {
+    .orders__top {
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+    }
 }
 
 .orders__top-arrow {

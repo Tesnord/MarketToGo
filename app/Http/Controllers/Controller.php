@@ -19,6 +19,6 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->requestHelper = new RequestHelper();
-        $this->paginate = new MarketPaginate();
+        // $this->paginate = new MarketPaginate();
     }
 }

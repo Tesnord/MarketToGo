@@ -1,4 +1,4 @@
-<div class="lk__menu">
+
     <div class="lk__menu-inner">
         <ul>
             <li @if(request()->route()->getName() === "personal.index") class="active" @endif>
@@ -18,4 +18,4 @@
             </li>
         </ul>
     </div>
-</div>
+

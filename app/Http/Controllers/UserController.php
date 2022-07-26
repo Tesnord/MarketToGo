@@ -18,9 +18,12 @@ class UserController extends Controller
     {
         if ($request->session()->has('token')) {
             $profile = $this->requestHelper->getUserRequest($request, 'profile');
-            // dd($profile);
+            $address = $this->requestHelper->getUserRequest($request, 'profile/addresses');
+//            dd($profile);
+//            dd($address);
             return view('login.user.setting', [
-                'profile' => $profile['data']
+                'profile' => $profile['data'],
+                'addresses' => $address['data'] ?? ''
             ]);
         }
         return redirect()->route('login.create');
@@ -28,19 +31,11 @@ class UserController extends Controller
 
     public function settingPut(Request $request)
     {
+//        dd($request);
         if ($request->input('name')) {
-            $profile = [
-                "name" => $request->input('name'),
-                "surname" => $request->input('surname'),
-                "email" => $request->input('email')
-            ];
-            // dd($profile);
-            if ($request->session()->has('token')) {
-                $this->requestHelper->getUserRequest($request, 'profile', $profile, 'put');
-                return ['status' => 'ok'];
-            }
+            $result = $this->requestHelper->getUserRequest($request, 'profile', $request->input(), 'put');
         }
-        if ($request->input('address.street')) {
+        if ($request->input('street')) {
             $addresses = [
                 "street" => $request->input('street'),
                 "apartment" => $request->input('apartment'),
@@ -48,11 +43,26 @@ class UserController extends Controller
                 "entrance" => $request->input('entrance'),
                 "intercom" => $request->input('intercom')
             ];
-            // dd($addresses);
-            if ($request->session()->has('token')) {
-                $this->requestHelper->getUserRequest($request, 'profile/address', $addresses, 'put');
-                return ['status' => 'ok'];
+            if ($request->input('id')) {
+                $result = $this->requestHelper->getUserRequest($request, 'profile/addresses/' . $request->input('id'), $addresses, 'put');
+            } else {
+                $result = $this->requestHelper->getUserRequest($request, 'profile/addresses', $addresses, 'post');
             }
+        }
+//        dd($result);
+        if ($result['meta']['code'] == 200) {
+//            dd($result);
+            return back()->withInput();
+        } else {
+            //dd($result);
+            return false;
+        }
+    }
+
+    public function settingDelete(Request $request) {
+        if ($request->session()->has('token')) {
+            $result = $this->requestHelper->getUserRequest($request, 'profile/addresses/' . $request->post('id'), [], 'delete');
+            return ['result' => $result];
         }
     }
 
@@ -68,7 +78,7 @@ class UserController extends Controller
     {
         if ($request->session()->has('token')) {
             $orders = $this->requestHelper->getUserRequest($request, 'profile/orders');
-            // dd($orders);
+//            dd($orders);
             if ($orders['data']['count']) {
                 $order = $orders['data']['orders'];
                 return view('login.user.orders', [

@@ -33,30 +33,6 @@
                         </div>
                     </div>
                 @endforeach
-                {{--<div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
-                    <div class="actions__item"><a class="actions__item-img" href="{{ route('promotions.show') }}" style="background-image: url('{{ asset('assets/images/action-img2.jpg') }}')"></a>
-                        <div class="actions__item-tx">
-                            <div class="actions__item-data">с 2 ноября по 4 апреля</div><a class="actions__item-title" href="{{ route('promotions.show') }}">Неделя черных суперцен</a>
-                            <div class="actions__item-firm">ООО «Мир здоровья»</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
-                    <div class="actions__item"><a class="actions__item-img" href="{{ route('promotions.show') }}" style="background-image: url('{{ asset('assets/images/action-img3.jpg') }}')"></a>
-                        <div class="actions__item-tx">
-                            <div class="actions__item-data">с 2 ноября по 4 апреля</div><a class="actions__item-title" href="{{ route('promotions.show') }}">Неделя черных суперцен</a>
-                            <div class="actions__item-firm">ООО «Мир здоровья»</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
-                    <div class="actions__item"><a class="actions__item-img" href="{{ route('promotions.show') }}" style="background-image: url('{{ asset('assets/images/action-img4.jpg') }}')"></a>
-                        <div class="actions__item-tx">
-                            <div class="actions__item-data">с 2 ноября по 4 апреля</div><a class="actions__item-title" href="{{ route('promotions.show') }}">Неделя черных суперцен</a>
-                            <div class="actions__item-firm">ООО «Мир здоровья»</div>
-                        </div>
-                    </div>
-                </div>--}}
             </div>
             {{ $paginator->render('layouts.vendor.pagination.bootstrap-4') }}
         </div>

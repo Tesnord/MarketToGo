@@ -37,7 +37,7 @@ class MarketPaginate
 
     }*/
 
-    public function paginate($url, $length)
+    /*public function paginate($url, $length)
     {
         // Получаем массив
         $items = Http::get($url)->json();
@@ -67,5 +67,5 @@ class MarketPaginate
             'total_pages' => $total_pages,
             'pages' => $arr,
         ];
-    }
+    }*/
 }

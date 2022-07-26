@@ -26,9 +26,9 @@ class StaticController extends Controller
         return view('static.provider');
     }
 
-    public function public()
+    public function publics()
     {
-        return view('static.public');
+        return view('static.publics');
     }
 
     public function faq()
@@ -39,6 +39,11 @@ class StaticController extends Controller
     public function scoreInfo()
     {
         return view('static.score-info');
+    }
+
+    public function requisites()
+    {
+        return view('static.requisites');
     }
 
 }

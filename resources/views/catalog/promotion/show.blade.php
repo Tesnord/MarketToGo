@@ -40,21 +40,23 @@
             </div>
         </div>
     </div>
-    <div class="title-main tw">
-        <div class="container">
-            <div class="title-main__inner">
-                <h1>Товары</h1>
-                <div class="title-main__numb">{{ count($promotion['products']) }} товаров</div>
+    @if($promotion['products'])
+        <div class="title-main tw">
+            <div class="container">
+                <div class="title-main__inner">
+                    <h1>Товары</h1>
+                    <div class="title-main__numb">{{ count($promotion['products']) }} товаров</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="catalog">
-        <div class="container">
-            <div class="catalog__inner">
-                @include('layouts.catalog.filter.filter_wrapper')
-                @include('layouts.catalog.product_list')
+        <div class="catalog">
+            <div class="container">
+                <div class="catalog__inner">
+                    @include('layouts.catalog.filter.filter_wrapper')
+                    @include('layouts.catalog.product_list')
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
 @endsection

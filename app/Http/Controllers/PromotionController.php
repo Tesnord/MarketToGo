@@ -25,7 +25,7 @@ class PromotionController extends Controller
     {
         $promotions = $this->requestHelper->getRequest('promotions/' . $slug_promotion);
         $promotion = $promotions['data'];
-        // dd(url());
+        // dd($promotion);
         $breadcrumbs = [
             'slug' => $slug_promotion,
             'title' => $promotion['title'],

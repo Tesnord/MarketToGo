@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\UserController;
+use Bitrix\Crm\Activity\Provider\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -81,5 +84,37 @@ class AppServiceProvider extends ServiceProvider
                 'productId' => $productId,
             ]
         );
+        View::composer('*', function(){
+            $tokens = request()->session()->get('token');
+            if ($tokens) {
+                $profile = Http::withHeaders(['Authorization' => $tokens['accessToken']])
+                    ->get('http://80.78.246.225:4002/v1/site/profile')->json();
+                switch ($profile['meta']['code']) {
+                    case 401:
+                        // refresh
+                        $response = Http::post(config('app.api_entry_auth') . 'refresh', ['refreshToken' => $tokens['refreshToken']]);
+                        request()->session()->put('token', $response->json()['data']);
+                        $profile = Http::withHeaders(['Authorization' => $tokens['accessToken']])
+                            ->get('http://80.78.246.225:4002/v1/site/profile')->json();
+                        break;
+                    case 400:
+                        abort(404);
+                }
+
+                if (!empty($profile['data']['name'])) {
+                    $name = $profile['data']['name'] . ' ' . mb_substr($profile['data']['surname'], 0, 1) . '.';
+                } else if (!empty($profile['data']['phone'])) {
+                    $name = $profile['data']['phone'];
+                } else {
+                    $name = 'Профиль';
+                }
+            } else {
+                $name = 'Профиль';
+            }
+            View::share([
+                'name' => $name,
+            ]);
+        });
+
     }
 }

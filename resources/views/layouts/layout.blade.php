@@ -9,14 +9,16 @@
     <meta http-equiv="msthemecompatible" content="no">
     <meta name="format-detection" content="telephone=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/svg/favicon.svg')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&amp;display=swap">
-    <link rel="stylesheet" href="{{asset('vendors/bootstrap/dist/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('vendors/select/select2.min.css')}}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="{{asset('vendors/slick/slick.css')}}">
+
+    <link rel="stylesheet" href="{{asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendors/select/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendors/jquery.fancybox.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendors/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
+
     <link rel="stylesheet" href="{{asset('assets/css/back.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/backSelect.css')}}">
@@ -166,7 +168,7 @@
 
                         @if(session()->has('token'))
                             <a class="header__bottom-info-item header__bottom-info-item-enter" href="{{ route('personal.index') }}">
-                                <img src="{{asset('assets/images/svg/icon-header4.svg')}}" alt=""> Профиль
+                                <img src="{{asset('assets/images/svg/icon-header4.svg')}}" alt=""> {{$name}}
                             </a>
                         @else
                             <a class="header__bottom-info-item header__bottom-info-item-enter" href="{{ route('login.create') }}">
@@ -212,6 +214,7 @@
                         <li><a href="{{ route('delivery') }}">Доставка и оплата</a></li>
                         <li><a href="{{ route('brand.index') }}">Бренды</a></li>
                         <li><a href="{{ route('faq') }}">Вопросы и ответы</a></li>
+                        <li><a href="{{ route('requisites') }}">Реквизиты</a></li>
                     </ul>
                     <div class="footer__top-info">
                         <a class="footer__tel" href="tel:8 800 456 25 14">8 800 456 25 14</a>
@@ -226,7 +229,7 @@
                     <ul class="footer__bottom-info">
                         <li>© 2020, MARKET TO GO</li>
                         <li><a href="{{ route('policy') }}">Конфиденциальность</a></li>
-                        <li><a href="{{ route('public') }}">Публичная оферта</a></li>
+                        <li><a href="{{ route('publics') }}">Публичная оферта</a></li>
                     </ul>
                     <div class="footer__bottom-descr">
                         <ul class="footer__soc">
@@ -284,30 +287,32 @@
 </div>
 
 <script type="application/javascript">const log = (...args) => {{ config('app.debug') ? 1 : 0}} && console.log(...args)</script>
-<script type="text/javascript" src="{{asset('vendors/jquery/dist/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/jquery-ui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/jquery-ui/jquery.ui.touch-punch.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/jquery.maskedinput/dist/jquery.maskedinput.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/select/select2.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/jquery.nicescroll.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/jquery.ui.touch-punch.js')}}"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script type="text/javascript" src="{{asset('vendors/jquery.airStickyBlock.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors/slick/slick.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery-ui/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery-ui/jquery.ui.touch-punch.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery.maskedinput/dist/jquery.maskedinput.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/select/select2.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery.nicescroll.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery.ui.touch-punch.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery.fancybox.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/jquery.airStickyBlock.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/slick/slick.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/app.js')}}"></script>
 {{--/* Back Script */--}}
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/lodash.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/external.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/auth.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/search.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/profile.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/checkout.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/filter.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/test.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/userOrders.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/requestProduct.js') }}"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/hasget/dist/hasget.min.js"></script>
+<script type="text/javascript" src="{{asset('assets/vendors/js.cookie.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/vendors/hasget.min.js') }}"></script>
+
+
+<script type="text/javascript" src="{{ asset('assets/js/test.js') }}"></script>
 </html>
 

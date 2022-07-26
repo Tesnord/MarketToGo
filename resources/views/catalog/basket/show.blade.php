@@ -156,7 +156,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <span class="total__price--deficiency" @if($totalPrice >= 1000) style="display: none" @endif>Добавьте товаров еще на <span>{{1000 - $totalPrice}}</span> {{ $product['price']['currency'] }}</span>
+                            <span class="total__price--deficiency" @if($totalPrice >= 1000) style="display: none" @endif>Минимальная сумма заказа 1000 {{ $product['price']['currency'] }}</span>
                         </div>
                         <div class="cart__list-all-btn">
                             <button class="button-disable"

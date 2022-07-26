@@ -12,12 +12,13 @@ class ProductController extends Controller
      */
     public function show(Request $request, $slug_product)
     {
-        if ($request->session()->has('token')) {
-            $products = $this->requestHelper->getUserRequest($request, 'product/' . $slug_product);
-        } else {
+//        dd($request->session()->has('token'));
+        if (!$request->session()->has('token')) {
             $products = $this->requestHelper->getRequest('product/' . $slug_product);
+        } else {
+            $products = $this->requestHelper->getUserRequest($request, 'product/' . $slug_product);
         }
-        // dd($products);
+//         dd($products);
         $product = $products['data'];
         $breadcrumbs = [
             'breadcrumbs' => $product['breadcrumbs'],
@@ -32,15 +33,18 @@ class ProductController extends Controller
 
     public function review(Request $request)
     {
+//        dd($request->all('file'));
         $arr = [
             "productId" => $request->input('productId'),
             "rating" => $request->input('rating'),
             "text" => $request->input('text') ?? '',
+            "images" => $request->all('file'),
             "isAnonymously" => $request->input('isAnonymously')
         ];
-        // dd($arr);
+//         dd($request->input('file'));
         if ($request->session()->has('token')) {
-            $result = $this->requestHelper->getUserRequest($request, 'reviews', $arr, 'post');
+            $result = $this->requestHelper->getUserRequest($request, 'reviews', $arr, 'post', true);
+            dd($result);
             return [
                 'status' => 'ok',
                 'result' => $result['data'],
