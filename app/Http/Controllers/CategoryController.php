@@ -10,7 +10,7 @@ class CategoryController extends Controller
     {
         $categories = $this->requestHelper->getRequest('catalog/' . $slug_category);
         $category = $categories['data'];
-        // dd($category);
+//         dd($category);
 
         $paginator = $this->requestHelper->pagination($category['products'], $category['count'], $slug_category);
 

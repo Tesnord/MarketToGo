@@ -105,6 +105,7 @@ Route::prefix('basket')->group(function () {
     Route::delete('/', [BasketController::class, 'delete'])->name('basket.delete');
     // Оформление заказа
     Route::get('/checkout', [BasketController::class, 'checkout'])->name('basket.checkout');
+    Route::put('/checkout/promocode', [BasketController::class, 'promocode'])->name('basket.promocode');
     Route::put('/checkout', [BasketController::class, 'order'])->name('basket.order');
 });
 

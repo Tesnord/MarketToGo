@@ -78,16 +78,12 @@ class UserController extends Controller
     {
         if ($request->session()->has('token')) {
             $orders = $this->requestHelper->getUserRequest($request, 'profile/orders');
-//            dd($orders);
-            if ($orders['data']['count']) {
-                $order = $orders['data']['orders'];
-                return view('login.user.orders', [
-                    'orders' => $order,
-                ]);
-            }
+            $order = $orders['data'];
+//            dd($order);
             return view('login.user.orders', [
-                'orders' => $orders['data']['count'],
+                'orders' => $order,
             ]);
+
         }
         return redirect()->route('login.create');
     }

@@ -79,9 +79,10 @@ class RequestHelper
                 $request->session()->put('token', $response->json()['data']);
                 return $this->getUserRequest($request, $handler, $data, $method);
             case 400:
-                dd($result);
-                abort(404);
-                break;
+//                dd($result);
+//                abort(404);
+//                break;
+                return $result;
             case 200:
                 return $result;
         }

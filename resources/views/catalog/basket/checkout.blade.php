@@ -333,7 +333,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="order__point">
+                                {{--<div class="order__point">
                                     <div class="order__point-check">
                                         <input class="scores__checked" type="checkbox" id="check" name="check">
                                         <label for="check">Списать баллы</label>
@@ -345,7 +345,7 @@
                                         </div>
                                         <div class="polzunok-5"></div>
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                         </div>
                         <div class="order__wrap">
@@ -411,10 +411,11 @@
                             <div class="order__list-promo">
                                 <div class="cart__list-promo">
                                     <input type="text">
-                                    <button class="cart__list-promo-btn"><img
-                                            src="{{ asset('assets/images/svg/arrow3.svg')}}" alt=""></button>
+                                    <button class="cart__list-promo-btn">
+                                        <img src="{{ asset('assets/images/svg/arrow3.svg')}}" alt="">
+                                    </button>
                                 </div>
-                                <div class="cart__list-promo-done">Промокод применен</div>
+
                             </div>
                             <div class="order__list-table order__list-table-tw">
                                 <div class="order__list-table-row">
@@ -446,11 +447,7 @@
                                     <div class="order__list-table-item">{{ $order['totalEconomy'] }} ₽</div>
                                 </div>
                             </div>
-                            <div class="order__list-all prom">
-                                <div class="order__list-all-item">Промокод:</div>
-                                <div class="order__list-all-item">-120 ₽</div>
-                            </div>
-                            <div class="order__list-all">
+                            <div class="order__list-all totalPrice">
                                 <div class="order__list-all-item">Итого:</div>
                                 <div class="order__list-all-item">{{$order['totalPrice']}} ₽</div>
                             </div>

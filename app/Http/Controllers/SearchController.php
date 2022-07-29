@@ -11,7 +11,7 @@ class SearchController extends Controller
         $string = $request->input('search');
         $result = $this->requestHelper->getRequest('search/'.$string);
         $search = $result['data'];
-        // dd($search);
+//         dd($search);
         // $paginator = $this->requestHelper->pagination($search['products'], $search['count'], $string);
 
         return view('catalog.search', [

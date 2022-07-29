@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
@@ -70,6 +71,14 @@ class BasketController extends Controller
         $product_id = $request->post('id');
         $this->requestHelper->getUserRequest($request, 'basket/' . $product_id, [], 'delete');
         return ['status' => 'ok'];
+    }
+
+    public function promocode(Request $request) {
+        $promocode = $request->input('promocode');
+        $result = $this->requestHelper->getUserRequest($request,'order/promocode', [$promocode], 'put');
+//        dump($result);
+//        return ['result' => $result];
+        return new JsonResponse(compact('result'));
     }
 
     public function checkout(Request $request)

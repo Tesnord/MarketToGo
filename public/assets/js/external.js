@@ -175,7 +175,7 @@ const up = e => {
                     if (json.status === 'ok') {
                         input.value = input.value++ < input.max ? input.value++ : input.max
                         el.count = input.value
-                        log(basketArr)
+                        // log(basketArr);
                         setBasket(basketArr)
                     } else {
                         log('errors')
@@ -206,7 +206,7 @@ const down = e => {
                         } else {
                             el.count = input.value
                         }
-                        log(basketArr)
+                        // log(basketArr)
                         setBasket(basketArr)
                     } else {
                         log('errors')
@@ -261,7 +261,39 @@ if (document.querySelectorAll('.cart__list-item')) {
             input.dispatchEvent(event);
         })
     })
-
+    /**
+     * Удаление товара из корзины
+     */
+    document.querySelectorAll('.cart__list-item .cart__list-delete').forEach(t => {
+        t.addEventListener('click', e => {
+            const basketArr = getBasket()
+            const product = e.currentTarget.closest('[data-product-id]')
+            const product_id = product.dataset.productId
+            getBasket().forEach((el, key) => {
+                if (el.id === product_id) {
+                    myFetch('/basket', 'DELETE', {id: product_id})
+                        .then(response => response.json())
+                        .then(json => {
+                            if (json.status === 'ok') {
+                                basketArr.splice(key, 1)
+                                const input = product.querySelector('input.count')
+                                input.value = 0;
+                                const event = new Event('change', { bubbles: true });
+                                input.dispatchEvent(event);
+                                product.remove()
+                                setBasket(basketArr)
+                                if (basketArr.length === 0) {
+                                    location.reload()
+                                }
+                                // log(basketArr);
+                            } else {
+                                log('errors')
+                            }
+                        })
+                }
+            })
+        })
+    })
     document.querySelectorAll('.cart__list-item input.count').forEach(t => {
         t.addEventListener('change', _.debounce(e => {
             const basketArr = getBasket()
@@ -348,34 +380,6 @@ if (document.querySelectorAll('.cart__list-item')) {
             }
         }, 1000))
     })
-    /**
-     * Удаление товара из корзины
-     */
-    document.querySelectorAll('.cart__list-item .cart__list-delete').forEach(t => {
-        t.addEventListener('click', e => {
-            const basketArr = getBasket()
-            const product = e.currentTarget.closest('[data-product-id]')
-            const product_id = product.dataset.productId
-            getBasket().forEach((el, key) => {
-                if (el.id === product_id) {
-                    myFetch('/basket', 'DELETE', {id: product_id})
-                        .then(response => response.json())
-                        .then(json => {
-                            if (json.status === 'ok') {
-                                basketArr.splice(key, 1)
-                                product.remove()
-                                setBasket(basketArr)
-                                if (basketArr.length === 0) {
-                                    location.reload()
-                                }
-                                log(basketArr)
-                            } else {
-                                log('errors')
-                            }
-                        })
-                }
-            })
-        })
-    })
+
 }
 

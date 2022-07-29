@@ -141,40 +141,45 @@ if (document.querySelector('div.order__list')) {
     document.querySelector('a.buy').addEventListener('click', e => {
         // Доставка
         let address = {
-            id: '',
-            date: false
+            // id: '',
+            // date: false
+            street: document.querySelector('.street').value,
+            apartment: document.querySelector('.apartment').value,
+            floor: document.querySelector('.floor').value,
+            entrance: document.querySelector('.entrance').value,
+            intercom: document.querySelector('.intercom').value,
         }
-        document.querySelectorAll('.address__js input').forEach(elem => {
-            if (elem.checked) {
-                address.id = elem.id
-
-            }
-        })
+        // document.querySelectorAll('.address__js input').forEach(elem => {
+        //     if (elem.checked) {
+        //         address.id = elem.id
+        //
+        //     }
+        // })
         // Время доставки
-        if (document.querySelector('#pills-time-2').classList.contains('show')) {
-            address.date = document.querySelector('#select-1 .select__toggle').textContent
-            address.time = document.querySelector('#select-2 .select__toggle').textContent
-        }
+        // if (document.querySelector('#pills-time-2').classList.contains('show')) {
+        //     address.date = document.querySelector('#select-1 .select__toggle').textContent
+        //     address.time = document.querySelector('#select-2 .select__toggle').textContent
+        // }
 
         // Оплата
         let payment = {
             type: '',
-            value: false,
-            score: false
+            // value: false,
+            // score: false
         }
         // Тип оплаты
         document.querySelector('#payment').querySelectorAll('input').forEach(elem => {
             if (elem.checked) {
                 payment.type = elem.id
-                if (elem.id === 'payment2') {
-                    payment.value = document.querySelector('.payment__cash--input').value
-                }
+                // if (elem.id === 'payment2') {
+                //     payment.value = document.querySelector('.payment__cash--input').value
+                // }
             }
         })
         // Списать баллы
-        if (document.querySelector('.scores__checked').checked) {
+        /*if (document.querySelector('.scores__checked').checked) {
             payment.score = document.querySelector('.scores__js').value
-        }
+        }*/
 
         // Профиль
         let profile = {
@@ -189,8 +194,8 @@ if (document.querySelector('div.order__list')) {
             address,
             profile
         }
-        console.log(arr)
-        /*myFetch('/basket/checkout', 'PUT', arr)
+        // console.log(arr)
+        myFetch('/basket/checkout', 'PUT', arr)
             .then(response => response.json())
             .then(json => {
                 if (json.status === 'ok') {
@@ -199,8 +204,32 @@ if (document.querySelector('div.order__list')) {
                 } else {
                     log('errors')
                 }
-            })*/
+            })
     })
+
+    document.querySelector('.cart__list-promo button').addEventListener('click', event => {
+        let arr = {
+            promocode: document.querySelector('.cart__list-promo input').value
+        }
+        myFetch('/basket/checkout/promocode', 'PUT', arr)
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+                if (json.result.meta.code === 400) {
+                    document.querySelector('.order__list-promo').insertAdjacentHTML(
+                        "beforeend",
+                        '<div class="cart__list-promo-done">Промокод применен</div>')
+                    document.querySelector('.totalPrice').insertAdjacentHTML(
+                        "beforebegin",
+                    '<div class="order__list-all prom">' +
+                        '<div class="order__list-all-item">Промокод:</div>' +
+                        '<div class="order__list-all-item">-120 ₽</div>' +
+                        '</div>')
+                } else {
+                    log('errors')
+                }
+            })
+    }, { once: true })
 }
 
 if (document.querySelector('.order__payment-list')) {

@@ -131,7 +131,7 @@
                     </div>--}}
                     <div class="cart__list-all">
                         {{--<div class="cart__list-descr">
-                            <div class="cart__list-all-title">Промокод применен</div>
+                            <div class="cart__list-all-title">Введите промокод</div>
                             <div class="cart__list-promo">
                                 <input type="text">
                                 <button class="cart__list-promo-btn"><img
